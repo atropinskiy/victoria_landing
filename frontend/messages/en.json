@@ -1,0 +1,12 @@
+{
+  "meta": {
+    "home": "Home"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contacts",
+    "welcome": "Welcome!"
+  },
+  "content": {}
+}
