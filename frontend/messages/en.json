@@ -1,12 +1,26 @@
 {
-  "meta": {
-    "home": "Home"
+  "metadata": {
+    "title": "Victoria Kezik — Lawyer and Mediator",
+    "description": "Legal assistance and mediation services. Consultations on family, civil and other legal matters."
   },
   "nav": {
     "home": "Home",
     "about": "About",
-    "contact": "Contacts",
+    "contact": "Contacts"
+  },
+  "main": {
+    "title": "Main",
     "welcome": "Welcome!"
+  },
+  "about": {
+    "title": "About me"
+  },
+  "contact": {
+    "title": "Contact"
+  },
+  "notFound": {
+    "message": "Page not found",
+    "back": "Go home"
   },
   "content": {}
 }

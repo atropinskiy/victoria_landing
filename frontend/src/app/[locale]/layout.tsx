@@ -1,11 +1,12 @@
 import type { Metadata } from "next"
 
 import { NextIntlClientProvider } from "next-intl"
-import { getMessages } from "next-intl/server"
+import { getMessages, getTranslations } from "next-intl/server"
 import { Geist, Geist_Mono } from "next/font/google"
 
 import { Footer } from "@/components/layout/Footer"
 import { Header } from "@/components/layout/Header"
+import { QueryProvider } from "@/providers/QueryProvider"
 
 import "../globals.css"
 
@@ -19,12 +20,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 })
 
-export const metadata: Metadata = {
-  title: {
-    template: "%s | My App",
-    default: "My App",
-  },
-  description: "Description",
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("metadata")
+
+  return {
+    title: {
+      default: t("title"),
+      template: `%s | ${t("title")}`,
+    },
+    description: t("description"),
+  }
 }
 
 export default async function LocaleLayout({
@@ -40,11 +45,13 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="flex min-h-screen flex-col antialiased">
-        <NextIntlClientProvider messages={messages}>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </NextIntlClientProvider>
+        <QueryProvider>
+          <NextIntlClientProvider messages={messages}>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </NextIntlClientProvider>
+        </QueryProvider>
       </body>
     </html>
   )
