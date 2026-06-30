@@ -1,15 +1,23 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL
+import { BASE_URL } from "@/consts/api"
+import { getAuthToken } from "@/lib/auth"
 
 async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
+  const token = getAuthToken()
+
   const response = await fetch(`${BASE_URL}${endpoint}`, {
     headers: {
       "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
       ...options?.headers,
     },
     ...options,
   })
 
   if (!response.ok) {
+    if (response.status === 401) {
+      // TODO: What should we do if there is an authorization error?
+    }
+
     throw new Error(`API error: ${response.status} ${response.statusText}`)
   }
 
