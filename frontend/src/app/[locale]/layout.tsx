@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages, getTranslations } from "next-intl/server"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Inter, PT_Sans_Caption } from "next/font/google"
 
 import { Footer } from "@/components/layout/Footer"
 import { Header } from "@/components/layout/Header"
@@ -10,14 +10,18 @@ import { QueryProvider } from "@/providers/QueryProvider"
 
 import "../globals.css"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+import { Container } from "@/components/layout/Container"
+
+const ptSansCaption = PT_Sans_Caption({
+  variable: "--font-heading",
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "700"],
 })
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const inter = Inter({
+  variable: "--font-sans",
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "600"],
 })
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -43,12 +47,12 @@ export default async function LocaleLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale} className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang={locale} className={`${ptSansCaption.variable} ${inter.variable}`}>
       <body className="flex min-h-screen flex-col antialiased">
         <QueryProvider>
           <NextIntlClientProvider messages={messages}>
             <Header />
-            <main className="flex-1">{children}</main>
+            <Container>{children}</Container>
             <Footer />
           </NextIntlClientProvider>
         </QueryProvider>
