@@ -1,7 +1,8 @@
+from datetime import datetime
 from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.security import hash_password
-from app.user.models import User
+from app.user.models import RevokedToken, User
 from app.user.schemas import UserCreate
 
 
@@ -32,3 +33,13 @@ async def create(db: AsyncSession, data: UserCreate) -> User:
     await db.commit()
     await db.refresh(user)
     return user
+
+
+async def is_token_revoked(db: AsyncSession, jti: str) -> bool:
+    result = await db.execute(select(RevokedToken).where(RevokedToken.jti == jti))
+    return result.scalar_one_or_none() is not None
+
+
+async def revoke_token(db: AsyncSession, jti: str, expires_at: datetime) -> None:
+    db.add(RevokedToken(jti=jti, expires_at=expires_at))
+    await db.commit()
