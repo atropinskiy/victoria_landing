@@ -19,7 +19,7 @@ export function LocaleSwitcher() {
 
   function toggle() {
     startTransition(() => {
-      router.replace(pathname, { locale: nextLocale })
+      router.replace(pathname, { locale: nextLocale, scroll: false })
     })
   }
 

@@ -1,48 +1,59 @@
-// import { getTranslations } from "next-intl/server"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 import Image from "next/image"
 
 import { Button } from "@/components/ui/button"
 import { Typography } from "@/components/ui/typography"
 
-export const dynamic = "force-static"
+// export const dynamic = "force-static"
 
-export default async function HomePage() {
-  // const t = await getTranslations("main")
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+
+  setRequestLocale(locale)
+
+  const t = await getTranslations("main")
 
   return (
-    <div className="mx-auto w-full">
+    <div className="mx-auto w-full max-w-182.5">
       <div className="flex justify-center">
-        <div>
-          <div className="-mr-7">
+        <div className="-mr-8 w-62 min-w-62">
+          <div className="">
             <Typography variant="h2" as="span" color="burgundy">
-              Виктори
+              {t("namePart1")}
             </Typography>
-            <Typography variant="h2" as="span" color="cream" className="z-500">
-              я
+            <Typography variant="h2" as="span" color="cream" className="relative">
+              {t("namePart2")}
             </Typography>
           </div>
-          <Typography variant="h5" className="mt-2">
-            юрист медиатор
+
+          <Typography variant="h5" className="mt-2 tracking-tight">
+            {t("subtitle")}
           </Typography>
+
           <Typography variant="h1" color="burgundy">
-            кезик
+            {t("surname")}
           </Typography>
         </div>
-        <Image
-          src="/images/portrait.avif"
-          alt="Виктория Кезик"
-          width={504}
-          height={578}
-          priority
-          className="-z-30 -mt-8"
-        />
-      </div>
 
-      <Typography variant="bodyLg">
-        18 лет помогаю оберегать от рисков бизнес, браки, недвижимость - максимально комфортно,
-        сохраняя конфиденциальность
-      </Typography>
-      <Button size="xl">Записаться на консультацию</Button>
+        <div className="flex flex-col items-end">
+          <Image
+            src="/images/portrait.avif"
+            alt={t("alt")}
+            width={504}
+            height={578}
+            priority
+            className="-mt-12"
+          />
+
+          <Typography variant="bodyLg" className="mt-6 max-w-126">
+            {t("description")}
+          </Typography>
+
+          <Button size="xl" className="mt-16 self-end">
+            {t("cta")}
+          </Button>
+        </div>
+      </div>
     </div>
   )
 }

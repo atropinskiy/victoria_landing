@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 import { NextIntlClientProvider } from "next-intl"
-import { getMessages, getTranslations } from "next-intl/server"
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server"
 import { Inter, PT_Sans_Caption } from "next/font/google"
 
 import { Container } from "@/components/layout/Container"
@@ -33,6 +33,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
+  setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: "metadata" })
 
   return {

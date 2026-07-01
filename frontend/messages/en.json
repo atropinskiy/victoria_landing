@@ -13,8 +13,13 @@
     "contacts": "Contact Information"
   },
   "main": {
-    "title": "Main",
-    "welcome": "Welcome!"
+    "namePart1": "Victoria",
+    "namePart2": "",
+    "subtitle": "legal mediator",
+    "surname": "Kezik",
+    "description": "18 years of experience helping protect businesses, marriages, and real estate risks — with maximum comfort and confidentiality.",
+    "cta": "Book a consultation",
+    "alt": "Victoria Kezik"
   },
   "about": {
     "title": "About me"

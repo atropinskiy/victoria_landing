@@ -17,7 +17,7 @@ const typographyVariants = cva("font-heading", {
 
       menuItem: "text-[24px] leading-snug font-bold uppercase",
 
-      bodyLg: "text-[24px] leading-normal font-normal text-justify",
+      bodyLg: "text-[24px] leading-normal font-bold text-justify",
       body: "text-[20px] leading-normal font-bold text-justify",
       bodySm: "font-sans text-[18px] leading-normal font-normal",
       accent: "font-sans text-[18px] leading-normal font-semibold italic capitalize",
