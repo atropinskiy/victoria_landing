@@ -4,13 +4,12 @@ import { NextIntlClientProvider } from "next-intl"
 import { getMessages, getTranslations } from "next-intl/server"
 import { Inter, PT_Sans_Caption } from "next/font/google"
 
+import { Container } from "@/components/layout/Container"
 import { Footer } from "@/components/layout/Footer"
 import { Header } from "@/components/layout/Header"
 import { QueryProvider } from "@/providers/QueryProvider"
 
 import "../globals.css"
-
-import { Container } from "@/components/layout/Container"
 
 const ptSansCaption = PT_Sans_Caption({
   variable: "--font-heading",
@@ -24,8 +23,17 @@ const inter = Inter({
   weight: ["400", "600"],
 })
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("metadata")
+export function generateStaticParams() {
+  return [{ locale: "ru" }, { locale: "en" }]
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "metadata" })
 
   return {
     title: {
@@ -44,13 +52,14 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
-  const messages = await getMessages()
+
+  const messages = await getMessages({ locale })
 
   return (
     <html lang={locale} className={`${ptSansCaption.variable} ${inter.variable}`}>
       <body className="flex min-h-screen flex-col antialiased">
         <QueryProvider>
-          <NextIntlClientProvider messages={messages}>
+          <NextIntlClientProvider messages={messages} locale={locale}>
             <Header />
             <Container>{children}</Container>
             <Footer />

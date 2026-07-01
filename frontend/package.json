@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack --port 3001",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
+    "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4",
     "@tanstack/eslint-plugin-query": "^5.101.2",
     "@tanstack/react-query-devtools": "^5.101.2",

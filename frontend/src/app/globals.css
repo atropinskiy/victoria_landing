@@ -74,8 +74,8 @@
   --secondary: var(--slate);
   --secondary-foreground: var(--cream);
 
-  --muted: #f5f5f5;
-  --muted-foreground: #737373;
+  --muted: #f0e9e4;
+  --muted-foreground: var(--slate);
 
   --accent: var(--navy);
   --accent-foreground: var(--cream);

@@ -1,37 +1,12 @@
-import { useTranslations } from "next-intl"
-import Link from "next/link"
-
+import { BurgerMenu } from "@/components/layout/BurgerMenu"
 import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher"
 
 export function Header() {
-  const t = useTranslations("nav")
-
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-transparent">
-      {" "}
-      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <div></div>
-        <nav className="flex items-center gap-6">
-          <Link
-            href="/"
-            className="text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900"
-          >
-            {t("home")}
-          </Link>
-          <Link
-            href="/about"
-            className="text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900"
-          >
-            {t("about")}
-          </Link>
-          <Link
-            href="/contact"
-            className="text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900"
-          >
-            {t("contact")}
-          </Link>
-        </nav>
+    <header className="fixed inset-x-0 top-0 z-40 bg-transparent">
+      <div className="mx-auto flex h-16 w-full items-center justify-end gap-2 px-4 sm:px-6 lg:px-8">
         <LocaleSwitcher />
+        <BurgerMenu />
       </div>
     </header>
   )

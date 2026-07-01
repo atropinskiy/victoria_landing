@@ -1,19 +1,26 @@
 // import { getTranslations } from "next-intl/server"
 import Image from "next/image"
 
-import { Button } from "@/components/ui/Button"
-import { Typography } from "@/components/ui/Typography"
+import { Button } from "@/components/ui/button"
+import { Typography } from "@/components/ui/typography"
+
+export const dynamic = "force-static"
 
 export default async function HomePage() {
   // const t = await getTranslations("main")
 
   return (
-    <div className="mx-auto w-full max-w-7xl">
-      <div className="flex">
+    <div className="mx-auto w-full">
+      <div className="flex justify-center">
         <div>
-          <Typography variant="h2" color="burgundy">
-            Виктория
-          </Typography>
+          <div className="-mr-7">
+            <Typography variant="h2" as="span" color="burgundy">
+              Виктори
+            </Typography>
+            <Typography variant="h2" as="span" color="cream" className="z-500">
+              я
+            </Typography>
+          </div>
           <Typography variant="h5" className="mt-2">
             юрист медиатор
           </Typography>
@@ -27,9 +34,10 @@ export default async function HomePage() {
           width={504}
           height={578}
           priority
-          className="-mt-8"
+          className="-z-30 -mt-8"
         />
       </div>
+
       <Typography variant="bodyLg">
         18 лет помогаю оберегать от рисков бизнес, браки, недвижимость - максимально комфортно,
         сохраняя конфиденциальность

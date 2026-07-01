@@ -4,9 +4,13 @@
     "description": "Legal assistance and mediation services. Consultations on family, civil and other legal matters."
   },
   "nav": {
-    "home": "Home",
-    "about": "About",
-    "contact": "Contacts"
+    "about": "About Me",
+    "services": "Services",
+    "services_items": "Business Partnership\nDivorce Process\nMediation\nReal Estate",
+    "cases": "Cases",
+    "library": "Library",
+    "profile": "Profile",
+    "contacts": "Contact Information"
   },
   "main": {
     "title": "Main",

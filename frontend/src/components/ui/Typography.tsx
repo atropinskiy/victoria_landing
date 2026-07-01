@@ -12,15 +12,15 @@ const typographyVariants = cva("font-heading", {
       h2: "text-[47px] leading-none font-bold tracking-normal uppercase",
       h3: "text-[32px] leading-none font-bold tracking-normal uppercase",
       h4: "text-[28px] leading-none font-bold tracking-normal uppercase",
-      h5: "text-[24px] leading-none font-bold tracking-normal capitalize",
-      h6: "text-[24px] leading-none font-bold tracking-normal uppercase",
+      h5: "text-[24px] leading-none font-bold tracking-normal uppercase",
+      h6: "text-[24px] leading-none font-bold tracking-normal capitalize",
 
-      menuItem: "text-[24px] leading-none font-bold uppercase",
+      menuItem: "text-[24px] leading-snug font-bold uppercase",
 
-      bodyLg: "text-[24px] leading-none font-normal text-justify",
-      body: "text-[20px] leading-none font-bold text-justify",
-      bodySm: "font-sans text-[18px] leading-none font-normal",
-      accent: "font-sans text-[18px] leading-none font-semibold italic capitalize",
+      bodyLg: "text-[24px] leading-normal font-normal text-justify",
+      body: "text-[20px] leading-normal font-bold text-justify",
+      bodySm: "font-sans text-[18px] leading-normal font-normal",
+      accent: "font-sans text-[18px] leading-normal font-semibold italic capitalize",
     },
     color: {
       burgundy: "text-primary",
