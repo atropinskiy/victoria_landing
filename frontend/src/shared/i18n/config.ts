@@ -1,5 +1,10 @@
-export const locales = ["ru", "en"] as const
+export const LOCALE = {
+  RU: "ru",
+  EN: "en",
+} as const
 
-export type Locale = (typeof locales)[number]
+export const locales = Object.values(LOCALE)
 
-export const defaultLocale: Locale = "ru"
+export type Locale = (typeof LOCALE)[keyof typeof LOCALE]
+
+export const defaultLocale: Locale = LOCALE.RU

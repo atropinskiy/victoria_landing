@@ -13,13 +13,18 @@
     "contacts": "Contact Information"
   },
   "main": {
-    "namePart1": "Victoria",
-    "namePart2": "",
+    "namePart1": "Victori",
+    "namePart2": "a",
     "subtitle": "legal mediator",
     "surname": "Kezik",
     "description": "18 years of experience helping protect businesses, marriages, and real estate risks — with maximum comfort and confidentiality.",
     "cta": "Book a consultation",
-    "alt": "Victoria Kezik"
+    "alt": "Victoria Kezik",
+    "cases": "cases in 5 countries",
+    "deals": "300+ successfully closed deals",
+    "experience": "18 years of experience",
+    "mediation": "16 marriages saved via mediation",
+    "realty": "real estate deals worth > 9 billion rubles"
   },
   "about": {
     "title": "About me"

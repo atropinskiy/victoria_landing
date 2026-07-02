@@ -24,7 +24,7 @@ const buttonVariants = cva(
         default: "h-10 gap-1.5  px-4 text-sm",
         sm: "h-9 gap-1 px-3 text-sm",
         lg: "h-13 gap-2 px-8 py-3 text-xl",
-        xl: "h-17 gap-2 px-10 py-4 text-2xl",
+        xl: "h-auto min-h-22 sm:px-10 gap-2 px-6 py-3 text-2xl whitespace-normal sm:px-10 sm:py-4 sm:whitespace-nowrap",
         icon: "size-10",
       },
       rounded: {

@@ -56,7 +56,7 @@ export default async function LocaleLayout({
   const messages = await getMessages({ locale })
 
   return (
-    <html lang={locale} className={`${ptSansCaption.variable} ${inter.variable}`}>
+    <html lang={locale} className={`${ptSansCaption.variable} ${inter.variable} overscroll-none`}>
       <body className="flex min-h-screen flex-col antialiased">
         <QueryProvider>
           <NextIntlClientProvider messages={messages} locale={locale}>
