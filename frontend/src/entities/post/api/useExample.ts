@@ -1,8 +1,8 @@
-import type { Post } from "@/types/ExamplePosts"
+import type { Post } from "@/entities/post/model/types"
 
 import { useQuery } from "@tanstack/react-query"
 
-import { api } from "@/lib/api"
+import { api } from "@/shared/api/base"
 
 export function useExamplePosts() {
   return useQuery({

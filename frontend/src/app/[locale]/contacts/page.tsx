@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 
-import { getTranslations } from "next-intl/server"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("contact")
@@ -10,7 +10,10 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function ContactPage() {
+export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  setRequestLocale(locale)
+
   const t = await getTranslations("contact")
 
   return (

@@ -4,10 +4,9 @@ import { NextIntlClientProvider } from "next-intl"
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server"
 import { Inter, PT_Sans_Caption } from "next/font/google"
 
-import { Container } from "@/components/layout/Container"
-import { Footer } from "@/components/layout/Footer"
-import { Header } from "@/components/layout/Header"
-import { QueryProvider } from "@/providers/QueryProvider"
+import { QueryProvider } from "@/app/providers/QueryProvider"
+import { Footer } from "@/widgets/footer/ui/Footer"
+import { Header } from "@/widgets/header/ui/Header"
 
 import "../globals.css"
 
@@ -62,7 +61,9 @@ export default async function LocaleLayout({
         <QueryProvider>
           <NextIntlClientProvider messages={messages} locale={locale}>
             <Header />
-            <Container>{children}</Container>
+            <div className="mx-auto w-full max-w-7xl flex-1 px-4 py-12 sm:px-6 lg:px-8">
+              {children}
+            </div>{" "}
             <Footer />
           </NextIntlClientProvider>
         </QueryProvider>

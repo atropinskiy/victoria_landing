@@ -1,13 +1,13 @@
 "use client"
 
-import type { Locale } from "@/i18n/config"
+import type { Locale } from "@/shared/i18n/config"
 
 import { useLocale } from "next-intl"
 import { useTransition } from "react"
 
-import { Button } from "@/components/ui/button"
-import { locales } from "@/i18n/config"
-import { usePathname, useRouter } from "@/i18n/routing"
+import { locales } from "@/shared/i18n/config"
+import { usePathname, useRouter } from "@/shared/i18n/routing"
+import { Button } from "@/shared/ui/button"
 
 export function LocaleSwitcher() {
   const locale = useLocale()

@@ -1,5 +1,5 @@
-import { BASE_URL } from "@/consts/api"
-import { getAuthToken } from "@/lib/auth"
+import { BASE_URL } from "@/shared/config/api"
+import { getAuthToken } from "@/shared/lib/auth"
 
 async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const token = getAuthToken()

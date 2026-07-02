@@ -1,10 +1,8 @@
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import Image from "next/image"
 
-import { Button } from "@/components/ui/button"
-import { Typography } from "@/components/ui/typography"
-
-// export const dynamic = "force-static"
+import { Button } from "@/shared/ui/button"
+import { Typography } from "@/shared/ui/typography"
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
@@ -25,11 +23,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               {t("namePart2")}
             </Typography>
           </div>
-
           <Typography variant="h5" className="mt-2 tracking-tight">
             {t("subtitle")}
           </Typography>
-
           <Typography variant="h1" color="burgundy">
             {t("surname")}
           </Typography>

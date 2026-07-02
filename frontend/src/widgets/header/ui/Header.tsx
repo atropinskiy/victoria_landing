@@ -1,5 +1,5 @@
-import { BurgerMenu } from "@/components/layout/BurgerMenu"
-import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher"
+import { LocaleSwitcher } from "@/features/locale-switch/LocaleSwitcher"
+import { BurgerMenu } from "@/widgets/header/ui/BurgerMenu"
 
 export function Header() {
   return (
