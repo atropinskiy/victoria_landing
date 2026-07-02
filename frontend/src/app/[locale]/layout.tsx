@@ -5,8 +5,8 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 import { Inter, PT_Sans_Caption } from "next/font/google"
 
 import { QueryProvider } from "@/app/providers/QueryProvider"
-import { Footer } from "@/widgets/footer/ui/Footer"
-import { Header } from "@/widgets/header/ui/Header"
+import { Footer } from "@/widgets/footer"
+import { Header } from "@/widgets/header"
 
 import "../globals.css"
 

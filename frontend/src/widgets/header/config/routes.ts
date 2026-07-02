@@ -1,4 +1,4 @@
-import { AppRoutes } from "@/shared/config/routes"
+import { AppRoutes } from "@/shared/config"
 
 export const NAV_LINKS = [
   { href: AppRoutes.ABOUT, key: "about" },

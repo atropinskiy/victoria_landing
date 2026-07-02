@@ -1,4 +1,4 @@
-import { BASE_URL } from "@/shared/config/api"
+import { BASE_URL } from "@/shared/config"
 import { getAuthToken } from "@/shared/lib/auth"
 
 async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {

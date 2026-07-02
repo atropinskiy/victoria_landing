@@ -4,11 +4,11 @@ import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useState } from "react"
 
+import { NAV_LINKS } from "@/widgets/header/config/routes"
 import { Button } from "@/shared/ui/button"
-import MenuIcon from "@/shared/ui/icons/menu.svg"
+import { MenuIcon } from "@/shared/ui/icons"
 import { Sheet, SheetContent, SheetTitle } from "@/shared/ui/sheet"
 import { Typography } from "@/shared/ui/typography"
-import { NAV_LINKS } from "@/widgets/header/config/routes"
 
 export function BurgerMenu() {
   const [open, setOpen] = useState(false)

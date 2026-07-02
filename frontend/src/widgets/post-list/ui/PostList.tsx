@@ -1,6 +1,6 @@
 "use client"
 
-import { useExamplePosts } from "@/entities/post/api/useExample"
+import { useExamplePosts } from "@/entities/post"
 
 export function PostList() {
   const { data, isLoading, error } = useExamplePosts()

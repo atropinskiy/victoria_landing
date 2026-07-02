@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Next.js-проект (App Router) с TypeScript, Tailwind CSS и архитектурой Feature-Sliced Design (FSD).
 
-## Getting Started
+## Стек
 
-First, run the development server:
+- Next.js (App Router), TypeScript, Tailwind CSS
+- shadcn/ui + Radix
+- next-intl (локализация)
+- Feature-Sliced Design + steiger (линтер FSD)
+
+## Установка
+
+```bash
+npm install
+```
+
+## Запуск
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
+Приложение будет доступно на [http://localhost:3001](http://localhost:3001).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Скрипты
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Команда | Назначение |
+| --- | --- |
+| `npm run dev` | Запуск дев-сервера |
+| `npm run build` | Продакшн-сборка |
+| `npm run start` | Запуск собранного проекта |
+| `npm run lint` | ESLint |
+| `npm run lint:fix` | ESLint с автофиксом |
+| `npm run lint:fsd` | Проверка структуры проекта на соответствие FSD (steiger) |
+| `npm run typecheck` | Проверка типов TypeScript |
+| `npm run format` | Форматирование Prettier |
+| `npm run format:check` | Проверка форматирования без изменений |
 
-## Learn More
+## Линтер FSD (steiger)
 
-To learn more about Next.js, take a look at the following resources:
+Проверяет, что слои, сегменты и импорты в `src` соответствуют правилам Feature-Sliced Design. Конфиг — [steiger.config.ts](steiger.config.ts).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Запуск проверки:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run lint:fsd
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+При нарушениях команда выведет список проблем с указанием файла и правила FSD, которое нарушено.

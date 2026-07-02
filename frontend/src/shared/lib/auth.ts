@@ -1,4 +1,4 @@
-import { AUTH_TOKEN_KEY } from "@/shared/config/auth"
+import { AUTH_TOKEN_KEY } from "@/shared/config"
 
 // TODO: change to cookies! (localstorage only for client components)
 
