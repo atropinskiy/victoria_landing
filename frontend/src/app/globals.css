@@ -46,9 +46,9 @@
   --text-h4: 28px;
   --text-h5: 24px;
 
-  --text-body-lg: 24px; /* PT Sans Caption regular */
-  --text-body: 20px; /* PT Sans Caption bold */
-  --text-body-sm: 18px; /* Inter */
+  --text-body-lg: 24px;
+  --text-body: 20px;
+  --text-body-sm: 18px;
 }
 
 :root {
@@ -58,12 +58,13 @@
   --cream: #faf5f2;
   --slate: #84909c;
   --ink: #0d0d0d;
+  --gray: #e2e1e1;
 
   /* Семантические токены */
   --background: var(--cream);
   --foreground: var(--ink);
 
-  --card: #ffffff;
+  --card: var(--gray);
   --card-foreground: var(--ink);
   --popover: #ffffff;
   --popover-foreground: var(--ink);

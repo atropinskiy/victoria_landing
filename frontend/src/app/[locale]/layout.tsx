@@ -61,9 +61,7 @@ export default async function LocaleLayout({
         <QueryProvider>
           <NextIntlClientProvider messages={messages} locale={locale}>
             <Header />
-            <div className="mx-auto w-full max-w-7xl flex-1 px-4 py-12 sm:px-6 lg:px-8">
-              {children}
-            </div>{" "}
+            <div className="flex-1">{children}</div>
             <Footer />
           </NextIntlClientProvider>
         </QueryProvider>

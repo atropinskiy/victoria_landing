@@ -7,7 +7,7 @@ import * as React from "react"
 import { cn } from "@/shared/lib/utils"
 
 const buttonVariants = cva(
-  "group/button inline-flex cursor-pointer shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button font-bold inline-flex cursor-pointer shrink-0 items-center justify-center border border-transparent bg-clip-padding text-sm whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
@@ -23,8 +23,8 @@ const buttonVariants = cva(
       size: {
         default: "h-10 gap-1.5  px-4 text-sm",
         sm: "h-9 gap-1 px-3 text-sm",
-        lg: "h-13 gap-2 px-8 py-3 text-xl",
-        xl: "h-auto min-h-22 sm:px-10 gap-2 px-6 py-3 text-2xl whitespace-normal sm:px-10 sm:py-4 sm:whitespace-nowrap",
+        lg: "h-13 gap-2 px-8 py-3 text-xl semibold",
+        xl: "h-auto min-h-22 sm:px-10 gap-2 semibold px-6 py-3 text-2xl whitespace-normal sm:px-10 sm:py-4 sm:whitespace-nowrap",
         icon: "size-10",
       },
       rounded: {
