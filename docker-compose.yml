@@ -40,3 +40,18 @@ services:
 
 volumes:
   postgres_data:
+
+
+# services:
+#   frontend:
+#     build:
+#       context: ./frontend
+#       dockerfile: Dockerfile
+#     container_name: optone_frontend
+#     ports:
+#       - "3000:3000"
+#     environment:
+#       - NODE_ENV=production
+#     volumes: [] # <-- пустой массив, если не монтируем локальные файлы
+#     restart: unless-stopped
+#  docker compose up --build -d frontend
