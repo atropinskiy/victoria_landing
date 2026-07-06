@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import Image from "next/image"
 
+import { ConsultationForm } from "@/widgets/consultation-form"
 import { LOCALE } from "@/shared/i18n"
 import { cn } from "@/shared/lib/utils"
 import { Button } from "@/shared/ui/button"
@@ -150,6 +151,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </CardContent>
           </Card>
         </div>
+
+        <ConsultationForm />
       </Container>
 
       <div className="bg-card">

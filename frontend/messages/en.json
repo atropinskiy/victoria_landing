@@ -50,6 +50,15 @@
     "aboutClosing": "If you need a lawyer who won't just formally check the paperwork, but will genuinely take on the task and see it through to a result, get in touch. I will become your reliable partner and help protect your interests in any situation.",
     "aboutCta": "Learn more"
   },
+  "consultationForm": {
+    "title": "Get a consultation right now!",
+    "namePlaceholder": "Name",
+    "phonePlaceholder": "Phone",
+    "emailPlaceholder": "Email",
+    "messagePlaceholder": "Your request",
+    "consent": "\"Consent to personal data processing\"",
+    "submit": "Submit"
+  },
   "about": {
     "title": "About me"
   },
