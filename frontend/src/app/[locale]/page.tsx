@@ -136,7 +136,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               {t("directionsItem6")}
             </Typography>
           </ul>
-          <Card className="min-w-fit" variant="default">
+          <Card className="min-w-60" variant="default">
             <CardHeader className="text-xl">{t("customersTitle")}</CardHeader>
             <CardContent>
               <ul className="flex flex-col gap-2 font-semibold italic">
