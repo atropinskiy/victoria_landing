@@ -1,13 +1,19 @@
-# # --- production stage ---
-# FROM node:20-slim AS runner
-# WORKDIR /app
-# # Копируем только необходимые файлы
-# COPY --from=builder /app/package.json ./package.json
-# COPY --from=builder /app/.next ./.next
-# COPY --from=builder /app/public ./public
+# --- builder stage ---
+FROM node:24-slim AS builder
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
 
-# # Устанавливаем только production-зависимости
-# COPY --from=builder /app/node_modules ./node_modules
+# --- production stage ---
+FROM node:24-slim AS runner
+WORKDIR /app
 
-# EXPOSE 3000
-# CMD ["npm", "start"]
+# standalone-сборка уже содержит нужные node_modules и сервер
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+
+EXPOSE 3000
+CMD ["node", "server.js"]
