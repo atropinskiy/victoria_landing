@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "title": "Victoria Kezik — Lawyer and Mediator",
+    "description": "Legal assistance and mediation services. Consultations on family, civil and other legal matters."
+  },
+  "nav": {
+    "about": "About Me",
+    "services": "Services",
+    "services_items": "Business Partnership\nDivorce Process\nMediation\nReal Estate",
+    "cases": "Cases",
+    "library": "Library",
+    "profile": "Profile",
+    "contacts": "Contact Information"
+  },
+  "main": {
+    "namePart1": "Victori",
+    "namePart2": "a",
+    "subtitle": "legal mediator",
+    "surname": "Kezik",
+    "description": "18 years of experience helping protect businesses, marriages, and real estate risks — with maximum comfort and confidentiality.",
+    "cta": "Book a consultation",
+    "alt": "Victoria Kezik",
+    "cases": "cases in 5 countries",
+    "deals": "300+ successfully closed deals",
+    "experience": "18 years of experience",
+    "mediation": "16 marriages saved via mediation",
+    "realty": "real estate deals worth > 9 billion rubles",
+    "directionsTitle": "key areas of practice",
+    "directionsItem1": "-Support of partnership negotiations",
+    "directionsItem2": "-Support of complex negotiations in corporate conflicts",
+    "directionsItem3": "-Support of divorce proceedings for business owners",
+    "directionsItem4": "-Commercial real estate purchase and sale transactions",
+    "directionsItem5": "-Partnerships",
+    "directionsItem6": "-Residence permits",
+    "customersTitle": "Client industries",
+    "customerIndustry1": "Real Estate",
+    "customerIndustry2": "Construction",
+    "customerIndustry3": "Startups",
+    "customerIndustry4": "Retail",
+    "customerIndustry5": "Metalworking",
+    "customerIndustry6": "IT",
+    "customerIndustry7": "Oil industry",
+    "aboutTitle": "ABOUT ME",
+    "aboutIntro": "My name is Victoria Kezik, I am a lawyer with over 18 years of experience in real estate, corporate and investment law.",
+    "aboutEducationTitle": "Education:",
+    "aboutEducationMgua": "Kutafin Moscow State Law University — Mediation",
+    "aboutEducationMgavt": "Moscow State Academy of Water Transport under the Ministry of Transport of Russia",
+    "aboutSince2008": "Since 2008, I have been solving clients' tasks every day: from drafting simple contracts to supporting multimillion-dollar investment projects.",
+    "aboutLocation": "I work in Moscow and the Moscow region, but I am ready to join projects across Russia and abroad. Remote work is possible using digital signatures and electronic document management.",
+    "aboutClosing": "If you need a lawyer who won't just formally check the paperwork, but will genuinely take on the task and see it through to a result, get in touch. I will become your reliable partner and help protect your interests in any situation.",
+    "aboutCta": "Learn more"
+  },
+  "consultationForm": {
+    "title": "Get a consultation right now!",
+    "namePlaceholder": "Name",
+    "phonePlaceholder": "Phone",
+    "emailPlaceholder": "Email",
+    "messagePlaceholder": "Your request",
+    "consent": "\"Consent to personal data processing\"",
+    "submit": "Submit"
+  },
+  "about": {
+    "title": "About me"
+  },
+  "contact": {
+    "title": "Contact"
+  },
+  "notFound": {
+    "message": "Page not found",
+    "back": "Go home"
+  },
+  "content": {}
+}
