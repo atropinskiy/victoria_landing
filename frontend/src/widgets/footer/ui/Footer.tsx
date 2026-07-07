@@ -1,8 +1,8 @@
 import { useTranslations } from "next-intl"
 
 import { FOOTER_DOCUMENT_LINKS } from "@/widgets/footer/config/links"
-import { Container } from "@/shared/ui/container"
 import { Typography } from "@/shared/ui/typography"
+import { Container } from "@/shared/ui/widgets"
 
 export function Footer() {
   const t = useTranslations("footer")

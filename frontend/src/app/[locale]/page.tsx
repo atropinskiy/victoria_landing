@@ -1,13 +1,18 @@
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import Image from "next/image"
 
+import { AboutSection } from "@/widgets/about"
+import { CasesSection } from "@/widgets/cases"
 import { ConsultationForm } from "@/widgets/consultation-form"
+import { ContactsSection } from "@/widgets/contacts"
+import { LibrarySection } from "@/widgets/library"
+import { ServicesSection } from "@/widgets/services"
 import { LOCALE } from "@/shared/i18n"
 import { cn } from "@/shared/lib/utils"
 import { Button } from "@/shared/ui/button"
 import { Card, CardContent, CardHeader } from "@/shared/ui/card"
-import { Container } from "@/shared/ui/container"
 import { Typography } from "@/shared/ui/typography"
+import { Container } from "@/shared/ui/widgets"
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
@@ -155,51 +160,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <ConsultationForm />
       </Container>
 
-      <Container bg="secondary" className="items-center gap-10">
-        <Typography as="h3" variant="h3" color="burgundy" className="self-center sm:self-start">
-          {t("aboutTitle")}
-        </Typography>
-        <div className="flex flex-col gap-8 text-justify">
-          <Typography variant="body" className="font-bold">
-            {t("aboutIntro")}
-          </Typography>
-          <div>
-            <Typography variant="body" className="font-bold">
-              {t("aboutEducationTitle")}
-            </Typography>
-            <Typography variant="body">{t("aboutEducationMgua")}</Typography>
-            <Typography variant="body">{t("aboutEducationMgavt")}</Typography>
-          </div>
-          <Typography variant="body">{t("aboutSince2008")}</Typography>
-          <Typography variant="body">{t("aboutLocation")}</Typography>
-          <Typography variant="body">{t("aboutClosing")}</Typography>
-        </div>
-        <Button size="lg">{t("aboutCta")}</Button>
-      </Container>
-
-      <Container className="">
-        <Typography as="h3" variant="h3" color="burgundy" className="self-center sm:self-start">
-          Мои услуги
-        </Typography>
-      </Container>
-
-      <Container bg="secondary">
-        <Typography as="h3" variant="h3" color="burgundy" className="self-center sm:self-start">
-          Кейсы
-        </Typography>
-      </Container>
-
-      <Container className="">
-        <Typography as="h3" variant="h3" color="burgundy" className="self-center sm:self-start">
-          Библиотека
-        </Typography>
-      </Container>
-
-      <Container bg="secondary">
-        <Typography as="h3" variant="h3" color="burgundy" className="self-center sm:self-start">
-          Контакты
-        </Typography>
-      </Container>
+      <AboutSection />
+      <ServicesSection />
+      <CasesSection />
+      <LibrarySection />
+      <ContactsSection />
     </main>
   )
 }
