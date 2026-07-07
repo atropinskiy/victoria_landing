@@ -2,10 +2,10 @@
 
 import { XIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
-import Link from "next/link"
 import { useState } from "react"
 
 import { NAV_LINKS } from "@/widgets/header/config/routes"
+import { Link } from "@/shared/i18n"
 import { Button } from "@/shared/ui/button"
 import { Drawer, DrawerClose, DrawerContent, DrawerTitle } from "@/shared/ui/drawer"
 import { MenuIcon } from "@/shared/ui/icons"
@@ -20,7 +20,10 @@ export function BurgerMenu() {
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => setOpen(true)}
+        onClick={(e) => {
+          e.currentTarget.blur()
+          setOpen(true)
+        }}
         aria-label="Open menu"
         className="bg-background h-9 w-11"
       >

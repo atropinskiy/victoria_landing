@@ -12,7 +12,7 @@ import { cn } from "@/shared/lib/utils"
 import { Button } from "@/shared/ui/button"
 import { Card, CardContent, CardHeader } from "@/shared/ui/card"
 import { Typography } from "@/shared/ui/typography"
-import { Container } from "@/shared/ui/widgets"
+import { Container, TypographyBorderedItem } from "@/shared/ui/widgets"
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
@@ -23,100 +23,92 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <main>
-      <Container>
-        <div className="flex flex-col-reverse items-center sm:flex-row sm:items-start sm:justify-end">
-          <div
-            className={cn(
-              "mt-6 mr-0 w-62 min-w-62 text-center sm:mt-0 sm:-mr-6 sm:text-left",
-              locale === LOCALE.EN && "mr-0 sm:-mr-14"
-            )}
-          >
-            <Typography variant="h1" as="h1" className="inline leading-none">
+      <Container className="sm:items-center">
+        <div className="flex flex-col sm:max-w-130 lg:w-250 lg:max-w-250">
+          <div className="flex flex-col-reverse items-center sm:flex-row sm:items-start sm:justify-end">
+            <div
+              className={cn(
+                "mt-6 mr-0 text-center sm:mt-0 sm:-mr-8 sm:w-88 sm:text-left lg:w-107 lg:min-w-109",
+                locale === LOCALE.EN && "lg:-mr-23"
+              )}
+            >
+              <Typography variant="h1" as="h1" className="inline">
+                <Typography
+                  as="span"
+                  variant="h2"
+                  color="burgundy"
+                  className="text-[47px] leading-none tracking-[0.02em] sm:text-[47px] lg:text-[85px]"
+                >
+                  {t("namePart1")}
+                </Typography>
+                <Typography
+                  as="span"
+                  variant="h2"
+                  color="cream"
+                  className="text-burgundy sm:text-cream relative text-[47px] sm:text-[47px] lg:text-[85px]"
+                >
+                  {t("namePart2")}
+                </Typography>
+              </Typography>
+
+              <Typography
+                as="p"
+                variant="h1"
+                className="text-[24px] tracking-tight sm:text-[24px] lg:text-[42px]"
+              >
+                {t("subtitle")}
+              </Typography>
+
               <Typography
                 as="span"
-                variant="h2"
+                variant="h1"
                 color="burgundy"
-                className="leading-none tracking-[0.02em]"
+                className="-ml-1.5 text-[67px] leading-none tracking-tight sm:text-[67px] lg:text-[122px]"
               >
-                {t("namePart1")}
+                {t("surname")}
               </Typography>
-              <Typography
-                as="span"
-                variant="h2"
-                color="cream"
-                className="text-burgundy sm:text-cream relative leading-none"
-              >
-                {t("namePart2")}
-              </Typography>
-            </Typography>
+            </div>
 
-            <Typography as="p" variant="h5" className="mt-1 tracking-tight">
-              {t("subtitle")}
-            </Typography>
-
-            <Typography as="span" variant="h1" color="burgundy" className="leading-none">
-              {t("surname")}
-            </Typography>
+            <Image
+              src="/images/portrait.avif"
+              alt={t("alt")}
+              width={1512}
+              height={1734}
+              priority
+              sizes="(min-width: 1024px) 548px, (min-width: 640px) 420px, 100vw"
+              className="-mx-4 -mt-12 h-auto w-[calc(100%+2rem)] max-w-none sm:mx-0 sm:w-105 lg:w-137"
+            />
           </div>
-
-          <Image
-            src="/images/portrait.avif"
-            alt={t("alt")}
-            width={504}
-            height={578}
-            priority
-            sizes="(min-width: 640px) 504px, 100vw"
-            className="-mx-4 -mt-12 h-auto w-[calc(100%+2rem)] max-w-none sm:mx-0 sm:w-126"
-          />
-        </div>
-        <div className="self-center text-center sm:self-end sm:text-end">
-          <Typography as="p" variant="bodyLg" className="mt-6 max-w-126">
+          <Typography
+            as="p"
+            variant="bodyLg"
+            className="mt-6 text-justify sm:ml-auto sm:w-105 lg:w-137"
+          >
             {t("description")}
           </Typography>
 
-          <Button size="xl" className="mt-16 w-full self-end sm:w-auto">
+          <Button size="xl" className="mt-16 w-full sm:ml-auto sm:hidden sm:w-auto">
             {t("cta")}
           </Button>
         </div>
-        <ul className="mt-28 flex flex-col items-center gap-12">
-          <Typography
-            as="li"
-            variant="h3"
-            className="border-burgundy block border-t-8 pt-2 text-center sm:pr-10 sm:text-start"
-          >
-            {t("cases")}
-          </Typography>
-          <Typography
-            as="li"
-            variant="h5"
-            className="border-burgundy block border-t-6 pt-2 text-center sm:self-end sm:text-start"
-          >
-            {t("deals")}
-          </Typography>
-          <Typography
-            as="li"
-            variant="h3"
-            className="border-burgundy block border-t-8 pt-2 text-center sm:self-end sm:text-start"
-          >
-            {t("experience")}
-          </Typography>
-          <Typography
-            as="li"
-            variant="h5"
-            className="border-burgundy block border-t-6 pt-2 text-center sm:self-end sm:text-start"
-          >
-            {t("mediation")}
-          </Typography>
-          <Typography
-            as="li"
-            variant="h3"
-            className="border-burgundy block w-full border-t-8 pt-2 text-center sm:w-92 sm:pr-8 sm:text-start"
-          >
+      </Container>
+
+      <Container>
+        <ul className="flex flex-col gap-10 sm:flex-row sm:flex-wrap sm:justify-center lg:flex-nowrap lg:justify-start">
+          <TypographyBorderedItem>{t("cases")}</TypographyBorderedItem>
+          <TypographyBorderedItem>{t("deals")}</TypographyBorderedItem>
+          <TypographyBorderedItem className="order-last lg:order-0 lg:max-w-70 lg:min-w-70">
             {t("realty")}
-          </Typography>
+          </TypographyBorderedItem>
+          <TypographyBorderedItem>{t("experience")}</TypographyBorderedItem>
+          <TypographyBorderedItem>{t("mediation")}</TypographyBorderedItem>
         </ul>
 
-        <Typography variant="h3" color="burgundy" className="mt-28 text-center whitespace-pre-line">
+        <Typography
+          variant="h1"
+          color="burgundy"
+          className="mt-28 self-center text-center whitespace-pre-line sm:self-start"
+        >
           {t("directionsTitle")}
         </Typography>
 
@@ -156,9 +148,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </CardContent>
           </Card>
         </div>
-
-        <ConsultationForm />
       </Container>
+      <ConsultationForm />
 
       <AboutSection />
       <ServicesSection />

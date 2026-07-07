@@ -41,11 +41,11 @@
   --font-sans: var(--font-sans);
   --font-heading: var(--font-heading);
 
-  --text-h1: 67px;
-  --text-h2: 47px;
-  --text-h3: 32px;
-  --text-h4: 28px;
-  --text-h5: 24px;
+  --text-h1: 50px;
+  --text-h2: 36px;
+  --text-h3: 28px;
+  --text-h4: 24px;
+  --text-h5: 20px;
 
   --text-body-lg: 24px;
   --text-body: 20px;

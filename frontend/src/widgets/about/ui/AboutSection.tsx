@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server"
 
+import { AppRoutes } from "@/shared/config"
+import { Link } from "@/shared/i18n"
 import { Button } from "@/shared/ui/button"
 import { Typography } from "@/shared/ui/typography"
 import { Container } from "@/shared/ui/widgets"
@@ -9,7 +11,7 @@ export async function AboutSection() {
 
   return (
     <Container id="about" bg="secondary" className="items-center gap-10">
-      <Typography as="h3" variant="h3" color="burgundy" className="self-center sm:self-start">
+      <Typography as="h1" variant="h1" color="burgundy" className="self-center sm:self-start">
         {t("aboutTitle")}
       </Typography>
       <div className="flex flex-col gap-8 text-justify">
@@ -27,7 +29,9 @@ export async function AboutSection() {
         <Typography variant="body">{t("aboutLocation")}</Typography>
         <Typography variant="body">{t("aboutClosing")}</Typography>
       </div>
-      <Button size="lg">{t("aboutCta")}</Button>
+      <Button size="lg" asChild>
+        <Link href={AppRoutes.ABOUT_PAGE}>{t("aboutCta")}</Link>
+      </Button>
     </Container>
   )
 }

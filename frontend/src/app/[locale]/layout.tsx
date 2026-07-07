@@ -58,6 +58,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
+      data-scroll-behavior="smooth"
       className={`${ptSansCaption.variable} ${inter.variable} overscroll-none scroll-smooth`}
     >
       <body className="flex min-h-screen flex-col antialiased">

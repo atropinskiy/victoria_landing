@@ -10,7 +10,7 @@ export function Footer() {
   return (
     <footer className="bg-default">
       <Container className="pb-6">
-        <Typography className="text-center text-sm">{t("disclaimer")}</Typography>
+        <Typography className="text-center text-sm sm:text-sm">{t("disclaimer")}</Typography>
 
         <div className="flex flex-col items-center">
           {FOOTER_DOCUMENT_LINKS.map(({ href, key }) => (

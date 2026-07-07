@@ -60,7 +60,22 @@
     "submit": "Submit"
   },
   "about": {
-    "title": "About me"
+    "title": "About me",
+    "heading": "ABOUT ME",
+    "back": "Back",
+    "paragraph1": "My career began as a junior lawyer working on family and civil law matters. Within a few years I rose to head the legal department of a holding company that united more than ten businesses in construction, finance, and investment. That experience taught me to see business holistically and to always weigh legal risk against economic outcome.",
+    "paragraph2": "From 2015 to 2020, I worked as deputy head of the real estate practice at a law firm. My focus was litigation over real estate and tax matters, establishing ownership rights, removing encumbrances, and supporting all types of transactions involving land, residential, and commercial property. My clients valued my persistence, attention to detail, and ability to build a strong defense strategy.",
+    "paragraph3": "From 2020 to 2024, I served as director of legal affairs and risk management at a major investment and construction holding. I supported deals worth hundreds of millions of rubles, drafted investment agreements, oversaw the corporate structure of group companies, and coordinated with banks and developers. My job was to eliminate legal errors and build a transparent, secure investment framework.",
+    "paragraph4": "Today I run my own private practice as a sole proprietor. This gives me the flexibility to adapt to each client's specific needs and to give full attention to every detail.",
+    "listItem1": "support of real estate transactions, including purchase and sale agreements, leases, mortgages, assignments, and investment agreements;",
+    "listItem2": "drafting and review of contracts of any complexity, including lease, service, loan, joint venture, and corporate agreements;",
+    "listItem3": "legal opinions on properties and transactions: title due diligence, risk identification, and recommendations for mitigation;",
+    "listItem4": "litigation in real estate, corporate relations, debt recovery, and disputes with developers and contractors;",
+    "listItem5": "corporate support: registration and amendment of company records, preparation of minutes and resolutions, and structuring of share deals.",
+    "paragraph5": "I hold to a principle: a lawyer should be not just an executor, but a strategic partner. I always explain every possible course of action to the client, assess the risks, and recommend the best solution. I work honestly, study the documents in depth, identify weak points, and immediately propose practical steps to protect my client's interests.",
+    "paragraph6": "Over the years I've built an extensive network of contacts: notaries, cadastral engineers, realtors, tax consultants. This helps me resolve matters faster and more comprehensively. I make sure to stay in touch: I answer questions in detail, explain every stage of the work, and keep the client informed of the case's progress.",
+    "paragraph7": "My clients value me for my professionalism, reliability, and negotiation skills. I speak in plain language, because I believe a client should clearly understand what we're doing and why.",
+    "paragraph8": "At the Kutafin Moscow State Law University, I additionally completed training in mediation and hold a mediator qualification. This lets me offer clients not only classic legal solutions but also effective out-of-court dispute resolution methods. Where relationships can be preserved and time saved, I apply mediation techniques; where necessary, I confidently defend interests in court."
   },
   "contact": {
     "title": "Contact"

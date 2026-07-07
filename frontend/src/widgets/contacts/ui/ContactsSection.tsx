@@ -4,7 +4,7 @@ import { Container } from "@/shared/ui/widgets"
 export function ContactsSection() {
   return (
     <Container id="contacts" bg="secondary">
-      <Typography as="h3" variant="h3" color="burgundy" className="self-center sm:self-start">
+      <Typography as="h1" variant="h1" color="burgundy" className="self-center sm:self-start">
         Контакты
       </Typography>
     </Container>

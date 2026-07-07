@@ -1,8 +1,9 @@
 export const AppRoutes = {
-  ABOUT: "#about",
-  SERVICES: "#services",
-  CASES: "#cases",
-  LIBRARY: "#library",
+  ABOUT: "/#about",
+  ABOUT_PAGE: "/about",
+  SERVICES: "/#services",
+  CASES: "/#cases",
+  LIBRARY: "/#library",
   PROFILE: "/profile",
-  CONTACTS: "#contacts",
+  CONTACTS: "/#contacts",
 } as const
