@@ -2,25 +2,13 @@ import type { Metadata } from "next"
 
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server"
-import { Inter, PT_Sans_Caption } from "next/font/google"
 
+import { inter, ptSansCaption } from "@/app/fonts"
 import { QueryProvider } from "@/app/providers/QueryProvider"
 import { Footer } from "@/widgets/footer"
 import { Header } from "@/widgets/header"
 
 import "../globals.css"
-
-const ptSansCaption = PT_Sans_Caption({
-  variable: "--font-heading",
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "700"],
-})
-
-const inter = Inter({
-  variable: "--font-sans",
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "600"],
-})
 
 export function generateStaticParams() {
   return [{ locale: "ru" }, { locale: "en" }]

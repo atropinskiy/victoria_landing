@@ -1,12 +1,13 @@
-import { Typography } from "@/shared/ui/typography"
-import { Container } from "@/shared/ui/widgets"
+import { getTranslations } from "next-intl/server"
 
-export function ServicesSection() {
+import { Container, SectionTitle } from "@/shared/ui/widgets"
+
+export async function ServicesSection() {
+  const t = await getTranslations("main")
+
   return (
     <Container id="services">
-      <Typography as="h1" variant="h1" color="burgundy" className="self-center sm:self-start">
-        Мои услуги
-      </Typography>
+      <SectionTitle>{t("servicesTitle")}</SectionTitle>
     </Container>
   )
 }

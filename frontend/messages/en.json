@@ -48,7 +48,11 @@
     "aboutSince2008": "Since 2008, I have been solving clients' tasks every day: from drafting simple contracts to supporting multimillion-dollar investment projects.",
     "aboutLocation": "I work in Moscow and the Moscow region, but I am ready to join projects across Russia and abroad. Remote work is possible using digital signatures and electronic document management.",
     "aboutClosing": "If you need a lawyer who won't just formally check the paperwork, but will genuinely take on the task and see it through to a result, get in touch. I will become your reliable partner and help protect your interests in any situation.",
-    "aboutCta": "Learn more"
+    "aboutCta": "Learn more",
+    "casesTitle": "Cases",
+    "servicesTitle": "My services",
+    "libraryTitle": "Library",
+    "contactsTitle": "Contacts"
   },
   "consultationForm": {
     "title": "Get a consultation right now!",

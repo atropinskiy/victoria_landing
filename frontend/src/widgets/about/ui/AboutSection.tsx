@@ -4,16 +4,14 @@ import { AppRoutes } from "@/shared/config"
 import { Link } from "@/shared/i18n"
 import { Button } from "@/shared/ui/button"
 import { Typography } from "@/shared/ui/typography"
-import { Container } from "@/shared/ui/widgets"
+import { Container, SectionTitle } from "@/shared/ui/widgets"
 
 export async function AboutSection() {
   const t = await getTranslations("main")
 
   return (
     <Container id="about" bg="secondary" className="items-center gap-10">
-      <Typography as="h1" variant="h1" color="burgundy" className="self-center sm:self-start">
-        {t("aboutTitle")}
-      </Typography>
+      <SectionTitle>{t("aboutTitle")}</SectionTitle>
       <div className="flex flex-col gap-8 text-justify">
         <Typography variant="body" className="font-bold">
           {t("aboutIntro")}
