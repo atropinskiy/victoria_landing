@@ -35,7 +35,7 @@ export function ConsultationForm() {
             as="h3"
             variant="h4"
             color="cream"
-            className="text-center text-[16px] sm:text-[16px]"
+            className="text-center text-[16px] whitespace-pre-line sm:text-[16px]"
           >
             {t("title")}
           </Typography>
