@@ -17,8 +17,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const t = await getTranslations("main")
 
   return (
-    <main className="flex w-full flex-col">
-      <Container className="mx-auto flex max-w-182.5 flex-col">
+    <main>
+      <Container>
         <div className="flex flex-col-reverse items-center sm:flex-row sm:items-start sm:justify-end">
           <div
             className={cn(
@@ -155,29 +155,51 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <ConsultationForm />
       </Container>
 
-      <div className="bg-card">
-        <Container className="mx-auto flex max-w-182.5 flex-col items-center gap-10 text-center">
-          <Typography as="h3" variant="h3" color="burgundy">
-            {t("aboutTitle")}
+      <Container bg="secondary" className="items-center gap-10">
+        <Typography as="h3" variant="h3" color="burgundy" className="self-center sm:self-start">
+          {t("aboutTitle")}
+        </Typography>
+        <div className="flex flex-col gap-8 text-justify">
+          <Typography variant="body" className="font-bold">
+            {t("aboutIntro")}
           </Typography>
-          <div className="flex flex-col gap-8 text-justify">
+          <div>
             <Typography variant="body" className="font-bold">
-              {t("aboutIntro")}
+              {t("aboutEducationTitle")}
             </Typography>
-            <div>
-              <Typography variant="body" className="font-bold">
-                {t("aboutEducationTitle")}
-              </Typography>
-              <Typography variant="body">{t("aboutEducationMgua")}</Typography>
-              <Typography variant="body">{t("aboutEducationMgavt")}</Typography>
-            </div>
-            <Typography variant="body">{t("aboutSince2008")}</Typography>
-            <Typography variant="body">{t("aboutLocation")}</Typography>
-            <Typography variant="body">{t("aboutClosing")}</Typography>
+            <Typography variant="body">{t("aboutEducationMgua")}</Typography>
+            <Typography variant="body">{t("aboutEducationMgavt")}</Typography>
           </div>
-          <Button size="lg">{t("aboutCta")}</Button>
-        </Container>
-      </div>
+          <Typography variant="body">{t("aboutSince2008")}</Typography>
+          <Typography variant="body">{t("aboutLocation")}</Typography>
+          <Typography variant="body">{t("aboutClosing")}</Typography>
+        </div>
+        <Button size="lg">{t("aboutCta")}</Button>
+      </Container>
+
+      <Container className="">
+        <Typography as="h3" variant="h3" color="burgundy" className="self-center sm:self-start">
+          Мои услуги
+        </Typography>
+      </Container>
+
+      <Container bg="secondary">
+        <Typography as="h3" variant="h3" color="burgundy" className="self-center sm:self-start">
+          Кейсы
+        </Typography>
+      </Container>
+
+      <Container className="">
+        <Typography as="h3" variant="h3" color="burgundy" className="self-center sm:self-start">
+          Библиотека
+        </Typography>
+      </Container>
+
+      <Container bg="secondary">
+        <Typography as="h3" variant="h3" color="burgundy" className="self-center sm:self-start">
+          Контакты
+        </Typography>
+      </Container>
     </main>
   )
 }

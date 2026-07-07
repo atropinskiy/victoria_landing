@@ -1,13 +1,14 @@
 "use client"
 
+import { XIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useState } from "react"
 
 import { NAV_LINKS } from "@/widgets/header/config/routes"
 import { Button } from "@/shared/ui/button"
+import { Drawer, DrawerClose, DrawerContent, DrawerTitle } from "@/shared/ui/drawer"
 import { MenuIcon } from "@/shared/ui/icons"
-import { Sheet, SheetContent, SheetTitle } from "@/shared/ui/sheet"
 import { Typography } from "@/shared/ui/typography"
 
 export function BurgerMenu() {
@@ -26,21 +27,41 @@ export function BurgerMenu() {
         <MenuIcon className="block size-auto" />
       </Button>
 
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent side="right" className="bg-cream border-cream w-full px-8 py-12 sm:w-72">
-          <SheetTitle className="sr-only">Navigation</SheetTitle>
+      <Drawer open={open} onOpenChange={setOpen} direction="right">
+        <DrawerContent className="bg-cream border-cream px-8 py-12 data-[vaul-drawer-direction=right]:w-full data-[vaul-drawer-direction=right]:rounded-l-none data-[vaul-drawer-direction=right]:sm:w-72">
+          <DrawerTitle className="sr-only">Navigation</DrawerTitle>
+
+          <DrawerClose asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-3 right-4 sm:right-6 lg:right-8"
+            >
+              <XIcon className="size-8" />
+              <span className="sr-only">Close</span>
+            </Button>
+          </DrawerClose>
 
           <nav className="mt-16 flex flex-col gap-10">
-            {NAV_LINKS.map(({ href, key }) => (
+            {NAV_LINKS.map(({ href, key, subKey }) => (
               <Link key={href} href={href} onClick={() => setOpen(false)}>
-                <Typography variant="menuItem" color="navy" className="whitespace-pre-line">
+                <Typography variant="menuItem" color="navy">
                   {t(key)}
                 </Typography>
+                {subKey && (
+                  <Typography
+                    variant="menuItem"
+                    color="navy"
+                    className="mt-1 text-sm whitespace-pre-line opacity-60"
+                  >
+                    {t(subKey)}
+                  </Typography>
+                )}
               </Link>
             ))}
           </nav>
-        </SheetContent>
-      </Sheet>
+        </DrawerContent>
+      </Drawer>
     </>
   )
 }

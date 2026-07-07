@@ -1,11 +1,31 @@
+import { useTranslations } from "next-intl"
+
+import { FOOTER_DOCUMENT_LINKS } from "@/widgets/footer/config/links"
+import { Container } from "@/shared/ui/container"
+import { Typography } from "@/shared/ui/typography"
+
 export function Footer() {
+  const t = useTranslations("footer")
+
   return (
-    <footer className="border-t border-zinc-200 bg-white py-8">
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <p className="text-center text-sm text-zinc-500">
-          © {new Date().getFullYear()} My App. All rights reserved.
-        </p>
-      </div>
+    <footer className="bg-default">
+      <Container className="pb-6">
+        <Typography className="text-center text-sm">{t("disclaimer")}</Typography>
+
+        <div className="flex flex-col items-center">
+          {FOOTER_DOCUMENT_LINKS.map(({ href, key }) => (
+            <a
+              key={key}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm underline"
+            >
+              {t(key)}
+            </a>
+          ))}
+        </div>
+      </Container>
     </footer>
   )
 }

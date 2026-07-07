@@ -19,6 +19,7 @@
   --color-destructive: var(--destructive);
 
   --color-card: var(--card);
+  --color-default: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);

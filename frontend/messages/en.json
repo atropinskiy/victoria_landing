@@ -69,5 +69,11 @@
     "message": "Page not found",
     "back": "Go home"
   },
+  "footer": {
+    "disclaimer": "Personal and other user data is processed in accordance with the Privacy Policy",
+    "privacyPolicy": "Privacy Policy",
+    "cookiePolicy": "Cookie Policy",
+    "dataConsent": "Data Processing Consent"
+  },
   "content": {}
 }
