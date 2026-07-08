@@ -19,7 +19,7 @@ const typographyVariants = cva("font-heading", {
 
       bodyLg: "text-[22px] sm:text-[24px] leading-tight font-bold text-justify",
       body: "text-[20px] sm:text-[22px] leading-tight text-justify",
-      bodySm: "font-sans sm:text-[20px] text-[18px] leading-tight font-normal",
+      bodySm: "font-sans sm:text-[18px] text-[16px] leading-tight font-normal",
       accent: "font-sans sm:text-[18px] text-[18px] leading-tight font-semibold italic capitalize",
     },
     color: {

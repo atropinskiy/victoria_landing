@@ -17,9 +17,11 @@ const cardVariants = cva(
           "bg-primary text-primary-foreground ring-0 [&_[data-slot=typography]]:text-primary-foreground",
         accent:
           "bg-accent text-accent-foreground ring-0 [&_[data-slot=typography]]:text-accent-foreground",
+        slate:
+          "bg-slate text-secondary-foreground ring-0 [&_[data-slot=typography]]:text-secondary-foreground",
       },
       rounded: {
-        default: "rounded-xl *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
+        default: "rounded-2xl *:[img:first-child]:rounded-t-2xl *:[img:last-child]:rounded-b-2xl",
         none: "rounded-none",
       },
     },
