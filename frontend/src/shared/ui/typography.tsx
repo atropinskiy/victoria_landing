@@ -36,20 +36,28 @@ const typographyVariants = cva("font-heading", {
   },
 })
 
-interface TypographyProps
-  extends
-    Omit<React.HTMLAttributes<HTMLElement>, "color">,
-    VariantProps<typeof typographyVariants> {
-  as?: React.ElementType
-}
+type TypographyProps<T extends React.ElementType> = {
+  as?: T
+} & VariantProps<typeof typographyVariants> &
+  Omit<React.ComponentPropsWithoutRef<T>, "as" | "color">
 
-function Typography({ className, variant, color, as, ...props }: TypographyProps) {
-  const Comp = as ?? "p"
+function Typography<T extends React.ElementType = "p">({
+  className,
+  variant,
+  color,
+  as,
+  ...props
+}: TypographyProps<T>) {
+  const Comp = (as ?? "p") as React.ElementType
 
   return (
     <Comp
       data-slot="typography"
-      className={cn(typographyVariants({ variant, color, className }))}
+      className={cn(
+        typographyVariants({ variant, color }),
+        as === "a" && "underline",
+        className
+      )}
       {...props}
     />
   )

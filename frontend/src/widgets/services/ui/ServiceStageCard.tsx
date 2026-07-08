@@ -1,6 +1,7 @@
+import type { cardVariants } from "@/shared/ui/card"
 import type { VariantProps } from "class-variance-authority"
 
-import { Card, CardContent, CardHeader, cardVariants } from "@/shared/ui/card"
+import { Card, CardContent, CardHeader } from "@/shared/ui/card"
 
 interface ServiceStageCardProps extends Pick<VariantProps<typeof cardVariants>, "variant"> {
   title: React.ReactNode

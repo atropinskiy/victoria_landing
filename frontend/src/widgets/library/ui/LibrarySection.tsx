@@ -45,16 +45,14 @@ export async function LibrarySection() {
         <CarouselPrevious
           className="-left-2 size-10 sm:-left-4 sm:size-12 lg:-left-8 lg:size-16"
           size="icon"
-          color="bg-default"
         />
         <CarouselNext
           className="-right-2 size-10 sm:-right-4 sm:size-12 lg:-right-8 lg:size-16"
           size="icon"
-          color="bg-default"
         />
       </Carousel>
 
-      <Typography color="burgundy" className="mt-10">
+      <Typography color="burgundy" className="mt-14 font-bold">
         {t("libraryCtaText")}{" "}
         <Link href={AppRoutes.PROFILE} className="font-bold underline">
           {t("libraryCtaLink")}

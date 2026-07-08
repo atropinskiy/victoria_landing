@@ -73,7 +73,12 @@
     "libraryItem1Title": "Agreement 1",
     "libraryCtaText": "To get more free documents, complete your",
     "libraryCtaLink": "registration",
-    "contactsTitle": "Contacts"
+    "contactsTitle": "Contacts",
+    "contactEmailLabel": "Email:",
+    "contactPhoneLabel": "Phone for booking:",
+    "contactAddressLabel": "Address:",
+    "contactHoursLabel": "Working hours:",
+    "contactHoursValue": "Mon–Fri, 9:00 AM–7:00 PM"
   },
   "consultationForm": {
     "title": "Get a consultation right now!",

@@ -73,7 +73,12 @@
     "libraryItem1Title": "Договор 1",
     "libraryCtaText": "Чтобы получить больше бесплатных документов, пройдите",
     "libraryCtaLink": "регистрацию",
-    "contactsTitle": "Контакты"
+    "contactsTitle": "Контакты",
+    "contactEmailLabel": "Почта:",
+    "contactPhoneLabel": "Телефон для записи:",
+    "contactAddressLabel": "Адрес:",
+    "contactHoursLabel": "Режим работы:",
+    "contactHoursValue": "Пн–Пт, 9:00–19:00"
   },
   "consultationForm": {
     "title": "Получите консультацию\nпрямо сейчас!",
