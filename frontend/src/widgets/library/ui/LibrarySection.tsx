@@ -45,10 +45,12 @@ export async function LibrarySection() {
         <CarouselPrevious
           className="-left-2 size-10 sm:-left-4 sm:size-12 lg:-left-8 lg:size-16"
           size="icon"
+          color="bg-primary/20 sm:bg-primary"
         />
         <CarouselNext
           className="-right-2 size-10 sm:-right-4 sm:size-12 lg:-right-8 lg:size-16"
           size="icon"
+          color="bg-primary/20 sm:bg-primary"
         />
       </Carousel>
 

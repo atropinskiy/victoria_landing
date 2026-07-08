@@ -8,10 +8,7 @@ export async function CustomerIndustriesSection() {
   const t = await getTranslations("main")
 
   return (
-    <Container className="items-center">
-      {/* <Typography variant="h4" color="slate" className="mb-10 tracking-widest">
-        {t("customersTitle")}
-      </Typography> */}
+    <Container className="items-start">
       <SectionTitle>{t("customersTitle")}</SectionTitle>
 
       <ul className="flex flex-wrap justify-center gap-4">
