@@ -50,6 +50,10 @@
     "aboutClosing": "Если вам нужен юрист, который не ограничится формальной проверкой бумаг, а действительно возьмет задачу и доведет её до результата, обращайтесь. Я стану вашим надежным партнером и помогу защитить интересы в любой ситуации.",
     "aboutCta": "Узнать подробнее",
     "casesTitle": "Кейсы",
+    "caseMediationTitle": "Медиация",
+    "caseMarriageTitle": "Сохранение брака",
+    "casePartnershipTitle": "Бизнес-партнёрство",
+    "caseRealtyTitle": "Недвижимость",
     "servicesTitle": "Мои услуги",
     "servicePartnershipTitle": "Бизнес-партнёрство",
     "servicePartnershipApproachTitle": "Особенность моего подхода:",
@@ -66,6 +70,9 @@
     "servicePartnershipWhoTitle": "Кому подойдет:",
     "servicePartnershipWhoText": "любым партнёрам по бизнесу: кто знаком 10 минут или 10 лет – любому бизнесу жизненно необходим данный документ",
     "libraryTitle": "Библиотека",
+    "libraryItem1Title": "Договор 1",
+    "libraryCtaText": "Чтобы получить больше бесплатных документов, пройдите",
+    "libraryCtaLink": "регистрацию",
     "contactsTitle": "Контакты"
   },
   "consultationForm": {

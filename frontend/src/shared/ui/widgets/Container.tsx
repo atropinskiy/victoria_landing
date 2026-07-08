@@ -23,7 +23,7 @@ function Container({
     <div className={containerVariants({ bg })}>
       <div
         className={cn(
-          "mx-auto flex w-full max-w-7xl flex-col px-4 py-14 sm:px-6 lg:px-8",
+          "mx-auto flex w-full max-w-360 flex-col px-4 py-14 sm:px-6 lg:px-8",
           className
         )}
         {...props}
