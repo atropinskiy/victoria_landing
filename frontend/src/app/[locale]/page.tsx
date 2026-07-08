@@ -79,7 +79,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               height={1734}
               priority
               sizes="(min-width: 1024px) 548px, (min-width: 640px) 420px, 100vw"
-              className="-mx-4 -mt-12 h-auto w-[calc(100%+2rem)] max-w-none sm:mx-0 sm:w-105 lg:w-137"
+              className="-mx-4 -mt-14 h-auto w-[calc(100%+2rem)] max-w-none sm:mx-0 sm:w-105 lg:w-137"
             />
           </div>
           <Typography
