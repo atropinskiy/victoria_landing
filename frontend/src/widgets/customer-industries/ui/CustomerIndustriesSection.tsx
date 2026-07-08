@@ -1,6 +1,5 @@
 import { getTranslations } from "next-intl/server"
 
-import { Typography } from "@/shared/ui/typography"
 import { Container, SectionTitle } from "@/shared/ui/widgets"
 
 import { IndustryChip } from "./IndustryChip"

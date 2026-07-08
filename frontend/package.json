@@ -11,7 +11,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
-    "lint:fsd": "steiger ./src"
+    "lint:fsd": "steiger ./src",
+    "check": "npm run lint && npm run lint:fsd && npm run typecheck && npm run build"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
