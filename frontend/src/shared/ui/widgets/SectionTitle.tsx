@@ -9,7 +9,7 @@ function SectionTitle({ className, ...props }: React.ComponentProps<typeof Typog
       as="h1"
       variant="h1"
       color="burgundy"
-      className={cn("self-center sm:self-start", className)}
+      className={cn("mb-10 self-center sm:self-start", className)}
       {...props}
     />
   )

@@ -5,12 +5,13 @@ import { AboutSection } from "@/widgets/about"
 import { CasesSection } from "@/widgets/cases"
 import { ConsultationForm } from "@/widgets/consultation-form"
 import { ContactsSection } from "@/widgets/contacts"
+import { CustomerIndustriesSection } from "@/widgets/customer-industries"
+import { DirectionsSection } from "@/widgets/directions"
 import { LibrarySection } from "@/widgets/library"
 import { ServicesSection } from "@/widgets/services"
 import { LOCALE } from "@/shared/i18n"
 import { cn } from "@/shared/lib/utils"
 import { Button } from "@/shared/ui/button"
-import { Card, CardContent, CardHeader } from "@/shared/ui/card"
 import { Typography } from "@/shared/ui/typography"
 import { Container, TypographyBorderedItem } from "@/shared/ui/widgets"
 
@@ -103,52 +104,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <TypographyBorderedItem>{t("experience")}</TypographyBorderedItem>
           <TypographyBorderedItem>{t("mediation")}</TypographyBorderedItem>
         </ul>
-
-        <Typography
-          variant="h1"
-          color="burgundy"
-          className="mt-28 self-center text-center whitespace-pre-line sm:self-start"
-        >
-          {t("directionsTitle")}
-        </Typography>
-
-        <div className="mt-12 flex flex-col items-center justify-between gap-24 sm:flex-row">
-          <ul className="flex flex-col gap-8">
-            <Typography variant="h5" className="font-normal">
-              {t("directionsItem1")}
-            </Typography>
-            <Typography variant="h5" className="font-normal">
-              {t("directionsItem2")}
-            </Typography>
-            <Typography variant="h5" className="font-normal">
-              {t("directionsItem3")}
-            </Typography>
-            <Typography variant="h5" className="font-normal">
-              {t("directionsItem4")}
-            </Typography>
-            <Typography variant="h5" className="font-normal">
-              {t("directionsItem5")}
-            </Typography>
-            <Typography variant="h5" className="font-normal">
-              {t("directionsItem6")}
-            </Typography>
-          </ul>
-          <Card className="min-w-60" variant="default">
-            <CardHeader className="text-xl">{t("customersTitle")}</CardHeader>
-            <CardContent>
-              <ul className="flex flex-col gap-2 font-semibold italic">
-                <Typography>{t("customerIndustry1")}</Typography>
-                <Typography>{t("customerIndustry2")}</Typography>
-                <Typography>{t("customerIndustry3")}</Typography>
-                <Typography>{t("customerIndustry4")}</Typography>
-                <Typography>{t("customerIndustry5")}</Typography>
-                <Typography>{t("customerIndustry6")}</Typography>
-                <Typography>{t("customerIndustry7")}</Typography>
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
       </Container>
+
+      <DirectionsSection />
+      <CustomerIndustriesSection />
       <ConsultationForm />
 
       <AboutSection />

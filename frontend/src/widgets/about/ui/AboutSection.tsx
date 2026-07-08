@@ -10,7 +10,7 @@ export async function AboutSection() {
   const t = await getTranslations("main")
 
   return (
-    <Container id="about" bg="secondary" className="items-center gap-10">
+    <Container id="about" bg="secondary" className="items-center">
       <SectionTitle>{t("aboutTitle")}</SectionTitle>
       <div className="flex flex-col gap-8 text-justify">
         <Typography variant="body" className="font-bold">
@@ -27,7 +27,7 @@ export async function AboutSection() {
         <Typography variant="body">{t("aboutLocation")}</Typography>
         <Typography variant="body">{t("aboutClosing")}</Typography>
       </div>
-      <Button size="lg" asChild>
+      <Button size="lg" asChild className="mt-10">
         <Link href={AppRoutes.ABOUT_PAGE}>{t("aboutCta")}</Link>
       </Button>
     </Container>
