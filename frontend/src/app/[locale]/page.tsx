@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server"
 import Image from "next/image"
 
 import { AboutSection } from "@/widgets/about"
+import { AchievementsSection } from "@/widgets/achievements"
 import { CasesSection } from "@/widgets/cases"
 import { ConsultationForm } from "@/widgets/consultation-form"
 import { ContactsSection } from "@/widgets/contacts"
@@ -9,11 +10,12 @@ import { CustomerIndustriesSection } from "@/widgets/customer-industries"
 import { DirectionsSection } from "@/widgets/directions"
 import { LibrarySection } from "@/widgets/library"
 import { ServicesSection } from "@/widgets/services"
-import { LOCALE } from "@/shared/i18n"
+import { AppRoutes } from "@/shared/config"
+import { Link, LOCALE } from "@/shared/i18n"
 import { cn } from "@/shared/lib/utils"
 import { Button } from "@/shared/ui/button"
 import { Typography } from "@/shared/ui/typography"
-import { Container, TypographyBorderedItem } from "@/shared/ui/widgets"
+import { Container } from "@/shared/ui/widgets"
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
@@ -88,32 +90,28 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             {t("description")}
           </Typography>
 
-          <Button size="xl" className="mt-16 w-full sm:ml-auto sm:hidden sm:w-auto">
-            {t("cta")}
+          <Button size="xl" asChild className="mt-16 w-full sm:ml-auto sm:hidden sm:w-auto">
+            <Link href={AppRoutes.BOOK}> {t("cta")}</Link>
           </Button>
         </div>
       </Container>
 
-      <Container>
-        <ul className="flex flex-col gap-10 sm:flex-row sm:flex-wrap sm:justify-center lg:flex-nowrap lg:justify-start">
-          <TypographyBorderedItem>{t("cases")}</TypographyBorderedItem>
-          <TypographyBorderedItem>{t("deals")}</TypographyBorderedItem>
-          <TypographyBorderedItem className="order-last lg:order-0 lg:max-w-70 lg:min-w-70">
-            {t("realty")}
-          </TypographyBorderedItem>
-          <TypographyBorderedItem>{t("experience")}</TypographyBorderedItem>
-          <TypographyBorderedItem>{t("mediation")}</TypographyBorderedItem>
-        </ul>
-      </Container>
+      <AchievementsSection />
 
       <DirectionsSection />
+
       <CustomerIndustriesSection />
+
       <ConsultationForm />
 
       <AboutSection />
+
       <ServicesSection />
+
       <CasesSection />
+
       <LibrarySection />
+
       <ContactsSection />
     </main>
   )

@@ -6,4 +6,5 @@ export const AppRoutes = {
   LIBRARY: "/#library",
   PROFILE: "/profile",
   CONTACTS: "/#contacts",
+  BOOK: "/#book",
 } as const
