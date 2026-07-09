@@ -14,7 +14,7 @@ export async function CustomerIndustriesSection() {
       </Typography> */}
       <SectionTitle>{t("customersTitle")}</SectionTitle>
 
-      <ul className="flex max-w-200 flex-wrap justify-center gap-4">
+      <ul className="flex flex-wrap justify-center gap-4">
         <IndustryChip>{t("customerIndustry1")}</IndustryChip>
         <IndustryChip>{t("customerIndustry2")}</IndustryChip>
         <IndustryChip>{t("customerIndustry3")}</IndustryChip>
