@@ -12,6 +12,13 @@
     "profile": "Личный кабинет",
     "contacts": "Контактная информация"
   },
+  "auth": {
+    "loginButton": "Войти",
+    "title": "Вход",
+    "usernamePlaceholder": "Логин",
+    "passwordPlaceholder": "Пароль",
+    "submit": "Войти"
+  },
   "main": {
     "namePart1": "Виктори",
     "namePart2": "я",

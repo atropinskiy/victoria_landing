@@ -67,7 +67,7 @@
 
   --card: var(--gray);
   --card-foreground: var(--ink);
-  --popover: #ffffff;
+  --popover: var(--cream);
   --popover-foreground: var(--ink);
 
   --primary: var(--burgundy);

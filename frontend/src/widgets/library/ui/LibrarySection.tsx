@@ -2,8 +2,7 @@ import { getTranslations } from "next-intl/server"
 import Image from "next/image"
 
 import { LIBRARY_ITEMS } from "@/widgets/library/config/library"
-import { AppRoutes } from "@/shared/config"
-import { Link } from "@/shared/i18n"
+import { LibraryLoginCta } from "@/widgets/library/ui/LibraryLoginCta"
 import {
   Carousel,
   CarouselContent,
@@ -45,21 +44,16 @@ export async function LibrarySection() {
         <CarouselPrevious
           className="-left-2 size-10 sm:-left-4 sm:size-12 lg:-left-8 lg:size-16"
           size="icon"
-          color="bg-primary/20 sm:bg-primary"
+          color="bg-primary/20 sm:bg-primary/80"
         />
         <CarouselNext
           className="-right-2 size-10 sm:-right-4 sm:size-12 lg:-right-8 lg:size-16"
           size="icon"
-          color="bg-primary/20 sm:bg-primary"
+          color="bg-primary/20 sm:bg-primary/80"
         />
       </Carousel>
 
-      <Typography color="burgundy" className="mt-14 font-bold">
-        {t("libraryCtaText")}{" "}
-        <Link href={AppRoutes.PROFILE} className="font-bold underline">
-          {t("libraryCtaLink")}
-        </Link>
-      </Typography>
+      <LibraryLoginCta />
     </Container>
   )
 }

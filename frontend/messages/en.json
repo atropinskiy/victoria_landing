@@ -12,6 +12,13 @@
     "profile": "Profile",
     "contacts": "Contact Information"
   },
+  "auth": {
+    "loginButton": "Login",
+    "title": "Login",
+    "usernamePlaceholder": "Username",
+    "passwordPlaceholder": "Password",
+    "submit": "Login"
+  },
   "main": {
     "namePart1": "Victori",
     "namePart2": "a",
