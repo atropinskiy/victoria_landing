@@ -17,7 +17,11 @@
     "title": "Вход",
     "usernamePlaceholder": "Логин",
     "passwordPlaceholder": "Пароль",
-    "submit": "Войти"
+    "submit": "Войти",
+    "loading": "Выполняется вход...",
+    "successTitle": "Вы успешно авторизованы",
+    "errorTitle": "Не удалось войти",
+    "errorDescription": "Проверьте логин или пароль"
   },
   "main": {
     "namePart1": "Виктори",

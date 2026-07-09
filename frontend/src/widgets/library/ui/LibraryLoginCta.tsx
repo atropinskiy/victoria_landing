@@ -19,7 +19,7 @@ export function LibraryLoginCta() {
         </button>
       </Typography>
 
-      <LoginModal open={open} onClose={setOpen} />
+      <LoginModal open={open} onClose={() => setOpen(false)} />
     </>
   )
 }

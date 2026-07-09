@@ -7,6 +7,7 @@ import { inter, ptSansCaption } from "@/app/fonts"
 import { QueryProvider } from "@/app/providers/QueryProvider"
 import { Footer } from "@/widgets/footer"
 import { Header } from "@/widgets/header"
+import { Toaster } from "@/shared/ui/sonner"
 
 import "../globals.css"
 
@@ -54,6 +55,7 @@ export default async function LocaleLayout({
           <NextIntlClientProvider messages={messages} locale={locale}>
             <Header />
             <div className="flex-1">{children}</div>
+            <Toaster />
             <Footer />
           </NextIntlClientProvider>
         </QueryProvider>

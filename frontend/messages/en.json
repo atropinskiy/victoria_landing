@@ -17,7 +17,11 @@
     "title": "Login",
     "usernamePlaceholder": "Username",
     "passwordPlaceholder": "Password",
-    "submit": "Login"
+    "submit": "Login",
+    "loading": "Logging in...",
+    "successTitle": "You have successfully logged in",
+    "errorTitle": "Login failed",
+    "errorDescription": "Check your username or password"
   },
   "main": {
     "namePart1": "Victori",

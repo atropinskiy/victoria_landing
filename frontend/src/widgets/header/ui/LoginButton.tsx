@@ -25,7 +25,7 @@ export function LoginButton() {
         {t("loginButton")}
       </Button>
 
-      <LoginModal open={open} onClose={setOpen} />
+      <LoginModal open={open} onClose={() => setOpen(false)} />
     </>
   )
 }
