@@ -3,19 +3,26 @@
 import type { SyntheticEvent } from "react"
 
 import { useTranslations } from "next-intl"
+import { Suspense } from "react"
 import { toast } from "sonner"
 
+import { ModalIds } from "@/shared/config"
+import { useModalParam } from "@/shared/lib/hooks"
 import { Button } from "@/shared/ui/button"
 import { Input } from "@/shared/ui/input"
 import { Modal } from "@/shared/ui/widgets"
 
-interface LoginModalProps {
-  open: boolean
-  onClose: () => void
+export function LoginModal() {
+  return (
+    <Suspense fallback={null}>
+      <LoginModalContent />
+    </Suspense>
+  )
 }
 
-export function LoginModal({ open, onClose }: LoginModalProps) {
+function LoginModalContent() {
   const t = useTranslations("auth")
+  const { isOpen, close } = useModalParam(ModalIds.LOGIN)
 
   const handleLogin = (e: SyntheticEvent) => {
     e.preventDefault()
@@ -23,13 +30,12 @@ export function LoginModal({ open, onClose }: LoginModalProps) {
       () =>
         new Promise<void>((resolve) =>
           setTimeout(() => {
-            onClose()
+            close()
             resolve()
           }, 2000)
         ),
       {
         loading: t("loading"),
-        position: "top-center",
         success: t("successTitle"),
         error: {
           message: t("errorTitle"),
@@ -41,8 +47,8 @@ export function LoginModal({ open, onClose }: LoginModalProps) {
 
   return (
     <Modal
-      open={open}
-      onClose={onClose}
+      open={isOpen}
+      onClose={close}
       title={t("title")}
       footer={
         <Button rounded="default" size="lg" form="login-form" onClick={handleLogin}>
