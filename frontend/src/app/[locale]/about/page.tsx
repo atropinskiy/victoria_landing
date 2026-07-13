@@ -24,7 +24,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
   return (
     <Container bg="secondary" className="gap-10">
-      <Button asChild variant="ghost" size="sm" className="-ml-3 self-start">
+      <Button asChild variant="plain" size="sm" className="-ml-3 self-start">
         <Link href="/">
           <ArrowLeft />
           {t("back")}

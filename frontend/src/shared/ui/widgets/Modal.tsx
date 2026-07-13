@@ -35,7 +35,7 @@ export function Modal({
         // onPointerDownOutside={(event) => event.preventDefault()}
       >
         <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
+          <DialogTitle className="pb-2">{title}</DialogTitle>
           {description && <DialogDescription>{description}</DialogDescription>}
         </DialogHeader>
 

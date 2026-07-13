@@ -1,16 +1,19 @@
 "use client"
 
-import type { SyntheticEvent } from "react"
+import type { LoginFormValues } from "@/features/auth/model/schema"
 
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { Suspense } from "react"
+import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
+import { loginSchema } from "@/features/auth/model/schema"
 import { ModalIds } from "@/shared/config"
 import { useModalParam } from "@/shared/lib/hooks"
 import { Button } from "@/shared/ui/button"
-import { Input } from "@/shared/ui/input"
-import { Modal } from "@/shared/ui/widgets"
+import { FieldGroup, FieldLegend } from "@/shared/ui/field"
+import { FormInput, FormPasswordInput, Modal } from "@/shared/ui/widgets"
 
 export function LoginModal() {
   return (
@@ -24,8 +27,15 @@ function LoginModalContent() {
   const t = useTranslations("auth")
   const { isOpen, close } = useModalParam(ModalIds.LOGIN)
 
-  const handleLogin = (e: SyntheticEvent) => {
-    e.preventDefault()
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  })
+
+  function onSubmit(data: LoginFormValues) {
     toast.promise(
       () =>
         new Promise<void>((resolve) =>
@@ -51,25 +61,30 @@ function LoginModalContent() {
       onClose={close}
       title={t("title")}
       footer={
-        <Button rounded="default" size="lg" form="login-form" onClick={handleLogin}>
+        <Button type="submit" rounded="default" size="lg" form="login-form">
           {t("submit")}
         </Button>
       }
     >
-      <form id="login-form" className="flex flex-col gap-4">
-        <Input
-          variant="light"
-          name="name"
-          placeholder={t("usernamePlaceholder")}
-          aria-label={t("usernamePlaceholder")}
-        />
-        <Input
-          variant="light"
-          name="password"
-          type="password"
-          placeholder={t("passwordPlaceholder")}
-          aria-label={t("passwordPlaceholder")}
-        />
+      <form id="login-form" onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <FieldGroup>
+          <FieldLegend className="sr-only">Login / Registration</FieldLegend>
+          <FormInput
+            name="username"
+            control={form.control}
+            variant="light"
+            autoComplete="username"
+            label={t("usernamePlaceholder")}
+          />
+          <FormPasswordInput
+            name="password"
+            control={form.control}
+            variant="light"
+            autoComplete="current-password"
+            label={t("passwordPlaceholder")}
+            toggleLabel={t("togglePassword")}
+          />
+        </FieldGroup>
       </form>
     </Modal>
   )

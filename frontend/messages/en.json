@@ -17,6 +17,7 @@
     "title": "Login",
     "usernamePlaceholder": "Username",
     "passwordPlaceholder": "Password",
+    "togglePassword": "Toggle password visibility",
     "submit": "Login",
     "loading": "Logging in...",
     "successTitle": "You have successfully logged in",

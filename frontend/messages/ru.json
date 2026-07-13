@@ -17,6 +17,7 @@
     "title": "Вход",
     "usernamePlaceholder": "Логин",
     "passwordPlaceholder": "Пароль",
+    "togglePassword": "Показать/скрыть пароль",
     "submit": "Войти",
     "loading": "Выполняется вход...",
     "successTitle": "Вы успешно авторизованы",
