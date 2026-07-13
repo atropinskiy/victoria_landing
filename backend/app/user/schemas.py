@@ -17,6 +17,7 @@ class UserRead(BaseModel):
     email: str | None
     username: str
     is_active: bool
+    role: str
 
     model_config = {"from_attributes": True}
 

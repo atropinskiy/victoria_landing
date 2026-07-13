@@ -1,16 +1,6 @@
-from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
-from app.core.database import Base, engine
 from app.user.router import auth_router, user_router
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-    yield
-
 
 app = FastAPI(
     title="Victoria Landing",
@@ -20,7 +10,6 @@ app = FastAPI(
         "и доступ к данным авторизованного пользователя."
     ),
     version="1.0.0",
-    lifespan=lifespan,
 )
 
 app.include_router(auth_router)
