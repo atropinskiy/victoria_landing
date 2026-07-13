@@ -1,6 +1,6 @@
 "use client"
 
-import type { LoginFormValues } from "@/features/auth/model/login-schema"
+import type { RegistrationFormValues } from "@/features/auth/model/registration-schema"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
@@ -8,7 +8,7 @@ import { Suspense, useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import { createLoginSchema } from "@/features/auth/model/login-schema"
+import { createRegistrationSchema } from "@/features/auth/model/registration-schema"
 import { ModalIds } from "@/shared/config"
 import { useModalParam } from "@/shared/lib/hooks"
 import { Button } from "@/shared/ui/button"
@@ -16,30 +16,31 @@ import { FieldGroup, FieldLegend } from "@/shared/ui/field"
 import { Typography } from "@/shared/ui/typography"
 import { FormInput, FormPasswordInput, Modal } from "@/shared/ui/widgets"
 
-export function LoginModal() {
+export function RegistrationModal() {
   return (
     <Suspense fallback={null}>
-      <LoginModalContent />
+      <RegistrationModalContent />
     </Suspense>
   )
 }
 
-function LoginModalContent() {
+function RegistrationModalContent() {
   const t = useTranslations("auth")
-  const { isOpen, close } = useModalParam(ModalIds.LOGIN)
-  const { open: openRegistration } = useModalParam(ModalIds.REGISTRATION)
+  const { isOpen, close } = useModalParam(ModalIds.REGISTRATION)
+  const { open: openLogin } = useModalParam(ModalIds.LOGIN)
 
-  const loginSchema = useMemo(() => createLoginSchema(t), [t])
+  const registrationSchema = useMemo(() => createRegistrationSchema(t), [t])
 
-  const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<RegistrationFormValues>({
+    resolver: zodResolver(registrationSchema),
     defaultValues: {
       username: "",
       password: "",
+      confirmPassword: "",
     },
   })
 
-  function onSubmit(data: LoginFormValues) {
+  function onSubmit(data: RegistrationFormValues) {
     toast.promise(
       () =>
         new Promise<void>((resolve) =>
@@ -49,11 +50,11 @@ function LoginModalContent() {
           }, 2000)
         ),
       {
-        loading: t("loading"),
-        success: t("successTitle"),
+        loading: t("registrationLoading"),
+        success: t("registrationSuccessTitle"),
         error: {
-          message: t("errorTitle"),
-          description: t("errorDescription"),
+          message: t("registrationErrorTitle"),
+          description: t("registrationErrorDescription"),
         },
       }
     )
@@ -63,7 +64,7 @@ function LoginModalContent() {
     <Modal
       open={isOpen}
       onClose={close}
-      title={t("title")}
+      title={t("registrationTitle")}
       footer={
         <div className="flex flex-1 flex-col items-center gap-4">
           <Button
@@ -71,13 +72,13 @@ function LoginModalContent() {
             type="submit"
             rounded="default"
             size="lg"
-            form="login-form"
+            form="registration-form"
           >
-            {t("submit")}
+            {t("registerLink")}
           </Button>
 
-          <Typography variant="bodyXs" className="text-muted-foreground">
-            {t("noAccountText")}{" "}
+          <Typography variant="bodyXs" className="text-muted-foreground text-center">
+            {t("hasAccountText")}{" "}
             <Typography
               color="burgundy"
               as="button"
@@ -85,15 +86,19 @@ function LoginModalContent() {
               variant="bodyXs"
               aria-haspopup="dialog"
               className="cursor-pointer underline"
-              onClick={openRegistration}
+              onClick={openLogin}
             >
-              {t("registerLink")}
+              {t("loginButton")}
             </Typography>
           </Typography>
         </div>
       }
     >
-      <form id="login-form" onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <form
+        id="registration-form"
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
         <FieldGroup>
           <FieldLegend className="sr-only">Login / Registration</FieldLegend>
           <FormInput
@@ -107,8 +112,16 @@ function LoginModalContent() {
             name="password"
             control={form.control}
             variant="light"
-            autoComplete="current-password"
+            autoComplete="new-password"
             label={t("passwordPlaceholder")}
+            toggleLabel={t("togglePassword")}
+          />
+          <FormPasswordInput
+            name="confirmPassword"
+            control={form.control}
+            variant="light"
+            autoComplete="new-password"
+            label={t("confirmPasswordPlaceholder")}
             toggleLabel={t("togglePassword")}
           />
         </FieldGroup>

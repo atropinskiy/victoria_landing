@@ -5,6 +5,7 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 
 import { inter, ptSansCaption } from "@/app/fonts"
 import { QueryProvider } from "@/app/providers/QueryProvider"
+import { AuthModals } from "@/features/auth"
 import { Footer } from "@/widgets/footer"
 import { Header } from "@/widgets/header"
 import { Toaster } from "@/shared/ui/sonner"
@@ -57,6 +58,7 @@ export default async function LocaleLayout({
             <div className="flex-1">{children}</div>
             <Toaster />
             <Footer />
+            <AuthModals />
           </NextIntlClientProvider>
         </QueryProvider>
       </body>

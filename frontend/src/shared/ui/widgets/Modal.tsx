@@ -35,13 +35,13 @@ export function Modal({
         // onPointerDownOutside={(event) => event.preventDefault()}
       >
         <DialogHeader>
-          <DialogTitle className="pb-2">{title}</DialogTitle>
+          <DialogTitle className="pb-4">{title}</DialogTitle>
           {description && <DialogDescription>{description}</DialogDescription>}
         </DialogHeader>
 
         {children}
 
-        {footer && <DialogFooter>{footer}</DialogFooter>}
+        {footer && <DialogFooter className="mt-1">{footer}</DialogFooter>}
       </DialogContent>
     </Dialog>
   )

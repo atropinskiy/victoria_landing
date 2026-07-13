@@ -15,14 +15,27 @@
   "auth": {
     "loginButton": "Login",
     "title": "Login",
+    "registrationTitle": "Registration",
     "usernamePlaceholder": "Username",
     "passwordPlaceholder": "Password",
+    "confirmPasswordPlaceholder": "Confirm password",
     "togglePassword": "Toggle password visibility",
     "submit": "Login",
+    "noAccountText": "Don't have an account?",
+    "registerLink": "Register",
+    "hasAccountText": "Already have an account?",
+    "usernameRequired": "Enter your username",
+    "passwordRequired": "Enter your password",
+    "confirmPasswordRequired": "Confirm your password",
+    "passwordMismatch": "Passwords do not match",
     "loading": "Logging in...",
     "successTitle": "You have successfully logged in",
     "errorTitle": "Login failed",
-    "errorDescription": "Check your username or password"
+    "errorDescription": "Check your username or password",
+    "registrationLoading": "Registering...",
+    "registrationSuccessTitle": "You have successfully registered",
+    "registrationErrorTitle": "Registration failed",
+    "registrationErrorDescription": "Check the entered data"
   },
   "main": {
     "namePart1": "Victori",

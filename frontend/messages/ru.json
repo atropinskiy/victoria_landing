@@ -15,14 +15,27 @@
   "auth": {
     "loginButton": "Войти",
     "title": "Вход",
+    "registrationTitle": "Регистрация",
     "usernamePlaceholder": "Логин",
     "passwordPlaceholder": "Пароль",
+    "confirmPasswordPlaceholder": "Повторите пароль",
     "togglePassword": "Показать/скрыть пароль",
     "submit": "Войти",
+    "noAccountText": "Нет аккаунта?",
+    "registerLink": "Зарегистрироваться",
+    "hasAccountText": "Уже есть аккаунт?",
+    "usernameRequired": "Введите имя пользователя",
+    "passwordRequired": "Введите пароль",
+    "confirmPasswordRequired": "Повторите пароль",
+    "passwordMismatch": "Пароли не совпадают",
     "loading": "Выполняется вход...",
     "successTitle": "Вы успешно авторизованы",
     "errorTitle": "Не удалось войти",
-    "errorDescription": "Проверьте логин или пароль"
+    "errorDescription": "Проверьте логин или пароль",
+    "registrationLoading": "Выполняется регистрация...",
+    "registrationSuccessTitle": "Вы успешно зарегистрированы",
+    "registrationErrorTitle": "Не удалось зарегистрироваться",
+    "registrationErrorDescription": "Проверьте введённые данные"
   },
   "main": {
     "namePart1": "Виктори",
