@@ -12,6 +12,7 @@ import { createRegistrationSchema } from "@/features/auth/model/registration-sch
 import { ModalIds } from "@/shared/config"
 import { useModalParam } from "@/shared/lib/hooks"
 import { Button } from "@/shared/ui/button"
+import { DialogFooter } from "@/shared/ui/dialog"
 import { FieldGroup, FieldLegend } from "@/shared/ui/field"
 import { Typography } from "@/shared/ui/typography"
 import { FormInput, FormPasswordInput, Modal } from "@/shared/ui/widgets"
@@ -40,7 +41,7 @@ function RegistrationModalContent() {
     },
   })
 
-  function onSubmit(data: RegistrationFormValues) {
+  function onSubmit(_data: RegistrationFormValues) {
     toast.promise(
       () =>
         new Promise<void>((resolve) =>
@@ -61,39 +62,7 @@ function RegistrationModalContent() {
   }
 
   return (
-    <Modal
-      open={isOpen}
-      onClose={close}
-      title={t("registrationTitle")}
-      footer={
-        <div className="flex flex-1 flex-col items-center gap-4">
-          <Button
-            className="self-stretch"
-            type="submit"
-            rounded="default"
-            size="lg"
-            form="registration-form"
-          >
-            {t("registerLink")}
-          </Button>
-
-          <Typography variant="bodyXs" className="text-muted-foreground text-center">
-            {t("hasAccountText")}{" "}
-            <Typography
-              color="burgundy"
-              as="button"
-              type="button"
-              variant="bodyXs"
-              aria-haspopup="dialog"
-              className="cursor-pointer underline"
-              onClick={openLogin}
-            >
-              {t("loginButton")}
-            </Typography>
-          </Typography>
-        </div>
-      }
-    >
+    <Modal open={isOpen} onClose={close} title={t("registrationTitle")}>
       <form
         id="registration-form"
         onSubmit={form.handleSubmit(onSubmit)}
@@ -126,6 +95,33 @@ function RegistrationModalContent() {
           />
         </FieldGroup>
       </form>
+
+      <DialogFooter className="mt-1 flex-1 flex-col items-center gap-4 sm:flex-col sm:justify-center">
+        <Button
+          className="self-stretch"
+          type="submit"
+          rounded="default"
+          size="lg"
+          form="registration-form"
+        >
+          {t("registerLink")}
+        </Button>
+
+        <Typography variant="bodyXs" className="text-muted-foreground text-center">
+          {t("hasAccountText")}{" "}
+          <Typography
+            color="burgundy"
+            as="button"
+            type="button"
+            variant="bodyXs"
+            aria-haspopup="dialog"
+            className="cursor-pointer underline"
+            onClick={openLogin}
+          >
+            {t("loginButton")}
+          </Typography>
+        </Typography>
+      </DialogFooter>
     </Modal>
   )
 }
