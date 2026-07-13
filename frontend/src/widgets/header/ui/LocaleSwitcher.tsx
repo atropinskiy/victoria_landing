@@ -28,7 +28,6 @@ export function LocaleSwitcher() {
       size="sm"
       onClick={toggle}
       disabled={isPending}
-      // className={isPending ? "opacity-40" : "opacity-100"}
       className="bg-background"
     >
       {locale.toUpperCase()}

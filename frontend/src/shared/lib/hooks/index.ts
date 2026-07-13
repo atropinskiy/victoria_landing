@@ -1,0 +1,1 @@
+export { useModalParam } from "./useModalParam"

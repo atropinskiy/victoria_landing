@@ -7,6 +7,11 @@ const withNextIntl = createNextIntlPlugin("./src/shared/i18n/request.ts")
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  experimental: {
+    webpackMemoryOptimizations: true,
+    preloadEntriesOnStart: false,
+  },
+
   images: {
     formats: ["image/avif", "image/webp"],
   },

@@ -27,7 +27,7 @@ export function ConsultationForm() {
         id="book"
         variant="accent"
         className={cn(
-          "self-center py-4 opacity-0 transition-opacity duration-500 sm:fixed sm:right-6 sm:bottom-6 sm:z-40 sm:mt-0 sm:max-w-80 sm:self-auto",
+          "w-full py-4 opacity-0 transition-opacity duration-500 sm:fixed sm:right-6 sm:bottom-6 sm:z-40 sm:mt-0 sm:w-auto sm:max-w-80",
           visible && "opacity-100"
         )}
       >
@@ -67,7 +67,7 @@ export function ConsultationForm() {
               placeholder={t("messagePlaceholder")}
               aria-label={t("messagePlaceholder")}
             />
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <Checkbox id="consultation-consent" className="border-cream/60" />
                 <label htmlFor="consultation-consent" className="text-cream text-xs">
