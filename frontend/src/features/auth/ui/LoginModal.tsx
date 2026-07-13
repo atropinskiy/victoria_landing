@@ -83,7 +83,7 @@ function LoginModalContent() {
         </FieldGroup>
       </form>
 
-      <DialogFooter className="mt-1 flex-1 flex-col items-center gap-4 sm:flex-col sm:justify-center">
+      <DialogFooter className="mt-1 flex-1 flex-col items-center gap-5 sm:flex-col sm:justify-center">
         <Button
           className="self-stretch"
           type="submit"
