@@ -32,7 +32,7 @@ export function Modal({
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent
         showCloseButton={showCloseButton}
-        onPointerDownOutside={(event) => event.preventDefault()}
+        // onPointerDownOutside={(event) => event.preventDefault()}
       >
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
