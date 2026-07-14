@@ -12,6 +12,11 @@ logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
+
+# Глушим сторонние логгеры — оставляем только наш victoria
+for _noisy in ("uvicorn.access", "sqlalchemy.engine", "sqlalchemy"):
+    logging.getLogger(_noisy).setLevel(logging.WARNING)
+
 logger = logging.getLogger("victoria")
 
 
