@@ -14,9 +14,11 @@
   },
   "auth": {
     "loginButton": "Login",
+    "logoutButton": "Logout",
     "title": "Login",
     "registrationTitle": "Registration",
     "usernamePlaceholder": "Username",
+    "emailPlaceholder": "Email (optional)",
     "passwordPlaceholder": "Password",
     "confirmPasswordPlaceholder": "Confirm password",
     "togglePassword": "Toggle password visibility",
@@ -24,9 +26,10 @@
     "noAccountText": "Don't have an account?",
     "registerLink": "Register",
     "hasAccountText": "Already have an account?",
-    "usernameRequired": "Enter your username",
-    "passwordRequired": "Enter your password",
+    "usernameMinLength": "Username must be at least 3 characters",
+    "passwordMinLength": "Password must be at least 8 characters",
     "confirmPasswordRequired": "Confirm your password",
+    "emailInvalid": "Enter a valid email",
     "passwordMismatch": "Passwords do not match",
     "loading": "Logging in...",
     "successTitle": "You have successfully logged in",
@@ -35,7 +38,10 @@
     "registrationLoading": "Registering...",
     "registrationSuccessTitle": "You have successfully registered",
     "registrationErrorTitle": "Registration failed",
-    "registrationErrorDescription": "Check the entered data"
+    "registrationErrorDescription": "Check the entered data",
+    "logoutLoading": "Logging out...",
+    "logoutSuccessTitle": "You have successfully logged out",
+    "logoutErrorTitle": "Logout failed"
   },
   "main": {
     "namePart1": "Victori",

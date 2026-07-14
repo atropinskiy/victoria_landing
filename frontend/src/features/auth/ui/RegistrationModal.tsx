@@ -8,7 +8,9 @@ import { Suspense, useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
+import { useRegister } from "@/features/auth"
 import { createRegistrationSchema } from "@/features/auth/model/registration-schema"
+import type { ApiError } from "@/shared/api"
 import { ModalIds } from "@/shared/config"
 import { useModalParam } from "@/shared/lib/hooks"
 import { Button } from "@/shared/ui/button"
@@ -30,33 +32,34 @@ function RegistrationModalContent() {
   const { isOpen, close } = useModalParam(ModalIds.REGISTRATION)
   const { open: openLogin } = useModalParam(ModalIds.LOGIN)
 
+  const { mutateAsync: register, isPending } = useRegister()
+
   const registrationSchema = useMemo(() => createRegistrationSchema(t), [t])
 
   const form = useForm<RegistrationFormValues>({
     resolver: zodResolver(registrationSchema),
     defaultValues: {
       username: "",
+      email: "",
       password: "",
       confirmPassword: "",
     },
   })
 
-  function onSubmit(_data: RegistrationFormValues) {
+  function onSubmit({ email, username, password }: RegistrationFormValues) {
     toast.promise(
       () =>
-        new Promise<void>((resolve) =>
-          setTimeout(() => {
-            close()
-            resolve()
-          }, 2000)
-        ),
+        register({ username, password, email: email || undefined }).then(() => {
+          close()
+          form.reset()
+        }),
       {
         loading: t("registrationLoading"),
         success: t("registrationSuccessTitle"),
-        error: {
+        error: (error: ApiError) => ({
           message: t("registrationErrorTitle"),
-          description: t("registrationErrorDescription"),
-        },
+          description: error.message || t("registrationErrorDescription"),
+        }),
       }
     )
   }
@@ -76,6 +79,14 @@ function RegistrationModalContent() {
             variant="light"
             autoComplete="username"
             label={t("usernamePlaceholder")}
+          />
+          <FormInput
+            name="email"
+            control={form.control}
+            variant="light"
+            type="email"
+            autoComplete="email"
+            label={t("emailPlaceholder")}
           />
           <FormPasswordInput
             name="password"
@@ -103,6 +114,7 @@ function RegistrationModalContent() {
           rounded="default"
           size="lg"
           form="registration-form"
+          disabled={isPending}
         >
           {t("registerLink")}
         </Button>

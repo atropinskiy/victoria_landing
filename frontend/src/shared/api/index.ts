@@ -1,5 +1,21 @@
 import { BASE_URL } from "@/shared/config"
-import { getAuthToken } from "@/shared/lib/auth"
+import { getAuthToken, removeAuthToken } from "@/shared/lib/auth"
+
+interface ApiErrorResponse {
+  success: false
+  message: string
+  data: null
+}
+
+export class ApiError extends Error {
+  status: number
+
+  constructor(message: string, status: number) {
+    super(message)
+    this.name = "ApiError"
+    this.status = status
+  }
+}
 
 async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const token = getAuthToken()
@@ -15,10 +31,12 @@ async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
 
   if (!response.ok) {
     if (response.status === 401) {
+      removeAuthToken()
       // TODO: What should we do if there is an authorization error?
     }
 
-    throw new Error(`API error: ${response.status} ${response.statusText}`)
+    const body = (await response.json().catch(() => null)) as ApiErrorResponse | null
+    throw new ApiError(body?.message ?? "", response.status)
   }
 
   return response.json() as Promise<T>

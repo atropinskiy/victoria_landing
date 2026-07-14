@@ -10,13 +10,7 @@ interface ModalProps {
   children?: ReactNode
 }
 
-export function Modal({
-  open,
-  onClose,
-  title,
-  showCloseButton = true,
-  children,
-}: ModalProps) {
+export function Modal({ open, onClose, title, showCloseButton = true, children }: ModalProps) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent
@@ -24,7 +18,7 @@ export function Modal({
         // onPointerDownOutside={(event) => event.preventDefault()}
       >
         <DialogHeader>
-          <DialogTitle className="pb-4">{title}</DialogTitle>
+          <DialogTitle className="pb-5">{title}</DialogTitle>
         </DialogHeader>
 
         {children}

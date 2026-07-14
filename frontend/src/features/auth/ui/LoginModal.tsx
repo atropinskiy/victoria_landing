@@ -8,7 +8,9 @@ import { Suspense, useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
+import { useLogin } from "@/features/auth"
 import { createLoginSchema } from "@/features/auth/model/login-schema"
+import type { ApiError } from "@/shared/api"
 import { ModalIds } from "@/shared/config"
 import { useModalParam } from "@/shared/lib/hooks"
 import { Button } from "@/shared/ui/button"
@@ -32,30 +34,30 @@ function LoginModalContent() {
 
   const loginSchema = useMemo(() => createLoginSchema(t), [t])
 
+  const { mutateAsync: login } = useLogin()
+
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: "",
+      login: "",
       password: "",
     },
   })
 
-  function onSubmit(_data: LoginFormValues) {
+  function onSubmit(data: LoginFormValues) {
     toast.promise(
       () =>
-        new Promise<void>((resolve) =>
-          setTimeout(() => {
-            close()
-            resolve()
-          }, 2000)
-        ),
+        login(data).then(() => {
+          close()
+          form.reset()
+        }),
       {
         loading: t("loading"),
         success: t("successTitle"),
-        error: {
+        error: (error: ApiError) => ({
           message: t("errorTitle"),
-          description: t("errorDescription"),
-        },
+          description: error.message || t("errorDescription"),
+        }),
       }
     )
   }
@@ -66,7 +68,7 @@ function LoginModalContent() {
         <FieldGroup>
           <FieldLegend className="sr-only">Login / Registration</FieldLegend>
           <FormInput
-            name="username"
+            name="login"
             control={form.control}
             variant="light"
             autoComplete="username"

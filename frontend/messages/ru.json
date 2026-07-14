@@ -14,9 +14,11 @@
   },
   "auth": {
     "loginButton": "Войти",
+    "logoutButton": "Выйти",
     "title": "Вход",
     "registrationTitle": "Регистрация",
     "usernamePlaceholder": "Логин",
+    "emailPlaceholder": "Email (необязательно)",
     "passwordPlaceholder": "Пароль",
     "confirmPasswordPlaceholder": "Повторите пароль",
     "togglePassword": "Показать/скрыть пароль",
@@ -24,9 +26,10 @@
     "noAccountText": "Нет аккаунта?",
     "registerLink": "Зарегистрироваться",
     "hasAccountText": "Уже есть аккаунт?",
-    "usernameRequired": "Введите имя пользователя",
-    "passwordRequired": "Введите пароль",
+    "usernameMinLength": "Логин должен содержать минимум 3 символа",
+    "passwordMinLength": "Пароль должен содержать минимум 8 символов",
     "confirmPasswordRequired": "Повторите пароль",
+    "emailInvalid": "Введите корректный email",
     "passwordMismatch": "Пароли не совпадают",
     "loading": "Выполняется вход...",
     "successTitle": "Вы успешно авторизованы",
@@ -35,7 +38,10 @@
     "registrationLoading": "Выполняется регистрация...",
     "registrationSuccessTitle": "Вы успешно зарегистрированы",
     "registrationErrorTitle": "Не удалось зарегистрироваться",
-    "registrationErrorDescription": "Проверьте введённые данные"
+    "registrationErrorDescription": "Проверьте введённые данные",
+    "logoutLoading": "Выполняется выход...",
+    "logoutSuccessTitle": "Вы успешно вышли из аккаунта",
+    "logoutErrorTitle": "Не удалось выйти"
   },
   "main": {
     "namePart1": "Виктори",
