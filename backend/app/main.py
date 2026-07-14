@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
+from app.core.logging import log_middleware
 from app.user.router import auth_router, user_router
 
 app = FastAPI(
@@ -11,6 +12,8 @@ app = FastAPI(
     ),
     version="1.0.0",
 )
+
+app.middleware("http")(log_middleware)
 
 app.include_router(auth_router)
 app.include_router(user_router)

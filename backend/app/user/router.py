@@ -86,7 +86,7 @@ async def login(data: UserLogin, db: AsyncSession = Depends(get_db)):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Неверный логин или пароль"
         )
-    token = create_access_token({"sub": user.username})
+    token = create_access_token({"sub": user.username, "role": user.role})
     return StatusResponse(
         success=True,
         message="Вход выполнен успешно",
