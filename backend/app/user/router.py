@@ -7,7 +7,7 @@ from app.core.security import create_access_token, verify_password
 from app.user import crud
 from app.user.deps import get_current_user, get_token_payload
 from app.user.models import User
-from app.user.schemas import TokenRead, UserCreate, UserLogin, UserRead
+from app.user.schemas import TokenRead, UserCreate, UserLogin, UserRead, UserWithToken
 
 auth_router = APIRouter(prefix="/auth", tags=["Авторизация"])
 user_router = APIRouter(prefix="/users", tags=["Пользователи"])
@@ -15,10 +15,10 @@ user_router = APIRouter(prefix="/users", tags=["Пользователи"])
 
 @auth_router.post(
     "/register",
-    response_model=StatusResponse[UserRead],
+    response_model=StatusResponse[UserWithToken],
     status_code=status.HTTP_201_CREATED,
     summary="Регистрация",
-    description="Создаёт нового пользователя. Username обязателен, email — нет.",
+    description="Создаёт нового пользователя и сразу возвращает JWT access token.",
 )
 async def register(data: UserCreate, db: AsyncSession = Depends(get_db)):
     if data.email and await crud.get_by_email(db, data.email):
@@ -30,8 +30,18 @@ async def register(data: UserCreate, db: AsyncSession = Depends(get_db)):
             status_code=400, detail="Пользователь с таким username уже существует"
         )
     user = await crud.create(db, data)
+    token = create_access_token({"sub": user.username, "role": user.role})
     return StatusResponse(
-        success=True, message="Пользователь зарегистрирован", data=user
+        success=True,
+        message="Пользователь зарегистрирован",
+        data=UserWithToken(
+            id=user.id,
+            email=user.email,
+            username=user.username,
+            is_active=user.is_active,
+            role=user.role,
+            access_token=token,
+        ),
     )
 
 
