@@ -27,7 +27,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   return (
     <main>
       <Container className="sm:items-center">
-        <div className="flex flex-col sm:max-w-130 lg:w-250 lg:max-w-250">
+        <div className="flex flex-col sm:max-w-130 lg:w-238 lg:max-w-238">
           <div className="flex flex-col-reverse items-center sm:flex-row sm:items-start sm:justify-end">
             <div
               className={cn(
@@ -77,7 +77,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               alt={t("alt")}
               width={1512}
               height={1734}
-              priority
+              preload
               sizes="(min-width: 1024px) 548px, (min-width: 640px) 420px, 100vw"
               className="-mx-4 -mt-14 h-auto w-[calc(100%+2rem)] max-w-none sm:mx-0 sm:w-105 lg:w-137"
             />

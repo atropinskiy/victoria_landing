@@ -17,7 +17,8 @@ export function LibraryLoginCta() {
 
 function LibraryLoginCtaContent() {
   const t = useTranslations("main")
-  const { open } = useModalParam(ModalIds.LOGIN)
+  const { open: openLogin } = useModalParam(ModalIds.LOGIN)
+  const { open: openRegistration } = useModalParam(ModalIds.REGISTRATION)
 
   return (
     <Typography color="burgundy" className="mt-14 font-bold">
@@ -28,9 +29,20 @@ function LibraryLoginCtaContent() {
         color="burgundy"
         aria-haspopup="dialog"
         className="cursor-pointer underline"
-        onClick={open}
+        onClick={openLogin}
       >
-        {t("libraryCtaLink")}
+        {t("libraryCtaLoginLink")}
+      </Typography>{" "}
+      {t("libraryCtaOr")}{" "}
+      <Typography
+        as="button"
+        type="button"
+        color="burgundy"
+        aria-haspopup="dialog"
+        className="cursor-pointer underline"
+        onClick={openRegistration}
+      >
+        {t("libraryCtaRegisterLink")}
       </Typography>
     </Typography>
   )

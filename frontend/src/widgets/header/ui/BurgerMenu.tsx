@@ -36,9 +36,9 @@ export function BurgerMenu() {
 
           <DrawerClose asChild>
             <Button
-              variant="ghost"
+              variant="plain"
               size="icon"
-              className="absolute top-3 right-4 sm:right-6 lg:right-8"
+              className="absolute top-5 right-4 sm:right-6 lg:right-8"
             >
               <XIcon className="size-8" />
               <span className="sr-only">Close</span>

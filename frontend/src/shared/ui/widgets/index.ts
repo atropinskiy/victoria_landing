@@ -1,3 +1,6 @@
 export { Container } from "./Container"
+export { FormInput } from "./FormInput"
+export { FormPasswordInput } from "./FormPasswordInput"
 export { Modal } from "./Modal"
+export { PasswordInput } from "./PasswordInput"
 export { SectionTitle } from "./SectionTitle"
