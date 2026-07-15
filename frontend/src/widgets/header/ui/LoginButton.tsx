@@ -1,20 +1,29 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import dynamic from "next/dynamic"
+import { Suspense } from "react"
 import { toast } from "sonner"
 
 import { useLogout, useMe } from "@/features/auth"
 import { ModalIds } from "@/shared/config"
 import { getAuthToken } from "@/shared/lib/auth"
-import { useModalParam } from "@/shared/lib/hooks"
+import { useHasMounted, useModalParam } from "@/shared/lib/hooks"
 import { Button } from "@/shared/ui/button"
+
+export function LoginButton() {
+  return (
+    <Suspense fallback={null}>
+      <LoginButtonContent />
+    </Suspense>
+  )
+}
 
 function LoginButtonContent() {
   const t = useTranslations("auth")
   const { open } = useModalParam(ModalIds.LOGIN)
 
-  const isAuthenticated = Boolean(getAuthToken())
+  const hasMounted = useHasMounted()
+  const isAuthenticated = hasMounted && Boolean(getAuthToken())
   const { isLoading } = useMe()
   const { mutateAsync: logout, isPending } = useLogout()
   const label = t(isAuthenticated ? "logoutButton" : "loginButton")
@@ -33,6 +42,8 @@ function LoginButtonContent() {
     }
   }
 
+  if (!hasMounted) return null
+
   return (
     <Button
       variant="ghost"
@@ -45,12 +56,4 @@ function LoginButtonContent() {
       {label}
     </Button>
   )
-}
-
-// ssr: false — компонент зависит от localStorage, серверу рендерить нечего
-// и незачем: без этого сервер и клиент разойдутся в hydration
-const LoginButtonLazy = dynamic(() => Promise.resolve(LoginButtonContent), { ssr: false })
-
-export function LoginButton() {
-  return <LoginButtonLazy />
 }

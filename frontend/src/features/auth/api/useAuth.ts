@@ -10,7 +10,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { AUTH_USER_QUERY_KEY } from "@/features/auth/config/queryKeys"
 import { api } from "@/shared/api"
-import { getAuthToken, removeAuthToken, setAuthToken } from "@/shared/lib/auth"
+import { removeAuthToken, setAuthToken } from "@/shared/lib/auth"
 
 export function useRegister() {
   const queryClient = useQueryClient()
@@ -54,7 +54,6 @@ export function useMe() {
   return useQuery({
     queryKey: AUTH_USER_QUERY_KEY,
     queryFn: () => api.get<GeneralResponse<User>>("/users/me"),
-    enabled: Boolean(getAuthToken()),
     retry: false,
   })
 }
