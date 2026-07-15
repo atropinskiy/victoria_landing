@@ -24,7 +24,7 @@ export function LocaleSwitcher() {
 
   return (
     <Button
-      variant="ghost"
+      variant="outline"
       size="sm"
       onClick={toggle}
       disabled={isPending}

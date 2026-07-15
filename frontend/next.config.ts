@@ -11,9 +11,8 @@ const nextConfig: NextConfig = {
     webpackMemoryOptimizations: true,
     preloadEntriesOnStart: false,
   },
-
   images: {
-    formats: ["image/avif", "image/webp"],
+    qualities: [75, 80, 85],
   },
   turbopack: {
     rules: {

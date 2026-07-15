@@ -46,7 +46,7 @@ function LoginButtonContent() {
 
   return (
     <Button
-      variant="ghost"
+      variant="outline"
       size="sm"
       disabled={isPending || isLoading}
       onClick={handleClick}
