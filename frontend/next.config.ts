@@ -8,7 +8,6 @@ const withNextIntl = createNextIntlPlugin("./src/shared/i18n/request.ts")
 const nextConfig: NextConfig = {
   output: "standalone",
   experimental: {
-    webpackMemoryOptimizations: true,
     preloadEntriesOnStart: false,
   },
   images: {
@@ -22,7 +21,7 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  typedRoutes: false,
+  typedRoutes: true,
 }
 
 export default withNextIntl(nextConfig)

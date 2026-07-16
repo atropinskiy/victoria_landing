@@ -1,10 +1,11 @@
 export const AppRoutes = {
-  ABOUT: "/#about",
+  HOME: "/",
+  ABOUT: { pathname: "/", hash: "about" },
   ABOUT_PAGE: "/about",
-  SERVICES: "/#services",
-  CASES: "/#cases",
-  LIBRARY: "/#library",
+  SERVICES: { pathname: "/", hash: "services" },
+  CASES: { pathname: "/", hash: "cases" },
+  LIBRARY: { pathname: "/", hash: "library" },
   PROFILE: "/profile",
-  CONTACTS: "/#contacts",
-  BOOK: "/#book",
+  CONTACTS: { pathname: "/", hash: "contacts" },
+  BOOK: { pathname: "/", hash: "book" },
 } as const

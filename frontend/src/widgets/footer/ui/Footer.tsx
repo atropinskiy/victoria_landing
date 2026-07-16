@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl"
 
 import { FOOTER_DOCUMENT_LINKS } from "@/widgets/footer/config/links"
+import { Link } from "@/shared/i18n"
 import { Typography } from "@/shared/ui/typography"
 import { Container } from "@/shared/ui/widgets"
 
@@ -14,7 +15,7 @@ export function Footer() {
 
         <div className="flex flex-col items-center">
           {FOOTER_DOCUMENT_LINKS.map(({ href, key }) => (
-            <a
+            <Link
               key={key}
               href={href}
               target="_blank"
@@ -22,7 +23,7 @@ export function Footer() {
               className="text-sm underline"
             >
               {t(key)}
-            </a>
+            </Link>
           ))}
         </div>
       </Container>

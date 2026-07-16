@@ -47,7 +47,7 @@ export function BurgerMenu() {
 
           <nav className="mt-16 flex flex-col gap-10">
             {NAV_LINKS.map(({ href, key, subKey }) => (
-              <Link key={href} href={href} onClick={() => setOpen(false)}>
+              <Link key={key} href={href} onClick={() => setOpen(false)}>
                 <Typography variant="menuItem" color="navy">
                   {t(key)}
                 </Typography>
