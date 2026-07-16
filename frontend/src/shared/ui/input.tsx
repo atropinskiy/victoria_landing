@@ -12,7 +12,7 @@ export const inputSurfaceVariants = {
 } as const
 
 const inputVariants = cva(
-  "w-full min-w-0 rounded-lg px-5 transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-2 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3",
+  "w-full min-w-0 rounded-sm px-5 transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-2 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3",
   {
     variants: {
       variant: {
@@ -27,7 +27,7 @@ const inputVariants = cva(
       },
       size: {
         default: "h-13 py-3 text-body-sm",
-        sm: "h-10 py-2 text-sm",
+        sm: "h-9 py-1.5 px-4 text-sm",
       },
     },
     defaultVariants: {

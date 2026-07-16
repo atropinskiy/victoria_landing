@@ -33,10 +33,9 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
 
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-sm: 0.225rem;
+  --radius-md: 0.375rem;
+  --radius-xl: 1rem;
 
   --font-sans: var(--font-sans);
   --font-heading: var(--font-heading);

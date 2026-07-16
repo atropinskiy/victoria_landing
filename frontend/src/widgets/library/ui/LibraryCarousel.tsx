@@ -34,7 +34,7 @@ export function LibraryCarousel() {
                 height={640}
                 quality={80}
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="aspect-3/4 w-full rounded-2xl object-cover"
+                className="aspect-3/4 w-full rounded-xl object-cover"
                 loading={index === 0 ? "eager" : "lazy"}
               />
               <Typography as="figcaption" variant="bodyLg" className="text-center">

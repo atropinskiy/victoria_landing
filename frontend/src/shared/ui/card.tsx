@@ -21,13 +21,13 @@ const cardVariants = cva(
           "bg-slate text-secondary-foreground ring-0 [&_[data-slot=typography]]:text-secondary-foreground",
       },
       rounded: {
-        default: "rounded-2xl *:[img:first-child]:rounded-t-2xl *:[img:last-child]:rounded-b-2xl",
-        none: "rounded-none",
+        rounded: "rounded-xl *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
+        default: "rounded-sm *:[img:first-child]:rounded-t-sm *:[img:last-child]:rounded-b-sm",
       },
     },
     defaultVariants: {
       variant: "default",
-      rounded: "none",
+      rounded: "default",
     },
   }
 )
@@ -55,7 +55,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card-header"
       className={cn(
-        "group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-xl px-(--card-spacing) text-xl font-bold uppercase has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-(--card-spacing)",
+        "group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-md px-(--card-spacing) text-xl font-bold uppercase has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-(--card-spacing)",
         className
       )}
       {...props}
@@ -127,7 +127,7 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card-footer"
       className={cn(
-        "bg-muted/50 flex items-center rounded-b-xl border-t p-(--card-spacing)",
+        "bg-muted/50 flex items-center rounded-b-md border-t p-(--card-spacing)",
         className
       )}
       {...props}
