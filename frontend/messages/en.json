@@ -10,7 +10,8 @@
     "cases": "Cases",
     "library": "Library",
     "profile": "Profile",
-    "contacts": "Contact Information"
+    "contacts": "Contact Information",
+    "admin": "Content management"
   },
   "auth": {
     "loginButton": "Login",
@@ -192,5 +193,14 @@
     "cookiePolicy": "Cookie Policy",
     "dataConsent": "Data Processing Consent"
   },
-  "content": {}
+  "admin": {
+    "sidebarTitle": "Content",
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "cases": "Cases",
+    "library": "Library",
+    "contacts": "Contacts",
+    "backToSite": "Back to site"
+  }
 }

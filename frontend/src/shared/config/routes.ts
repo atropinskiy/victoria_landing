@@ -8,4 +8,12 @@ export const AppRoutes = {
   PROFILE: "/profile",
   CONTACTS: { pathname: "/", hash: "contacts" },
   BOOK: { pathname: "/", hash: "book" },
+  ADMIN: {
+    HOME: "/admin",
+    ABOUT: "/admin/about",
+    SERVICES: "/admin/services",
+    CASES: "/admin/cases",
+    LIBRARY: "/admin/library",
+    CONTACTS: "/admin/contacts",
+  },
 } as const

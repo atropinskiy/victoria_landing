@@ -10,7 +10,8 @@
     "cases": "Кейсы",
     "library": "Библиотека",
     "profile": "Личный кабинет",
-    "contacts": "Контактная информация"
+    "contacts": "Контактная информация",
+    "admin": "Управление контентом"
   },
   "auth": {
     "loginButton": "Войти",
@@ -192,5 +193,14 @@
     "cookiePolicy": "Политика использования cookie",
     "dataConsent": "Согласие на обработку данных"
   },
-  "content": {}
+  "admin": {
+    "sidebarTitle": "Контент",
+    "home": "Главная",
+    "about": "Обо мне",
+    "services": "Услуги",
+    "cases": "Кейсы",
+    "library": "Библиотека",
+    "contacts": "Контакты",
+    "backToSite": "На сайт"
+  }
 }
