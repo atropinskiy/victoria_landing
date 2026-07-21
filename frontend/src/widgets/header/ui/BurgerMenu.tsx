@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 import { ADMIN_NAV_LINK, NAV_LINKS } from "@/widgets/header/config/routes"
+import { useMe } from "@/features/auth"
 import { Link } from "@/shared/i18n"
 import { Button } from "@/shared/ui/button"
 import { Drawer, DrawerClose, DrawerContent, DrawerTitle } from "@/shared/ui/drawer"
@@ -14,8 +15,10 @@ import { Typography } from "@/shared/ui/typography"
 export function BurgerMenu() {
   const [open, setOpen] = useState(false)
   const t = useTranslations("nav")
+  const { data } = useMe()
 
-  const isAdmin = true
+  const isAdmin = !!data
+
   return (
     <>
       <Button

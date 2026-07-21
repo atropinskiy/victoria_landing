@@ -1,6 +1,8 @@
 import { BASE_URL } from "@/shared/config"
 import { getAuthToken, removeAuthToken } from "@/shared/lib/auth"
 
+export type { components } from "./schema"
+
 interface ApiErrorResponse {
   success: false
   message: string

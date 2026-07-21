@@ -12,6 +12,7 @@
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
     "lint:fsd": "steiger ./src",
+    "gen:api": "openapi-typescript http://localhost:8001/openapi.json -o src/shared/api/schema.ts",
     "check": "npm run lint && npm run lint:fsd && npm run typecheck && npm run build",
     "clean": "rm -rf .next tsconfig.tsbuildinfo",
     "clean:full": "rm -rf .next node_modules tsconfig.tsbuildinfo package-lock.json && npm install"
@@ -65,6 +66,7 @@
     "eslint-config-next": "16.2.9",
     "eslint-config-prettier": "^10.1.8",
     "lint-staged": "^16.4.0",
+    "openapi-typescript": "^7.13.0",
     "prettier": "^3.9.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "steiger": "^0.5.13",
