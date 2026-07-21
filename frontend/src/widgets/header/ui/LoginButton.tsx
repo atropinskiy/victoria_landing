@@ -46,12 +46,12 @@ function LoginButtonContent() {
 
   return (
     <Button
-      variant="outline"
+      variant="glass"
       size="sm"
       disabled={isPending || isLoading}
       onClick={handleClick}
       aria-label={label}
-      className="bg-background h-9 disabled:opacity-100"
+      className="h-9"
     >
       {label}
     </Button>

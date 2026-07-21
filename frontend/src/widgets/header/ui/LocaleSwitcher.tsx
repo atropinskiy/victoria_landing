@@ -23,13 +23,7 @@ export function LocaleSwitcher() {
   }
 
   return (
-    <Button
-      variant="outline"
-      size="sm"
-      onClick={toggle}
-      disabled={isPending}
-      className="bg-background"
-    >
+    <Button variant="glass" size="sm" onClick={toggle} disabled={isPending}>
       {locale.toUpperCase()}
     </Button>
   )

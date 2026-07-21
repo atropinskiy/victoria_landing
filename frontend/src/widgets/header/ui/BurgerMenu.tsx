@@ -19,14 +19,14 @@ export function BurgerMenu() {
   return (
     <>
       <Button
-        variant="outline"
+        variant="glass"
         size="icon"
         onClick={(e) => {
           e.currentTarget.blur()
           setOpen(true)
         }}
         aria-label="Open menu"
-        className="bg-background h-9 w-11"
+        className="h-9 w-11"
       >
         <MenuIcon className="block size-auto" />
       </Button>
