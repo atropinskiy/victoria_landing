@@ -5,7 +5,7 @@ import { Container } from "@/shared/ui/widgets"
 
 export function Header() {
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-40 bg-transparent pr-(--removed-body-scroll-bar-size,0px)">
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-40 bg-transparent">
       <Container className="max-w-360 flex-row justify-end py-6">
         <div className="pointer-events-auto flex items-center gap-2">
           <LoginButton />

@@ -27,7 +27,7 @@ export function ConsultationForm() {
         id="book"
         variant="accent"
         className={cn(
-          "w-full py-4 opacity-0 transition-opacity duration-500 sm:fixed sm:right-[calc(1.5rem+var(--removed-body-scroll-bar-size,0px))] sm:bottom-6 sm:z-40 sm:mt-0 sm:w-auto sm:max-w-80",
+          "w-full py-4 opacity-0 transition-opacity duration-500 sm:fixed sm:right-6 sm:bottom-6 sm:z-40 sm:mt-0 sm:w-auto sm:max-w-80",
           visible && "opacity-100"
         )}
       >
