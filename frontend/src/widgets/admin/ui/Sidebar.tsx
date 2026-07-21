@@ -14,7 +14,7 @@ export function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="bg-accent flex w-16 shrink-0 flex-col gap-8 px-2 py-8 sm:w-60 sm:px-6">
+    <aside className="bg-accent flex w-16 shrink-0 flex-col gap-8 px-2 py-8 shadow-[6px_0_6px_-4px_rgba(0,0,0,0.3),10px_0_20px_-6px_rgba(0,0,0,0.25)] sm:w-60 sm:px-6">
       <Typography
         as="span"
         className="text-accent-foreground hidden text-lg font-bold tracking-wide uppercase sm:block"

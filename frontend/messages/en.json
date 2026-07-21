@@ -201,6 +201,7 @@
     "cases": "Cases",
     "library": "Library",
     "contacts": "Contacts",
-    "backToSite": "Back to site"
+    "backToSite": "Back to site",
+    "accessDenied": "Access denied"
   }
 }

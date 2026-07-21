@@ -201,6 +201,7 @@
     "cases": "Кейсы",
     "library": "Библиотека",
     "contacts": "Контакты",
-    "backToSite": "На сайт"
+    "backToSite": "На сайт",
+    "accessDenied": "Нет доступа"
   }
 }
