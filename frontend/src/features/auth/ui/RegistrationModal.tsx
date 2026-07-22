@@ -10,7 +10,6 @@ import { toast } from "sonner"
 
 import { useRegister } from "@/features/auth"
 import { createRegistrationSchema } from "@/features/auth/model/registration-schema"
-import type { ApiError } from "@/shared/api"
 import { ModalIds } from "@/shared/config"
 import { useModalParam } from "@/shared/lib/hooks"
 import { Button } from "@/shared/ui/button"
@@ -56,7 +55,7 @@ function RegistrationModalContent() {
       {
         loading: t("registrationLoading"),
         success: t("registrationSuccessTitle"),
-        error: (error: ApiError) => ({
+        error: (error) => ({
           message: t("registrationErrorTitle"),
           description: error.message || t("registrationErrorDescription"),
         }),

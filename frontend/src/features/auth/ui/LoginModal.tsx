@@ -10,7 +10,6 @@ import { toast } from "sonner"
 
 import { useLogin } from "@/features/auth"
 import { createLoginSchema } from "@/features/auth/model/login-schema"
-import type { ApiError } from "@/shared/api"
 import { ModalIds } from "@/shared/config"
 import { useModalParam } from "@/shared/lib/hooks"
 import { Button } from "@/shared/ui/button"
@@ -54,7 +53,7 @@ function LoginModalContent() {
       {
         loading: t("loading"),
         success: t("successTitle"),
-        error: (error: ApiError) => ({
+        error: (error) => ({
           message: t("errorTitle"),
           description: error.message || t("errorDescription"),
         }),
