@@ -15,6 +15,7 @@ if config.config_file_name is not None:
 from app.core.config import get_db_url
 from app.core.database import Base
 import app.user.models  # noqa: F401 — регистрирует модели в Base.metadata
+import app.services.models  # noqa: F401 — регистрирует модели в Base.metadata
 
 target_metadata = Base.metadata
 
