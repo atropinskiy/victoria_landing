@@ -31,8 +31,6 @@ class Services(Base):
     title_en: Mapped[str | None] = mapped_column(
         String, unique=True, index=True, nullable=True
     )
-    appr_title_ru: Mapped[str] = mapped_column(String, nullable=False)
-    appr_title_en: Mapped[str] = mapped_column(String, nullable=False)
     ru_descr: Mapped[str | None] = mapped_column(
         String, unique=True, index=False, nullable=True
     )

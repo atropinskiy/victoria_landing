@@ -3,7 +3,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from app.services.models import Categories, Services, Stages
 from app.services.schemas import (
-    Approach,
     Bilingual,
     CategoryCreate,
     CategoryRead,
@@ -45,10 +44,7 @@ def to_read(service: Services) -> ServiceRead:
         id=service.id,
         order=service.order,
         title=Bilingual(ru=service.title_ru, en=service.title_en),
-        approach=Approach(
-            title=Bilingual(ru=service.appr_title_ru, en=service.appr_title_en),
-            text=Bilingual(ru=service.ru_descr, en=service.en_descr),
-        ),
+        description=Bilingual(ru=service.ru_descr, en=service.en_descr),
         stages=[
             StageRead(
                 title=Bilingual(ru=stage.title_ru, en=stage.title_en),
@@ -85,10 +81,8 @@ async def create_service(db: AsyncSession, data: ServiceCreate) -> Services:
         order=data.order,
         title_ru=data.title.ru,
         title_en=data.title.en,
-        appr_title_ru=data.approach.title.ru,
-        appr_title_en=data.approach.title.en,
-        ru_descr=data.approach.text.ru,
-        en_descr=data.approach.text.en,
+        ru_descr=data.description.ru,
+        en_descr=data.description.en,
         stages=[
             Stages(
                 order=index,

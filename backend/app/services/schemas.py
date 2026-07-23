@@ -25,16 +25,11 @@ class StageRead(BaseModel):
     items: list[Bilingual]
 
 
-class Approach(BaseModel):
-    title: Bilingual
-    text: Bilingual
-
-
 class ServiceCreate(BaseModel):
     category_id: int
     order: int
     title: Bilingual
-    approach: Approach
+    description: Bilingual
     stages: list[StageCreate] = Field(default_factory=list)
 
 
@@ -42,7 +37,7 @@ class ServiceRead(BaseModel):
     id: int
     order: int
     title: Bilingual
-    approach: Approach
+    description: Bilingual
     stages: list[StageRead]
 
 
