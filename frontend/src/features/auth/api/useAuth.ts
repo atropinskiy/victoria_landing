@@ -18,7 +18,7 @@ export function useRegister() {
     onSuccess: (response) => {
       if (response.data) {
         setAuthToken(response.data.access_token)
-        queryClient.setQueryData(AUTH_USER_QUERY_KEY, response.data.user)
+        queryClient.setQueryData(AUTH_USER_QUERY_KEY, response.data)
       }
     },
   })
@@ -36,7 +36,7 @@ export function useLogin() {
     onSuccess: (response) => {
       if (response?.data) {
         setAuthToken(response.data.access_token)
-        queryClient.setQueryData(AUTH_USER_QUERY_KEY, response.data.user)
+        queryClient.setQueryData(AUTH_USER_QUERY_KEY, response.data)
       }
     },
   })

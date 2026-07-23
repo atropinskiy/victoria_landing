@@ -84,14 +84,183 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Список категорий
+         * @description Возвращает все категории услуг (id и название на русском/английском), отсортированные по id.
+         */
+        get: operations["get_categories_categories_get"];
+        put?: never;
+        /**
+         * Создать категорию
+         * @description Создаёт новую категорию услуг с названием на русском и английском.
+         */
+        post: operations["create_category_categories_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/categories/{category_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Удалить категорию
+         * @description Удаляет категорию по id. Услуги с ней больше не связаны, поэтому не затрагиваются. Если категория с таким id не найдена, возвращает 404.
+         */
+        delete: operations["delete_category_categories__category_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/services": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Список услуг
+         * @description Возвращает все услуги, отсортированные по полю order. У каждой услуги есть title и description (текст на русском/английском) и stages — этапы оказания услуги, каждый со своим заголовком и списком пунктов (items).
+         */
+        get: operations["get_services_services_get"];
+        put?: never;
+        /**
+         * Создать услугу
+         * @description Создаёт услугу вместе с этапами (stages) и их пунктами (items). order услуге присваивается автоматически — в конец списка, передавать его самостоятельно не нужно. Порядок этапов в переданном массиве определяет их порядковый номер (order) — тоже присваивается автоматически по позиции в списке.
+         */
+        post: operations["create_service_services_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/services/{service_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Удалить услугу
+         * @description Удаляет услугу по id. Каскадно удаляются все её этапы (stages) — отдельно чистить их не нужно. Другие услуги не затрагиваются. Если услуга с таким id не найдена, возвращает 404.
+         */
+        delete: operations["delete_service_services__service_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** Bilingual */
+        Bilingual: {
+            /** Ru */
+            ru: string;
+            /** En */
+            en: string;
+        };
+        /** CategoryCreate */
+        CategoryCreate: {
+            title: components["schemas"]["Bilingual"];
+        };
+        /** CategoryRead */
+        CategoryRead: {
+            /** Id */
+            id: number;
+            title: components["schemas"]["Bilingual"];
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** ServiceCreate */
+        ServiceCreate: {
+            title: components["schemas"]["Bilingual"];
+            description: components["schemas"]["Bilingual"];
+            /** Stages */
+            stages?: components["schemas"]["StageCreate"][];
+        };
+        /** ServiceRead */
+        ServiceRead: {
+            /** Id */
+            id: number;
+            /** Order */
+            order: number;
+            title: components["schemas"]["Bilingual"];
+            description: components["schemas"]["Bilingual"];
+            /** Stages */
+            stages: components["schemas"]["StageRead"][];
+        };
+        /** StageCreate */
+        StageCreate: {
+            title: components["schemas"]["Bilingual"];
+            /** Items */
+            items?: components["schemas"]["Bilingual"][];
+        };
+        /** StageRead */
+        StageRead: {
+            title: components["schemas"]["Bilingual"];
+            /** Items */
+            items: components["schemas"]["Bilingual"][];
+        };
+        /** StatusResponse[CategoryRead] */
+        StatusResponse_CategoryRead_: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            data?: components["schemas"]["CategoryRead"] | null;
+        };
+        /** StatusResponse[NoneType] */
+        StatusResponse_NoneType_: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            /** Data */
+            data?: null;
+        };
+        /** StatusResponse[ServiceRead] */
+        StatusResponse_ServiceRead_: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            data?: components["schemas"]["ServiceRead"] | null;
         };
         /** StatusResponse[TokenRead] */
         StatusResponse_TokenRead_: {
@@ -115,6 +284,41 @@ export interface components {
             message: string;
             data?: components["schemas"]["UserRead"] | null;
         };
+        /** StatusResponse[UserWithToken] */
+        StatusResponse_UserWithToken_: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            data?: components["schemas"]["UserWithToken"] | null;
+        };
+        /** StatusResponse[list[CategoryRead]] */
+        StatusResponse_list_CategoryRead__: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            /** Data */
+            data?: components["schemas"]["CategoryRead"][] | null;
+        };
+        /** StatusResponse[list[ServiceRead]] */
+        StatusResponse_list_ServiceRead__: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            /** Data */
+            data?: components["schemas"]["ServiceRead"][] | null;
+        };
         /** TokenRead */
         TokenRead: {
             /** Access Token */
@@ -124,7 +328,6 @@ export interface components {
              * @default bearer
              */
             token_type: string;
-            user: components["schemas"]["UserRead"];
         };
         /** UserCreate */
         UserCreate: {
@@ -171,6 +374,26 @@ export interface components {
             /** Role */
             role: string;
         };
+        /** UserWithToken */
+        UserWithToken: {
+            /** Id */
+            id: number;
+            /** Email */
+            email: string | null;
+            /** Username */
+            username: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Role */
+            role: string;
+            /** Access Token */
+            access_token: string;
+            /**
+             * Token Type
+             * @default bearer
+             */
+            token_type: string;
+        };
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -212,7 +435,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["StatusResponse_TokenRead_"];
+                    "application/json": components["schemas"]["StatusResponse_UserWithToken_"];
                 };
             };
             /** @description Validation Error */
@@ -304,6 +527,188 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StatusResponse_UserRead_"];
+                };
+            };
+        };
+    };
+    get_categories_categories_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_list_CategoryRead__"];
+                };
+            };
+        };
+    };
+    create_category_categories_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CategoryCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_CategoryRead_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_category_categories__category_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                category_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_NoneType_"];
+                };
+            };
+            /** @description Категория не найдена */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_services_services_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_list_ServiceRead__"];
+                };
+            };
+        };
+    };
+    create_service_services_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ServiceCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_ServiceRead_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_service_services__service_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                service_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_NoneType_"];
+                };
+            };
+            /** @description Услуга не найдена */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
