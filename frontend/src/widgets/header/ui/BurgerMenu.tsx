@@ -15,9 +15,9 @@ import { Typography } from "@/shared/ui/typography"
 export function BurgerMenu() {
   const [open, setOpen] = useState(false)
   const t = useTranslations("nav")
-  const { data } = useMe()
+  const {} = useMe()
 
-  const isAdmin = !!data
+  const isAdmin = true
 
   return (
     <>

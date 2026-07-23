@@ -113,6 +113,8 @@
     "serviceDivorceStage3Item1": "Судебный процесс",
     "serviceDivorceStage3Item2": "Исполнительное производство",
     "serviceMediationTitle": "Медиация",
+    "serviceMediationApproachTitle": "Особенность моего подхода:",
+    "serviceMediationApproachText": "Медиация — это конфиденциальные переговоры с участием независимого посредника, который помогает сторонам услышать друг друга и найти решение без обращения в суд. Такой подход сохраняет отношения, экономит время и оставляет результат под контролем самих сторон.",
     "serviceMediationStage1Title": "1 этап",
     "serviceMediationStage1Item1": "Стартовая сессия",
     "serviceMediationStage1Item2": "Сессия – обсуждение обеих сторон конфликта",

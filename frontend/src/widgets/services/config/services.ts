@@ -64,6 +64,10 @@ export const SERVICES: readonly Service[] = [
   },
   {
     titleKey: "serviceMediationTitle",
+    approach: {
+      titleKey: "serviceMediationApproachTitle",
+      textKey: "serviceMediationApproachText",
+    },
     stages: [
       {
         titleKey: "serviceMediationStage1Title",

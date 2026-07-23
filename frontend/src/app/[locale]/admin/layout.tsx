@@ -18,7 +18,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     <AdminGuard>
       <div className="flex h-full flex-1">
         <Sidebar />
-        <Container className="mt-20">{children}</Container>
+        <Container className="mt-10">{children}</Container>
       </div>
     </AdminGuard>
   )

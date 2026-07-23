@@ -4,9 +4,8 @@ import { NextIntlClientProvider } from "next-intl"
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server"
 
 import { inter, ptSansCaption } from "@/app/fonts"
-import { QueryProvider } from "@/app/providers/QueryProvider"
-import { AuthModals } from "@/features/auth"
 import { Header } from "@/widgets/header"
+import { AuthModals } from "@/features/auth"
 import { Toaster } from "@/shared/ui/sonner"
 
 import "../globals.css"
@@ -51,14 +50,12 @@ export default async function LocaleLayout({
       className={`${ptSansCaption.variable} ${inter.variable} overscroll-none scroll-smooth`}
     >
       <body className="flex min-h-screen flex-col antialiased">
-        <QueryProvider>
-          <NextIntlClientProvider messages={messages} locale={locale}>
-            <Header />
-            <div className="flex flex-1 flex-col">{children}</div>
-            <Toaster />
-            <AuthModals />
-          </NextIntlClientProvider>
-        </QueryProvider>
+        <NextIntlClientProvider messages={messages} locale={locale}>
+          <Header />
+          <div className="flex flex-1 flex-col">{children}</div>
+          <Toaster />
+          <AuthModals />
+        </NextIntlClientProvider>
       </body>
     </html>
   )

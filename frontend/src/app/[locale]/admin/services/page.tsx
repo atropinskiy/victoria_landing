@@ -1,5 +1,7 @@
 import { setRequestLocale } from "next-intl/server"
 
+import { ServicesList } from "@/widgets/admin"
+
 export default async function AdminServicesPage({
   params,
 }: {
@@ -9,5 +11,9 @@ export default async function AdminServicesPage({
 
   setRequestLocale(locale)
 
-  return <div></div>
+  return (
+    <div>
+      <ServicesList />
+    </div>
+  )
 }
