@@ -4,10 +4,23 @@
 
 ## База данных
 
-В файле `backend/.env` переключается через `USE_SQLITE`:
+По умолчанию `docker compose up` поднимает и `app`, и `db` (PostgreSQL 16 в контейнере) —
+чтобы локально не ловить расхождения поведения между SQLite и PostgreSQL.
 
-- `USE_SQLITE=true` — SQLite (файл `backend/app.db`, для локальной разработки)
-- `USE_SQLITE=false` — PostgreSQL (настройки подключения там же в `.env`)
+Настройки подключения лежат в двух файлах (оба в `.gitignore`, шаблон — `backend/.env.example`):
+
+- `backend/.env.local` — локальная PostgreSQL в контейнере (`DB_HOST=db`)
+- `backend/.env.server` — боевая база на сервере (`DB_HOST=161.104.17.173`)
+
+Какой из них подключить, выбирает переменная `APP_ENV` (по умолчанию `local`):
+
+```bash
+# Локальная база в контейнере (по умолчанию)
+docker compose up -d --build
+
+# Подключиться к базе на сервере
+APP_ENV=server docker compose up -d --build
+```
 
 ## Миграции
 

@@ -17,12 +17,11 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
-    with op.batch_alter_table('stages', schema=None) as batch_op:
-        batch_op.add_column(sa.Column('ru_descr', sa.String(), nullable=True))
-        batch_op.add_column(sa.Column('en_descr', sa.String(), nullable=True))
+    # no-op: колонки 'ru_descr'/'en_descr' уже создаются в 972b6cf434ce_stages_descr_to_array —
+    # задублировались здесь из-за рассинхронизации локальной SQLite-базы с историей миграций
+    pass
 
 
 def downgrade() -> None:
-    with op.batch_alter_table('stages', schema=None) as batch_op:
-        batch_op.drop_column('en_descr')
-        batch_op.drop_column('ru_descr')
+    # no-op: см. upgrade
+    pass

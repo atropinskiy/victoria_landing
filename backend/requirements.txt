@@ -2,7 +2,6 @@ fastapi
 alembic
 uvicorn[standard]
 sqlalchemy
-aiosqlite
 asyncpg
 pydantic-settings
 passlib[bcrypt]
