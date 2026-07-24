@@ -12,8 +12,8 @@ const typographyVariants = cva("font-heading", {
       h2: "text-[28px] sm:text-[36px] leading-tight font-bold tracking-normal uppercase",
       h3: "text-[24px] sm:text-[28px] leading-tight font-bold tracking-normal uppercase",
       h4: "text-[20px] sm:text-[24px] leading-tight font-bold tracking-normal uppercase",
-      h5: "text-[18px] sm:text-[20px] leading-tight font-bold tracking-normal capitalize",
-      h6: "text-[16px] sm:text-[20px] leading-tight font-bold tracking-normal capitalize",
+      h5: "text-[16px] sm:text-[18px] leading-tight font-normal tracking-normal capitalize",
+      h6: "text-[14px] sm:text-[16px] leading-tight font-semibold tracking-normal capitalize",
 
       menuItem: "text-[24px] leading-snug font-bold uppercase",
 

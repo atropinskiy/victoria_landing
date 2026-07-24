@@ -84,50 +84,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/categories": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Список категорий
-         * @description Возвращает все категории услуг (id и название на русском/английском), отсортированные по id.
-         */
-        get: operations["get_categories_categories_get"];
-        put?: never;
-        /**
-         * Создать категорию
-         * @description Создаёт новую категорию услуг с названием на русском и английском.
-         */
-        post: operations["create_category_categories_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/categories/{category_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /**
-         * Удалить категорию
-         * @description Удаляет категорию по id. Услуги с ней больше не связаны, поэтому не затрагиваются. Если категория с таким id не найдена, возвращает 404.
-         */
-        delete: operations["delete_category_categories__category_id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/services": {
         parameters: {
             query?: never;
@@ -137,13 +93,13 @@ export interface paths {
         };
         /**
          * Список услуг
-         * @description Возвращает все услуги, отсортированные по полю order. У каждой услуги есть title и description (текст на русском/английском) и stages — этапы оказания услуги, каждый со своим заголовком и списком пунктов (items).
+         * @description Возвращает все услуги вместе с этапами (stages) и их пунктами (items), отсортированные по полю order.
          */
         get: operations["get_services_services_get"];
         put?: never;
         /**
          * Создать услугу
-         * @description Создаёт услугу вместе с этапами (stages) и их пунктами (items). order услуге присваивается автоматически — в конец списка, передавать его самостоятельно не нужно. Порядок этапов в переданном массиве определяет их порядковый номер (order) — тоже присваивается автоматически по позиции в списке.
+         * @description Создаёт услугу вместе с этапами (stages) и их пунктами (items). order передавать не нужно — новая услуга автоматически становится последней в списке. Порядок этапов в переданном массиве определяет их порядковый номер — присваивается автоматически по позиции в списке.
          */
         post: operations["create_service_services_post"];
         delete?: never;
@@ -164,7 +120,7 @@ export interface paths {
         post?: never;
         /**
          * Удалить услугу
-         * @description Удаляет услугу по id. Каскадно удаляются все её этапы (stages) — отдельно чистить их не нужно. Другие услуги не затрагиваются. Если услуга с таким id не найдена, возвращает 404.
+         * @description Удаляет услугу по id. Каскадно удаляются все её этапы (stages) — отдельно чистить их не нужно. Если услуга с таким id не найдена, возвращает 404.
          */
         delete: operations["delete_service_services__service_id__delete"];
         options?: never;
@@ -182,16 +138,6 @@ export interface components {
             ru: string;
             /** En */
             en: string;
-        };
-        /** CategoryCreate */
-        CategoryCreate: {
-            title: components["schemas"]["Bilingual"];
-        };
-        /** CategoryRead */
-        CategoryRead: {
-            /** Id */
-            id: number;
-            title: components["schemas"]["Bilingual"];
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -227,17 +173,6 @@ export interface components {
             title: components["schemas"]["Bilingual"];
             /** Items */
             items: components["schemas"]["Bilingual"][];
-        };
-        /** StatusResponse[CategoryRead] */
-        StatusResponse_CategoryRead_: {
-            /** Success */
-            success: boolean;
-            /**
-             * Message
-             * @default
-             */
-            message: string;
-            data?: components["schemas"]["CategoryRead"] | null;
         };
         /** StatusResponse[NoneType] */
         StatusResponse_NoneType_: {
@@ -294,18 +229,6 @@ export interface components {
              */
             message: string;
             data?: components["schemas"]["UserWithToken"] | null;
-        };
-        /** StatusResponse[list[CategoryRead]] */
-        StatusResponse_list_CategoryRead__: {
-            /** Success */
-            success: boolean;
-            /**
-             * Message
-             * @default
-             */
-            message: string;
-            /** Data */
-            data?: components["schemas"]["CategoryRead"][] | null;
         };
         /** StatusResponse[list[ServiceRead]] */
         StatusResponse_list_ServiceRead__: {
@@ -527,97 +450,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StatusResponse_UserRead_"];
-                };
-            };
-        };
-    };
-    get_categories_categories_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["StatusResponse_list_CategoryRead__"];
-                };
-            };
-        };
-    };
-    create_category_categories_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CategoryCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["StatusResponse_CategoryRead_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_category_categories__category_id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                category_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["StatusResponse_NoneType_"];
-                };
-            };
-            /** @description Категория не найдена */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

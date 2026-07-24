@@ -29,10 +29,13 @@ interface SortableListProps<T> {
   onReorder: (items: T[]) => void
   renderItem: (item: T) => ReactNode
   isSelected?: (item: T) => boolean
+  expandedId?: string | number | null
+  renderExpanded?: (item: T) => ReactNode
+  onDragStart?: () => void
 }
 
 const ROW_CLASSNAME =
-  "group flex touch-none items-center gap-3 border-b border-l-4 border-border border-l-transparent bg-white px-3 py-1.5 last:border-b-0 cursor-grab select-none active:cursor-grabbing"
+  "group flex touch-none items-center gap-3 bg-white px-3 py-1.5 cursor-grab select-none active:cursor-grabbing"
 
 function RowContent({ children, dimmed }: { children: ReactNode; dimmed?: boolean }) {
   return (
@@ -47,9 +50,11 @@ interface SortableRowProps {
   id: string | number
   children: ReactNode
   selected?: boolean
+  expanded?: boolean
+  expandedContent?: ReactNode
 }
 
-function SortableRow({ id, children, selected }: SortableRowProps) {
+function SortableRow({ id, children, expanded, expandedContent }: SortableRowProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id,
   })
@@ -63,11 +68,22 @@ function SortableRow({ id, children, selected }: SortableRowProps) {
     <li
       ref={setNodeRef}
       style={style}
-      {...attributes}
-      {...listeners}
-      className={cn(ROW_CLASSNAME, selected && "border-l-primary bg-muted")}
+      className={"border-border border-b border-l-4 border-l-transparent bg-white last:border-b-0"}
     >
-      <RowContent dimmed={isDragging}>{children}</RowContent>
+      <div {...attributes} {...listeners} className={ROW_CLASSNAME}>
+        <RowContent dimmed={isDragging}>{children}</RowContent>
+      </div>
+
+      <div
+        className={cn(
+          "grid transition-[grid-template-rows] duration-200 ease-out",
+          expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        )}
+      >
+        <div className="overflow-hidden">
+          <div className="border-border border-t px-5 py-6">{expandedContent}</div>
+        </div>
+      </div>
     </li>
   )
 }
@@ -78,14 +94,25 @@ export function SortableList<T>({
   onReorder,
   renderItem,
   isSelected,
+  expandedId,
+  renderExpanded,
+  onDragStart,
 }: SortableListProps<T>) {
   const [activeId, setActiveId] = useState<string | number | null>(null)
+  const [sortedItems, setSortedItems] = useState(items)
+  const [prevItems, setPrevItems] = useState(items)
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }))
 
-  const activeItem = items.find((item) => getId(item) === activeId)
+  if (items !== prevItems) {
+    setPrevItems(items)
+    setSortedItems(items)
+  }
+
+  const activeItem = sortedItems.find((item) => getId(item) === activeId)
 
   function handleDragStart(event: DragStartEvent) {
     setActiveId(event.active.id)
+    onDragStart?.()
   }
 
   function handleDragEnd(event: DragEndEvent) {
@@ -93,10 +120,12 @@ export function SortableList<T>({
     setActiveId(null)
     if (!over || active.id === over.id) return
 
-    const oldIndex = items.findIndex((item) => getId(item) === active.id)
-    const newIndex = items.findIndex((item) => getId(item) === over.id)
+    const oldIndex = sortedItems.findIndex((item) => getId(item) === active.id)
+    const newIndex = sortedItems.findIndex((item) => getId(item) === over.id)
+    const reordered = arrayMove(sortedItems, oldIndex, newIndex)
 
-    onReorder(arrayMove(items, oldIndex, newIndex))
+    setSortedItems(reordered)
+    onReorder(reordered)
   }
 
   return (
@@ -106,19 +135,30 @@ export function SortableList<T>({
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <SortableContext items={items.map(getId)} strategy={verticalListSortingStrategy}>
-        <ul className="overflow-hidden rounded-sm border border-border bg-white">
-          {items.map((item) => (
-            <SortableRow key={getId(item)} id={getId(item)} selected={isSelected?.(item)}>
-              {renderItem(item)}
-            </SortableRow>
-          ))}
+      <SortableContext items={sortedItems.map(getId)} strategy={verticalListSortingStrategy}>
+        <ul className="border-border overflow-hidden rounded-sm border bg-white">
+          {sortedItems.map((item) => {
+            const id = getId(item)
+            const expanded = expandedId != null && id === expandedId
+
+            return (
+              <SortableRow
+                key={id}
+                id={id}
+                selected={isSelected?.(item)}
+                expanded={expanded}
+                expandedContent={renderExpanded?.(item)}
+              >
+                {renderItem(item)}
+              </SortableRow>
+            )
+          })}
         </ul>
       </SortableContext>
 
       <DragOverlay>
         {activeItem ? (
-          <div className={cn(ROW_CLASSNAME, "rounded-sm border-b-0 shadow-lg")}>
+          <div className={cn(ROW_CLASSNAME, "rounded-sm shadow-lg")}>
             <RowContent>{renderItem(activeItem)}</RowContent>
           </div>
         ) : null}

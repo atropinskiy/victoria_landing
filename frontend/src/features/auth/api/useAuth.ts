@@ -65,5 +65,8 @@ export function useMe() {
       return data
     },
     retry: false,
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   })
 }
