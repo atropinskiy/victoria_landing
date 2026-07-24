@@ -34,8 +34,8 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title_ru', sa.String(), nullable=True),
     sa.Column('title_en', sa.String(), nullable=True),
-    sa.Column('ru_descr', sa.ARRAY(sa.String()), nullable=True),
-    sa.Column('en_descr', sa.ARRAY(sa.String()), nullable=True),
+    sa.Column('ru_descr', sa.String(), nullable=True),
+    sa.Column('en_descr', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     with op.batch_alter_table('stages', schema=None) as batch_op:
