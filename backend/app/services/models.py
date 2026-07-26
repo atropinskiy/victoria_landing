@@ -35,10 +35,10 @@ class Services(Base):
         String, unique=True, index=True, nullable=True
     )
     ru_descr: Mapped[str | None] = mapped_column(
-        String, unique=True, index=False, nullable=True
+        String, index=False, nullable=True
     )
     en_descr: Mapped[str | None] = mapped_column(
-        String, unique=True, index=False, nullable=True
+        String, index=False, nullable=True
     )
     order: Mapped[int] = mapped_column(Integer, index=False)
 
@@ -60,8 +60,6 @@ class Stages(Base):
     order: Mapped[int] = mapped_column(Integer, index=False)
     title_ru: Mapped[str] = mapped_column(String, nullable=False)
     title_en: Mapped[str] = mapped_column(String, nullable=False)
-    ru_descr: Mapped[str | None] = mapped_column(String, nullable=True)
-    en_descr: Mapped[str | None] = mapped_column(String, nullable=True)
     items: Mapped[list[dict]] = mapped_column(
         JSON().with_variant(JSONB(astext_type=Text()), "postgresql"),
         nullable=False,

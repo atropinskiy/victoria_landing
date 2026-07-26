@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_db
 from app.core.schemas import StatusResponse
 from app.services import crud
-from app.services.schemas import ServiceCreate, ServiceRead
+from app.services.schemas import ServiceCreate, ServiceOrderItem, ServiceRead
 
 services_router = APIRouter(prefix="/services", tags=["Услуги"])
 
@@ -104,6 +104,53 @@ async def create_service(data: ServiceCreate, db: AsyncSession = Depends(get_db)
     return StatusResponse(
         success=True,
         message="Услуга создана",
+        data=crud.to_read(service),
+    )
+
+
+@services_router.patch(
+    "/reorder",
+    response_model=StatusResponse[list[ServiceRead]],
+    summary="Изменить порядок услуг",
+    description=(
+        "Принимает массив {id, order} — по одному объекту на каждую существующую "
+        "услугу — и проставляет order каждой услуге по её id. Ожидается, что "
+        "фронт всегда присылает записи целиком (все услуги разом). "
+        "Если среди переданных id есть несуществующий, ничего не меняется и "
+        "возвращается 404."
+    ),
+    responses={404: {"description": "Одна или несколько услуг не найдены"}},
+)
+async def reorder_services(items: list[ServiceOrderItem], db: AsyncSession = Depends(get_db)):
+    services = await crud.reorder_services(db, items)
+    if services is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Одна или несколько услуг не найдены")
+    return StatusResponse(
+        success=True,
+        message="Порядок обновлён",
+        data=[crud.to_read(service) for service in services],
+    )
+
+
+@services_router.patch(
+    "/{service_id}",
+    response_model=StatusResponse[ServiceRead],
+    summary="Обновить услугу",
+    description=(
+        "Обновляет название, описание и этапы (stages) услуги по id. "
+        "Список stages передаётся целиком и полностью заменяет текущий — "
+        "порядок в массиве определяет их order. order самой услуги не меняется. "
+        "Если услуга с таким id не найдена, возвращает 404."
+    ),
+    responses={404: {"description": "Услуга не найдена"}},
+)
+async def update_service(service_id: int, data: ServiceCreate, db: AsyncSession = Depends(get_db)):
+    service = await crud.update_service(db, service_id, data)
+    if service is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Услуга не найдена")
+    return StatusResponse(
+        success=True,
+        message="Услуга обновлена",
         data=crud.to_read(service),
     )
 
