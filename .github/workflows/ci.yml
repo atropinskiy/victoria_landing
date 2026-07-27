@@ -28,10 +28,12 @@ jobs:
       - name: Create backend env
         run: touch backend/.env
 
+      # Проверяем, что всё собирается через compose
       - name: Build containers
         run: docker compose build
 
-      - name: Push frontend image
+      # Публикуем frontend image
+      - name: Build and push frontend
         uses: docker/build-push-action@v6
         with:
           context: ./frontend
@@ -39,12 +41,23 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}/frontend:latest
 
+      # Публикуем backend image
+      - name: Build and push backend
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}/backend:latest
+
+      # Проверяем запуск
       - name: Start containers
         run: docker compose up -d
 
       - name: Check containers
         run: docker compose ps
 
+      # Проверяем фронтенд
       - name: Lint frontend
         run: |
           cd frontend
