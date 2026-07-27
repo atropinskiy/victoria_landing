@@ -31,7 +31,7 @@ export function BurgerMenu() {
       </Button>
 
       <Drawer open={open} onOpenChange={setOpen} direction="right">
-        <DrawerContent className="bg-cream border-cream px-8 py-12 data-[vaul-drawer-direction=right]:w-full data-[vaul-drawer-direction=right]:rounded-l-none data-[vaul-drawer-direction=right]:sm:w-72">
+        <DrawerContent className="bg-cream border-cream px-8 py-12 data-[vaul-drawer-direction=right]:w-full data-[vaul-drawer-direction=right]:rounded-l-none data-[vaul-drawer-direction=right]:sm:w-[300px]">
           <DrawerTitle className="sr-only">Navigation</DrawerTitle>
 
           <DrawerClose asChild>
