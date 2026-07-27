@@ -5,7 +5,7 @@ import createClient from "openapi-fetch"
 import { BASE_URL } from "@/shared/config"
 import { getAuthToken, removeAuthToken } from "@/shared/lib/auth"
 
-export const client = createClient<paths>({ baseUrl: BASE_URL })
+export const client = createClient<paths>({ baseUrl: "/api" })
 
 client.use({
   onRequest({ request }) {
