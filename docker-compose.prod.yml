@@ -1,0 +1,70 @@
+services:
+  app:
+    image: ghcr.io/atropinskiy/victoria_landing/backend:latest
+    container_name: victoria_backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    expose:
+      - "8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+
+  frontend:
+    image: ghcr.io/atropinskiy/victoria_landing/frontend:latest
+    container_name: victoria_frontend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    expose:
+      - "3000"
+
+
+  db:
+    image: postgres:16-alpine
+    container_name: victoria_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: victoria
+      POSTGRES_USER: victoria
+      POSTGRES_PASSWORD: victoria
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    expose:
+      - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U victoria"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+  nginx:
+    image: nginx:alpine
+    container_name: victoria_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+      - frontend
+
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: victoria_portainer
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+
+volumes:
+  postgres_data:
+  portainer_data:

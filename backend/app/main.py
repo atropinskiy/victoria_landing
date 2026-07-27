@@ -12,6 +12,8 @@ app = FastAPI(
         "и доступ к данным авторизованного пользователя."
     ),
     version="1.0.0",
+    docs_url="/docs",
+    openapi_url="/openapi.json",
 )
 
 app.middleware("http")(log_middleware)
