@@ -17,10 +17,16 @@ class UserRead(BaseModel):
     email: str | None
     username: str
     is_active: bool
+    role: str
 
     model_config = {"from_attributes": True}
 
 
 class TokenRead(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+
+
+class UserWithToken(UserRead):
     access_token: str
     token_type: str = "bearer"
