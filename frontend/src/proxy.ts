@@ -26,6 +26,6 @@ export default function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|docs|openapi.json|_next|_vercel|.*\\..*).*)",
+    "/((?!api|_next|_vercel|.*\\..*).*)",
   ],
 }
