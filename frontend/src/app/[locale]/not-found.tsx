@@ -2,8 +2,9 @@ import type { Metadata } from "next"
 
 import { ArrowLeft } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import Link from "next/link"
 
+import { AppRoutes } from "@/shared/config"
+import { Link } from "@/shared/i18n"
 import { Button } from "@/shared/ui/button"
 import { Typography } from "@/shared/ui/typography"
 
@@ -27,7 +28,7 @@ export default async function NotFound() {
         {t("message")}
       </Typography>
       <Button asChild size="lg" className="w-55">
-        <Link href="/">
+        <Link href={AppRoutes.HOME}>
           <ArrowLeft />
           {t("back")}
         </Link>

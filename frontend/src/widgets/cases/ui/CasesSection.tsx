@@ -28,9 +28,10 @@ export async function CasesSection() {
                   src={image}
                   alt={t(titleKey)}
                   width={480}
+                  quality={85}
                   height={640}
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="aspect-3/4 w-full rounded-2xl object-cover"
+                  className="aspect-3/4 w-full rounded-xl object-cover"
                 />
                 <Typography as="figcaption" variant="bodyLg" className="text-center">
                   {t(titleKey)}

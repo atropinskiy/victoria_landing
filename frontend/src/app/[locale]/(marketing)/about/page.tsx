@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { ArrowLeft } from "lucide-react"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 
+import { AppRoutes } from "@/shared/config"
 import { Link } from "@/shared/i18n"
 import { Button } from "@/shared/ui/button"
 import { Typography } from "@/shared/ui/typography"
@@ -25,7 +26,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   return (
     <Container bg="secondary" className="gap-10">
       <Button asChild variant="plain" size="sm" className="-ml-3 self-start">
-        <Link href="/">
+        <Link href={AppRoutes.HOME}>
           <ArrowLeft />
           {t("back")}
         </Link>

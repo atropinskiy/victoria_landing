@@ -24,7 +24,7 @@ export function ServiceRow({ service, t }: ServiceRowProps) {
 
       <div className="flex snap-x snap-mandatory flex-row flex-nowrap items-stretch gap-6 overflow-x-auto pb-6">
         {approach && (
-          <Card className="w-120 shrink-0 snap-start gap-10" variant="slate" rounded="default">
+          <Card className="w-120 shrink-0 snap-start gap-10" variant="slate" rounded="rounded">
             {approach.titleKey && <CardHeader>{t(approach.titleKey)}</CardHeader>}
             <CardContent className="flex flex-1 flex-col justify-end">
               <Typography variant="bodySm">{t(approach.textKey)}</Typography>

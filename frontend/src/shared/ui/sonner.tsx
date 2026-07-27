@@ -39,7 +39,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
         classNames: {
           toast: "cn-toast shadow-xl shadow-black/20 ring-1 ring-foreground/20",
           title: "text-base font-semibold",
-          description: "text-foreground",
+          description: "!text-slate",
         },
       }}
       {...props}

@@ -1,8 +1,8 @@
 import type { VariantProps } from "class-variance-authority"
+import type * as React from "react"
 
+import { useRender } from "@base-ui/react/use-render"
 import { cva } from "class-variance-authority"
-import { Slot } from "radix-ui"
-import * as React from "react"
 
 import { cn } from "@/shared/lib/utils"
 
@@ -14,7 +14,11 @@ const buttonVariants = cva(
         default: "bg-primary text-primary-foreground hover:bg-primary/85",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/85",
         outline:
-          "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
+          "bg-background shadow-[0_1px_3px_0_rgba(0,0,0,0.12)] hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
+        glass:
+          "bg-background/60 supports-backdrop-filter:backdrop-blur-md shadow-[0_1px_3px_0_rgba(0,0,0,0.12)] hover:bg-background/80 aria-expanded:bg-muted aria-expanded:text-foreground",
+        glassBurgundy:
+          "bg-primary text-primary-foreground supports-backdrop-filter:backdrop-blur-md shadow-[0_1px_3px_0_rgba(0,0,0,0.12)] hover:bg-primary/80 aria-expanded:bg-primary aria-expanded:text-primary-foreground",
         ghost: "hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground",
         plain: "",
         destructive:
@@ -47,22 +51,24 @@ function Button({
   size = "default",
   rounded = "default",
   asChild = false,
+  children,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
   }) {
-  const Comp = asChild ? Slot.Root : "button"
-
-  return (
-    <Comp
-      data-slot="button"
-      data-variant={variant}
-      data-size={size}
-      className={cn(buttonVariants({ variant, size, rounded, className }))}
-      {...props}
-    />
-  )
+  return useRender({
+    defaultTagName: "button",
+    render: asChild ? (children as React.ReactElement) : undefined,
+    props: {
+      "data-slot": "button",
+      "data-variant": variant,
+      "data-size": size,
+      className: cn(buttonVariants({ variant, size, rounded, className })),
+      children: asChild ? undefined : children,
+      ...props,
+    },
+  })
 }
 
 export { Button, buttonVariants }
