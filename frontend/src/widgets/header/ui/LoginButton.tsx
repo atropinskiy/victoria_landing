@@ -4,7 +4,8 @@ import { useTranslations } from "next-intl"
 import { Suspense } from "react"
 import { toast } from "sonner"
 
-import { useLogout, useMe } from "@/features/auth"
+import { useLogout } from "@/features/auth"
+import { useMe } from "@/entities/user"
 import { ModalIds } from "@/shared/config"
 import { getAuthToken } from "@/shared/lib/auth"
 import { useHasMounted, useModalParam } from "@/shared/lib/hooks"
@@ -46,7 +47,7 @@ function LoginButtonContent() {
 
   return (
     <Button
-      variant="glass"
+      variant="burgundy"
       size="sm"
       disabled={isPending || isLoading}
       onClick={handleClick}

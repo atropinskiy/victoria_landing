@@ -4,19 +4,19 @@ import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 import { toast } from "sonner"
 
-import { useMe } from "@/features/auth/api/useAuth"
+import { useMe } from "@/entities/user"
 import { AppRoutes } from "@/shared/config"
 import { useRouter } from "@/shared/i18n"
 
 function AdminGuard({ children }: { children: React.ReactNode }) {
-  const { isPending } = useMe()
+  const { data, isPending } = useMe()
   const router = useRouter()
   const t = useTranslations("admin")
   const hasRedirected = useRef(false)
 
   // TODO: when will the role be added
   // const isAdmin = data?.data.role === "admin"
-  const isAdmin = true
+  const isAdmin = !!data
 
   useEffect(() => {
     if (isPending || isAdmin || hasRedirected.current) return

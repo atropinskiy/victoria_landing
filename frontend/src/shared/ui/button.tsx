@@ -17,8 +17,8 @@ const buttonVariants = cva(
           "bg-background shadow-[0_1px_3px_0_rgba(0,0,0,0.12)] hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
         glass:
           "bg-background/60 supports-backdrop-filter:backdrop-blur-md shadow-[0_1px_3px_0_rgba(0,0,0,0.12)] hover:bg-background/80 aria-expanded:bg-muted aria-expanded:text-foreground",
-        glassBurgundy:
-          "bg-primary text-primary-foreground supports-backdrop-filter:backdrop-blur-md shadow-[0_1px_3px_0_rgba(0,0,0,0.12)] hover:bg-primary/80 aria-expanded:bg-primary aria-expanded:text-primary-foreground",
+        burgundy:
+          "bg-primary text-primary-foreground shadow-[0_4px_10px_-6px_color-mix(in_oklab,var(--color-primary)_45%,transparent)] hover:bg-primary/85 aria-expanded:bg-primary aria-expanded:text-primary-foreground border-none",
         ghost: "hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground",
         plain: "",
         destructive:

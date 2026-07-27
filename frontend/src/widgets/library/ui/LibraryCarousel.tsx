@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl"
 import Image from "next/image"
 
 import { LIBRARY_ITEMS } from "@/widgets/library/config/library"
-import { useMe } from "@/features/auth"
+import { useMe } from "@/entities/user"
 import {
   Carousel,
   CarouselContent,

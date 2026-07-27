@@ -12,7 +12,7 @@ export default async function AdminServicesPage({
   setRequestLocale(locale)
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-10">
       <ServicesList />
       <ServiceCreate />
     </div>
