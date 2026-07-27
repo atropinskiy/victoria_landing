@@ -8,6 +8,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 
 import { ServiceEdit } from "@/widgets/admin/ui/services/ServiceEdit"
+import { ServicesListSkeleton } from "@/widgets/admin/ui/services/ServicesListSkeleton"
 import { useServiceDelete, useServiceOrder, useServices } from "@/entities/service"
 import { Typography } from "@/shared/ui/typography"
 import { ConfirmModal, DeleteButton, EditButton, SortableList } from "@/shared/ui/widgets"
@@ -45,7 +46,9 @@ export function ServicesList() {
     )
   }
 
+  if (isPending) return <ServicesListSkeleton />
   if (!services) return null
+
   return (
     <>
       <SortableList

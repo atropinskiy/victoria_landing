@@ -24,9 +24,11 @@ export function DeleteButton({
     <Button
       type="button"
       variant="ghost"
-      size="icon"
       aria-label={label}
-      className={cn("text-destructive hover:text-destructive hover:bg-transparent", className)}
+      className={cn(
+        "text-destructive hover:text-destructive size-9 hover:bg-transparent",
+        className
+      )}
       onClick={onClick}
     >
       <Icon className={cn("size-4", iconClassName)} />
