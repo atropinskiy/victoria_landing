@@ -99,6 +99,6 @@ docker compose up --build
 
 Проверка прода:
 docker compose -f docker-compose.prod.yml pull
-docker compose -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.prod.yml up -d !
 
 Важно: Нужно дождаться выполнения action на Github. Команды для прода работают с созданными и проверенными образами.
