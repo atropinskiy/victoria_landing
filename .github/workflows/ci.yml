@@ -18,6 +18,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Проверяем frontend до публикации образов
+      - name: Lint frontend
+        run: |
+          cd frontend
+          npm ci
+          npm run lint
+
+      # Авторизация в GitHub Container Registry
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
@@ -25,14 +33,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Временный env для сборки backend
       - name: Create backend env
         run: touch backend/.env
 
-      # Проверяем, что всё собирается через compose
-      - name: Build containers
-        run: docker compose build
-
-      # Публикуем frontend image
+      # Сборка и публикация frontend
       - name: Build and push frontend
         uses: docker/build-push-action@v6
         with:
@@ -40,8 +45,9 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.repository }}/frontend:latest
+            ghcr.io/${{ github.repository }}/frontend:${{ github.sha }}
 
-      # Публикуем backend image
+      # Сборка и публикация backend
       - name: Build and push backend
         uses: docker/build-push-action@v6
         with:
@@ -49,17 +55,37 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.repository }}/backend:latest
+            ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
 
-      # Проверяем запуск
+      # Проверяем, что compose запускается в CI
       - name: Start containers
         run: docker compose up -d
 
       - name: Check containers
         run: docker compose ps
 
-      # Проверяем фронтенд
-      - name: Lint frontend
-        run: |
-          cd frontend
-          npm ci
-          npm run lint
+      # Проверка подключения к серверу
+      - name: Test SSH
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            whoami
+            docker --version
+            docker compose version
+
+      # Деплой на сервер
+      - name: Deploy
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /app
+            docker compose pull
+            docker compose up -d
