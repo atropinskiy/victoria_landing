@@ -10,12 +10,21 @@ import { ModalIds } from "@/shared/config"
 import { getAuthToken } from "@/shared/lib/auth"
 import { useHasMounted, useModalParam } from "@/shared/lib/hooks"
 import { Button } from "@/shared/ui/button"
+import { Skeleton } from "@/shared/ui/skeleton"
 
 export function LoginButton() {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<LoginButtonSkeleton />}>
       <LoginButtonContent />
     </Suspense>
+  )
+}
+
+function LoginButtonSkeleton() {
+  return (
+    <Button variant="burgundy" size="sm" className="h-9" aria-hidden="true">
+      <Skeleton className="h-4 w-11 rounded-md" />
+    </Button>
   )
 }
 
@@ -43,7 +52,7 @@ function LoginButtonContent() {
     }
   }
 
-  if (!hasMounted) return null
+  if (!hasMounted) return <LoginButtonSkeleton />
 
   return (
     <Button
