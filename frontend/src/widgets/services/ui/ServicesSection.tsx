@@ -1,12 +1,16 @@
-import { getTranslations } from "next-intl/server"
+"use client"
+
+import { useTranslations } from "next-intl"
 
 import { SERVICES } from "@/widgets/services/config/services"
+import { useServices } from "@/entities/service"
 import { Container, SectionTitle } from "@/shared/ui/widgets"
 
 import { ServiceRow } from "./ServiceRow"
 
-export async function ServicesSection() {
-  const t = await getTranslations("main")
+export function ServicesSection() {
+  const t = useTranslations("main")
+  const {} = useServices()
 
   return (
     <Container id="services">

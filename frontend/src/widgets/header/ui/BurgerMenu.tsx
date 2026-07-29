@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 import { ADMIN_NAV_LINK, NAV_LINKS } from "@/widgets/header/config/routes"
-import { useMe } from "@/entities/user"
+import { useMe, USER_ROLES } from "@/entities/user"
 import { Link } from "@/shared/i18n"
 import { Button } from "@/shared/ui/button"
 import { Drawer, DrawerClose, DrawerContent, DrawerTitle } from "@/shared/ui/drawer"
@@ -17,7 +17,8 @@ export function BurgerMenu() {
   const t = useTranslations("nav")
   const { data } = useMe()
 
-  const isAdmin = !!data
+  // const isAdmin = !!data
+  const isAdmin = data?.data?.role === USER_ROLES.ADMIN
 
   return (
     <>

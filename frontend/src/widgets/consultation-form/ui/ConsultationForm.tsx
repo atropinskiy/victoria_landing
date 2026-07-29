@@ -27,21 +27,21 @@ export function ConsultationForm() {
         id="book"
         variant="accent"
         className={cn(
-          "w-full py-4 opacity-0 transition-opacity duration-500 sm:fixed sm:right-6 sm:bottom-6 sm:z-40 sm:mt-0 sm:w-auto sm:max-w-80",
+          "w-full py-4 opacity-0 transition-opacity duration-500 sm:fixed sm:right-6 sm:bottom-6 sm:z-40 sm:mt-0 sm:w-72 sm:max-w-72",
           visible && "opacity-100"
         )}
       >
-        <CardContent className="flex flex-col gap-4 px-4">
+        <CardContent className="flex flex-col gap-3.5 px-4">
           <Typography
-            as="h3"
-            variant="h4"
+            as="h6"
+            variant="h6"
             color="cream"
-            className="text-center text-[16px] whitespace-pre-line sm:text-[16px]"
+            className="text-center font-semibold whitespace-pre-line"
           >
             {t("title")}
           </Typography>
 
-          <form className="flex flex-col gap-4">
+          <form className="flex flex-col gap-3.5">
             <Input
               size="sm"
               name="name"
@@ -67,18 +67,15 @@ export function ConsultationForm() {
               placeholder={t("messagePlaceholder")}
               aria-label={t("messagePlaceholder")}
             />
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <Checkbox id="consultation-consent" className="border-cream/60" />
-                <label htmlFor="consultation-consent" className="text-cream text-xs">
-                  {t("consent")}
-                </label>
-              </div>
-
-              <Button type="button" className="self-end sm:w-auto">
-                {t("submit")}
-              </Button>
+            <div className="flex items-center gap-2">
+              <Checkbox id="consultation-consent" className="border-cream/60" />
+              <label htmlFor="consultation-consent" className="text-cream text-justify text-sm">
+                {t("consent")}
+              </label>
             </div>
+            <Button type="button" className="self-end sm:w-auto">
+              {t("submit")}
+            </Button>
           </form>
         </CardContent>
       </Card>
