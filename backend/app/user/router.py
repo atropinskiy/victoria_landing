@@ -1,6 +1,8 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.core.database import get_db
 from app.core.schemas import StatusResponse
 from app.core.security import create_access_token, verify_password
@@ -127,7 +129,7 @@ async def logout(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    expires_at = datetime.fromtimestamp(payload["exp"], tz=timezone.utc)
+    expires_at = datetime.fromtimestamp(payload["exp"], tz=UTC)
     await crud.revoke_token(db, payload["jti"], expires_at)
     return StatusResponse(
         success=True, message="Вы вышли из системы", data=current_user

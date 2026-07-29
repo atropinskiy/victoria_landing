@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.core.database import get_db
 from app.core.schemas import StatusResponse
 from app.services import crud
@@ -124,7 +125,10 @@ async def create_service(data: ServiceCreate, db: AsyncSession = Depends(get_db)
 async def reorder_services(items: list[ServiceOrderItem], db: AsyncSession = Depends(get_db)):
     services = await crud.reorder_services(db, items)
     if services is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Одна или несколько услуг не найдены")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Одна или несколько услуг не найдены",
+        )
     return StatusResponse(
         success=True,
         message="Порядок обновлён",

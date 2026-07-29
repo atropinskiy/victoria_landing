@@ -34,6 +34,25 @@ make lint
 
 > На Windows системный `make` может резолвиться не в GNU Make, а в другой `make.exe` (например, от Delphi/Borland), который падает с ошибкой `Fatal: Command arguments too long` на любой команде. Поэтому на Windows используйте `.ps1`-скрипты из `scripts/`, а не `make`.
 
+## Линтинг бэкенда (ruff)
+
+Бэкенд линтуется [ruff](https://docs.astral.sh/ruff/) (конфиг — `backend/pyproject.toml`). Включены pycodestyle, pyflakes, isort, bugbear, pyupgrade, comprehensions, simplify.
+
+```bash
+# внутри контейнера (ruff уже в backend/requirements.txt)
+docker compose exec backend ruff check app
+
+# автофикс того, что чинится автоматически (сортировка импортов, pyupgrade и т.п.)
+docker compose exec backend ruff check app --fix
+```
+
+Локально (без Docker), если в `backend/.venv` установлены зависимости из `requirements.txt`:
+
+```bash
+cd backend
+ruff check app
+```
+
 ## Документация API (Swagger)
 
 После запуска бэкенда документация доступна:

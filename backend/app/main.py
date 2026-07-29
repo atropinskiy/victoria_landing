@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse
 from fastapi.openapi.docs import get_swagger_ui_html
+from fastapi.responses import JSONResponse
+
 from app.core.logging import log_middleware, logger
 from app.services.router import services_router
 from app.user.router import auth_router, user_router
