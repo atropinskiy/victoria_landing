@@ -5,6 +5,8 @@ from app.core.database import get_db
 from app.core.schemas import StatusResponse
 from app.services import crud
 from app.services.schemas import ServiceCreate, ServiceOrderItem, ServiceRead
+from app.user.deps import get_current_user
+from app.user.models import User
 
 services_router = APIRouter(prefix="/services", tags=["Услуги"])
 
@@ -100,7 +102,11 @@ async def get_services(db: AsyncSession = Depends(get_db)):
         "их порядковый номер — присваивается автоматически по позиции в списке."
     ),
 )
-async def create_service(data: ServiceCreate, db: AsyncSession = Depends(get_db)):
+async def create_service(
+    data: ServiceCreate,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     service = await crud.create_service(db, data)
     return StatusResponse(
         success=True,
@@ -122,7 +128,11 @@ async def create_service(data: ServiceCreate, db: AsyncSession = Depends(get_db)
     ),
     responses={404: {"description": "Одна или несколько услуг не найдены"}},
 )
-async def reorder_services(items: list[ServiceOrderItem], db: AsyncSession = Depends(get_db)):
+async def reorder_services(
+    items: list[ServiceOrderItem],
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     services = await crud.reorder_services(db, items)
     if services is None:
         raise HTTPException(
@@ -148,10 +158,17 @@ async def reorder_services(items: list[ServiceOrderItem], db: AsyncSession = Dep
     ),
     responses={404: {"description": "Услуга не найдена"}},
 )
-async def update_service(service_id: int, data: ServiceCreate, db: AsyncSession = Depends(get_db)):
+async def update_service(
+    service_id: int,
+    data: ServiceCreate,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     service = await crud.update_service(db, service_id, data)
     if service is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Услуга не найдена")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Услуга не найдена"
+        )
     return StatusResponse(
         success=True,
         message="Услуга обновлена",
@@ -170,8 +187,14 @@ async def update_service(service_id: int, data: ServiceCreate, db: AsyncSession 
     ),
     responses={404: {"description": "Услуга не найдена"}},
 )
-async def delete_service(service_id: int, db: AsyncSession = Depends(get_db)):
+async def delete_service(
+    service_id: int,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     deleted = await crud.delete_service(db, service_id)
     if not deleted:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Услуга не найдена")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Услуга не найдена"
+        )
     return StatusResponse(success=True, message="Услуга удалена", data=None)
