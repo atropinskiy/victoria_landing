@@ -4,7 +4,8 @@ import { XIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
-import { NAV_LINKS } from "@/widgets/header/config/routes"
+import { ADMIN_NAV_LINK, NAV_LINKS } from "@/widgets/header/config/routes"
+import { useMe } from "@/features/auth"
 import { Link } from "@/shared/i18n"
 import { Button } from "@/shared/ui/button"
 import { Drawer, DrawerClose, DrawerContent, DrawerTitle } from "@/shared/ui/drawer"
@@ -14,31 +15,34 @@ import { Typography } from "@/shared/ui/typography"
 export function BurgerMenu() {
   const [open, setOpen] = useState(false)
   const t = useTranslations("nav")
+  const {} = useMe()
+
+  const isAdmin = true
 
   return (
     <>
       <Button
-        variant="ghost"
+        variant="glass"
         size="icon"
         onClick={(e) => {
           e.currentTarget.blur()
           setOpen(true)
         }}
         aria-label="Open menu"
-        className="bg-background h-9 w-11"
+        className="h-9 w-11"
       >
         <MenuIcon className="block size-auto" />
       </Button>
 
       <Drawer open={open} onOpenChange={setOpen} direction="right">
-        <DrawerContent className="bg-cream border-cream px-8 py-12 data-[vaul-drawer-direction=right]:w-full data-[vaul-drawer-direction=right]:rounded-l-none data-[vaul-drawer-direction=right]:sm:w-72">
+        <DrawerContent className="bg-cream border-cream px-8 py-12 data-[vaul-drawer-direction=right]:w-full data-[vaul-drawer-direction=right]:rounded-l-none data-[vaul-drawer-direction=right]:sm:w-92">
           <DrawerTitle className="sr-only">Navigation</DrawerTitle>
 
           <DrawerClose asChild>
             <Button
-              variant="ghost"
+              variant="plain"
               size="icon"
-              className="absolute top-3 right-4 sm:right-6 lg:right-8"
+              className="absolute top-5 right-4 sm:right-6 lg:right-8"
             >
               <XIcon className="size-8" />
               <span className="sr-only">Close</span>
@@ -47,7 +51,7 @@ export function BurgerMenu() {
 
           <nav className="mt-16 flex flex-col gap-10">
             {NAV_LINKS.map(({ href, key, subKey }) => (
-              <Link key={href} href={href} onClick={() => setOpen(false)}>
+              <Link key={key} href={href} onClick={() => setOpen(false)}>
                 <Typography variant="menuItem" color="navy">
                   {t(key)}
                 </Typography>
@@ -62,6 +66,13 @@ export function BurgerMenu() {
                 )}
               </Link>
             ))}
+            {isAdmin && (
+              <Link href={ADMIN_NAV_LINK.href} onClick={() => setOpen(false)}>
+                <Typography variant="menuItem" color="navy">
+                  {t(ADMIN_NAV_LINK.key)}
+                </Typography>
+              </Link>
+            )}
           </nav>
         </DrawerContent>
       </Drawer>

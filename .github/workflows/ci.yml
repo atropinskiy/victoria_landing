@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Проверяем frontend
+      - name: Lint frontend
+        run: |
+          cd frontend
+          npm ci
+          npm run lint
+
+      # Проверяем, что backend собирается
+      - name: Create backend env
+        run: touch backend/.env
+
+      - name: Build containers
+        run: docker compose build
+
+      # Проверяем запуск
+      - name: Start containers
+        run: docker compose up -d
+
+      - name: Check containers
+        run: docker compose ps

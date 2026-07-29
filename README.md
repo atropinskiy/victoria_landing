@@ -76,7 +76,7 @@ Portainer — веб-интерфейс для мониторинга и упр�
 
 ### Первый запуск
 
-При первом открытии Portainer попросит создать администратора.  
+При первом открытии Portainer попросит создать администратора.
 **Важно:** на это даётся ~5 минут, иначе Portainer заблокируется по таймауту.
 
 Если заблокировался — перезапусти и сразу открой страницу:
@@ -100,3 +100,18 @@ token=5c09e1b20b8f6a4721c347...
 ### Просмотр логов конкретного контейнера
 
 В интерфейсе: **Local → Containers → viktoria_landing_app-1 → Logs**
+
+### Деплой/CI CD
+
+docker-compose.prod.yml — предназначен для проверки уже собранных образов из GHCR.
+Для разработки docker-compose.yml docker compose up --build
+GitHub Actions собирает образы и пушит их в GHCR.
+
+Разработка:
+docker compose up --build
+
+Проверка прода:
+docker compose -f docker-compose.prod.yml pull
+docker compose -f docker-compose.prod.yml up -d !
+
+Важно: Нужно дождаться выполнения action на Github. Команды для прода работают с созданными и проверенными образами.
