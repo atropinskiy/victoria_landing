@@ -9,7 +9,7 @@ from app.core.security import create_access_token, verify_password
 from app.user import crud
 from app.user.deps import get_current_user, get_token_payload
 from app.user.models import User
-from app.user.schemas import TokenRead, UserCreate, UserLogin, UserRead, UserWithToken
+from app.user.schemas import UserCreate, UserLogin, UserRead, UserWithToken
 
 auth_router = APIRouter(prefix="/auth", tags=["Авторизация"])
 user_router = APIRouter(prefix="/users", tags=["Пользователи"])
@@ -49,7 +49,7 @@ async def register(data: UserCreate, db: AsyncSession = Depends(get_db)):
 
 @auth_router.post(
     "/login",
-    response_model=StatusResponse[TokenRead],
+    response_model=StatusResponse[UserWithToken],
     summary="Вход",
     description="Принимает email **или** username и пароль, возвращает JWT access token.",
     responses={
@@ -64,6 +64,11 @@ async def register(data: UserCreate, db: AsyncSession = Depends(get_db)):
                                 "success": True,
                                 "message": "Вход выполнен успешно",
                                 "data": {
+                                    "id": 1,
+                                    "email": "user@example.com",
+                                    "username": "john_doe",
+                                    "is_active": True,
+                                    "role": "user",
                                     "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
                                     "token_type": "bearer",
                                 },
@@ -102,7 +107,14 @@ async def login(data: UserLogin, db: AsyncSession = Depends(get_db)):
     return StatusResponse(
         success=True,
         message="Вход выполнен успешно",
-        data=TokenRead(access_token=token),
+        data=UserWithToken(
+            id=user.id,
+            email=user.email,
+            username=user.username,
+            is_active=user.is_active,
+            role=user.role,
+            access_token=token,
+        ),
     )
 
 
