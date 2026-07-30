@@ -12,15 +12,13 @@
 
 ## Запуск проекта
 
-**Windows / PowerShell** (рекомендуется — см. примечание про `make` ниже):
+**Windows / PowerShell** (рекомендуется — см. примечание про `make` ниже) Для более удобного запуска написан скрипт. Запускатеся из корня проетка:
 
 ```powershell
 .\scripts\up.ps1      # собрать образы, поднять контейнеры, накатить миграции (печатает ссылки на Swagger и фронт)
-.\scripts\down.ps1    # остановить контейнеры
-.\scripts\logs.ps1    # логи всех контейнеров
-.\scripts\build.ps1   # только собрать образы, без запуска
-.\scripts\lint.ps1    # линт фронтенда
 ```
+
+Этот скрипт собирает проект и после выдает ссылки на фронт и бэк
 
 **Linux/macOS/CI** (через `make`, аналогичные таргеты в `Makefile`):
 
@@ -78,17 +76,13 @@ backend:
     - ./backend/.env.${APP_ENV:-server} # ← переключение базы происходит здесь
 ```
 
-Docker Compose подставляет значение `APP_ENV` в имя файла и загружает его как `env_file`. `:-server` — это дефолт: если переменная не задана, подставится `server`, то есть контейнер заберёт `backend/.env.server` и уйдёт в боевую базу.
+Docker Compose подставляет значение `APP_ENV` в имя файла и загружает его как `env_file`. `:-server`. Если хотите запустить локальную базу замените server в `docker-compose.yml` на local.
 
 ```bash
-# ⚠️ По умолчанию (APP_ENV не задан) backend коннектится к БОЕВОЙ базе (.env.server)!
 docker compose up -d --build
-
-# Локальная база в контейнере — используйте это для разработки
-APP_ENV=local docker compose up -d --build
 ```
 
-`.\scripts\up.ps1` не выставляет `APP_ENV`, поэтому по умолчанию тоже целится в прод-базу — задайте `$env:APP_ENV="local"` перед запуском, если нужна локальная разработка.
+`.\scripts\up.ps1` не выставляет `APP_ENV`, поэтому по умолчанию тоже целится в прод-базу — задайте в `docker-compose.yml` перед запуском, если нужна локальная разработка.
 
 ## База данных для локальной разработки
 
@@ -112,8 +106,9 @@ docker compose --profile postgres up -d --build
 
 ```bash
 docker compose up -d --build
-docker compose exec backend alembic upgrade head
 ```
+
+Миграции применяются автоматически в `docker-compose.yml`. Поэтому после генерации миграции проверьте ее перед новым билдом
 
 ### Изменил модель — создай и примени миграцию
 
@@ -123,8 +118,11 @@ git pull
 # Сгенерировать миграцию
 docker compose exec backend alembic revision --autogenerate -m "описание_изменения"
 
-# Применить
+# Просто накатить миграции на бд
 docker compose exec backend alembic upgrade head
+
+# Собрать проект и накатить миграции сразу можно через
+docker compose up -d --build
 ```
 
 Если autogenerate не находит изменений в моделях, файл миграции **не создаётся** — в лог пишется `No changes in schema detected.` (аналог `makemigrations` в Django). Это настроено в `backend/migrations/env.py` через хук `process_revision_directives`.
