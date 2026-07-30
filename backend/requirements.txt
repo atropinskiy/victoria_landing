@@ -11,3 +11,6 @@ python-jose[cryptography]
 email-validator
 python-multipart
 ruff
+pytest
+pytest-asyncio
+httpx
