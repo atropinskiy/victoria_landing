@@ -228,17 +228,6 @@ export interface components {
             message: string;
             data?: components["schemas"]["ServiceRead"] | null;
         };
-        /** StatusResponse[TokenRead] */
-        StatusResponse_TokenRead_: {
-            /** Success */
-            success: boolean;
-            /**
-             * Message
-             * @default
-             */
-            message: string;
-            data?: components["schemas"]["TokenRead"] | null;
-        };
         /** StatusResponse[UserRead] */
         StatusResponse_UserRead_: {
             /** Success */
@@ -272,16 +261,6 @@ export interface components {
             message: string;
             /** Data */
             data?: components["schemas"]["ServiceRead"][] | null;
-        };
-        /** TokenRead */
-        TokenRead: {
-            /** Access Token */
-            access_token: string;
-            /**
-             * Token Type
-             * @default bearer
-             */
-            token_type: string;
         };
         /** UserCreate */
         UserCreate: {
@@ -422,7 +401,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["StatusResponse_TokenRead_"];
+                    "application/json": components["schemas"]["StatusResponse_UserWithToken_"];
                 };
             };
             /** @description Неверный логин или пароль */
