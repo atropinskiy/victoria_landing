@@ -4,7 +4,7 @@ services:
     container_name: victoria_backend
     restart: unless-stopped
     env_file:
-      - ./backend/.env
+      - ./backend/.env.${APP_ENV:-server}
     expose:
       - "8000"
     healthcheck:
