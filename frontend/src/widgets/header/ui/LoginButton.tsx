@@ -4,17 +4,27 @@ import { useTranslations } from "next-intl"
 import { Suspense } from "react"
 import { toast } from "sonner"
 
-import { useLogout, useMe } from "@/features/auth"
+import { useLogout } from "@/features/auth"
+import { useMe } from "@/entities/user"
 import { ModalIds } from "@/shared/config"
 import { getAuthToken } from "@/shared/lib/auth"
 import { useHasMounted, useModalParam } from "@/shared/lib/hooks"
 import { Button } from "@/shared/ui/button"
+import { Skeleton } from "@/shared/ui/skeleton"
 
 export function LoginButton() {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<LoginButtonSkeleton />}>
       <LoginButtonContent />
     </Suspense>
+  )
+}
+
+function LoginButtonSkeleton() {
+  return (
+    <Button variant="burgundy" size="sm" className="h-9" aria-hidden="true">
+      <Skeleton className="h-4 w-11 rounded-md" />
+    </Button>
   )
 }
 
@@ -42,11 +52,11 @@ function LoginButtonContent() {
     }
   }
 
-  if (!hasMounted) return null
+  if (!hasMounted) return <LoginButtonSkeleton />
 
   return (
     <Button
-      variant="glass"
+      variant="burgundy"
       size="sm"
       disabled={isPending || isLoading}
       onClick={handleClick}

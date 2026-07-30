@@ -1,8 +1,8 @@
 import type { LoginPayload, RegisterPayload } from "@/features/auth/model/types"
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 
-import { AUTH_USER_QUERY_KEY } from "@/features/auth/config/queryKeys"
+import { USER_QUERY_KEY } from "@/entities/user"
 import { client } from "@/shared/api"
 import { removeAuthToken, setAuthToken } from "@/shared/lib/auth"
 
@@ -18,7 +18,7 @@ export function useRegister() {
     onSuccess: (response) => {
       if (response.data) {
         setAuthToken(response.data.access_token)
-        queryClient.setQueryData(AUTH_USER_QUERY_KEY, response.data)
+        queryClient.setQueryData(USER_QUERY_KEY, response.data)
       }
     },
   })
@@ -36,7 +36,7 @@ export function useLogin() {
     onSuccess: (response) => {
       if (response?.data) {
         setAuthToken(response.data.access_token)
-        queryClient.setQueryData(AUTH_USER_QUERY_KEY, response.data)
+        queryClient.setQueryData(USER_QUERY_KEY, response.data)
       }
     },
   })
@@ -51,22 +51,7 @@ export function useLogout() {
     },
     onSettled: () => {
       removeAuthToken()
-      queryClient.setQueryData(AUTH_USER_QUERY_KEY, null)
+      queryClient.setQueryData(USER_QUERY_KEY, null)
     },
-  })
-}
-
-export function useMe() {
-  return useQuery({
-    queryKey: AUTH_USER_QUERY_KEY,
-    queryFn: async () => {
-      const { data, error } = await client.GET("/users/me")
-      if (error) throw error
-      return data
-    },
-    retry: false,
-    staleTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
   })
 }

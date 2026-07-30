@@ -15,10 +15,9 @@ export function EditButton({ label, onClick, expanded, className }: EditButtonPr
     <Button
       type="button"
       variant="ghost"
-      size="icon"
       aria-label={label}
       aria-expanded={expanded}
-      className={cn("hover:bg-transparent", className)}
+      className={cn("size-9 hover:bg-transparent", className)}
       onClick={onClick}
     >
       <Pencil className="text-navy size-4" />

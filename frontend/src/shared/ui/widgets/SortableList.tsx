@@ -1,6 +1,11 @@
 "use client"
 
-import type { DragEndEvent, DragStartEvent } from "@dnd-kit/core"
+import type {
+  DraggableAttributes,
+  DraggableSyntheticListeners,
+  DragEndEvent,
+  DragStartEvent,
+} from "@dnd-kit/core"
 import type { ReactNode } from "react"
 
 import {
@@ -21,6 +26,7 @@ import { CSS } from "@dnd-kit/utilities"
 import { GripVertical } from "lucide-react"
 import { useState } from "react"
 
+import { Accordion, AccordionContent, AccordionItem } from "@/shared/ui/accordion"
 import { cn } from "@/shared/lib/utils"
 
 interface SortableListProps<T> {
@@ -34,13 +40,33 @@ interface SortableListProps<T> {
   onDragStart?: () => void
 }
 
-const ROW_CLASSNAME =
-  "group flex touch-none items-center gap-3 bg-white px-3 py-1.5 cursor-grab select-none active:cursor-grabbing"
+const ROW_CLASSNAME = "group flex items-center gap-3 bg-white px-3 py-1.5 select-none"
 
-function RowContent({ children, dimmed }: { children: ReactNode; dimmed?: boolean }) {
+interface DragHandleProps {
+  attributes?: DraggableAttributes
+  listeners?: DraggableSyntheticListeners
+}
+
+function RowContent({
+  children,
+  dimmed,
+  dragHandleProps,
+}: {
+  children: ReactNode
+  dimmed?: boolean
+  dragHandleProps?: DragHandleProps
+}) {
   return (
     <div className={cn("flex flex-1 items-center gap-3", dimmed && "opacity-40")}>
-      <GripVertical className="text-muted-foreground size-4 shrink-0" aria-hidden="true" />
+      <button
+        type="button"
+        aria-label="Изменить порядок"
+        className="text-muted-foreground touch-none cursor-grab select-none active:cursor-grabbing"
+        {...dragHandleProps?.attributes}
+        {...dragHandleProps?.listeners}
+      >
+        <GripVertical className="size-4 shrink-0" aria-hidden="true" />
+      </button>
       <div className="flex flex-1 items-center justify-between gap-2">{children}</div>
     </div>
   )
@@ -70,20 +96,19 @@ function SortableRow({ id, children, expanded, expandedContent }: SortableRowPro
       style={style}
       className={"border-border border-b border-l-4 border-l-transparent bg-white last:border-b-0"}
     >
-      <div {...attributes} {...listeners} className={ROW_CLASSNAME}>
-        <RowContent dimmed={isDragging}>{children}</RowContent>
+      <div className={ROW_CLASSNAME}>
+        <RowContent dimmed={isDragging} dragHandleProps={{ attributes, listeners }}>
+          {children}
+        </RowContent>
       </div>
 
-      <div
-        className={cn(
-          "grid transition-[grid-template-rows] duration-200 ease-out",
-          expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-        )}
-      >
-        <div className="overflow-hidden">
-          <div className="border-border border-t px-5 py-6">{expandedContent}</div>
-        </div>
-      </div>
+      <Accordion value={expanded ? [id] : []} keepMounted>
+        <AccordionItem value={id}>
+          <AccordionContent className="border-border border-t px-5 py-6">
+            {expandedContent}
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </li>
   )
 }

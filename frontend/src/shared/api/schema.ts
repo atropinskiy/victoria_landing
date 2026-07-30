@@ -108,6 +108,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/services/reorder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Изменить порядок услуг
+         * @description Принимает массив {id, order} — по одному объекту на каждую существующую услугу — и проставляет order каждой услуге по её id. Ожидается, что фронт всегда присылает записи целиком (все услуги разом). Если среди переданных id есть несуществующий, ничего не меняется и возвращается 404.
+         */
+        patch: operations["reorder_services_services_reorder_patch"];
+        trace?: never;
+    };
     "/services/{service_id}": {
         parameters: {
             query?: never;
@@ -125,7 +145,11 @@ export interface paths {
         delete: operations["delete_service_services__service_id__delete"];
         options?: never;
         head?: never;
-        patch?: never;
+        /**
+         * Обновить услугу
+         * @description Обновляет название, описание и этапы (stages) услуги по id. Список stages передаётся целиком и полностью заменяет текущий — порядок в массиве определяет их order. order самой услуги не меняется. Если услуга с таким id не найдена, возвращает 404.
+         */
+        patch: operations["update_service_services__service_id__patch"];
         trace?: never;
     };
 }
@@ -150,6 +174,13 @@ export interface components {
             description: components["schemas"]["Bilingual"];
             /** Stages */
             stages?: components["schemas"]["StageCreate"][];
+        };
+        /** ServiceOrderItem */
+        ServiceOrderItem: {
+            /** Id */
+            id: number;
+            /** Order */
+            order: number;
         };
         /** ServiceRead */
         ServiceRead: {
@@ -507,6 +538,46 @@ export interface operations {
             };
         };
     };
+    reorder_services_services_reorder_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ServiceOrderItem"][];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_list_ServiceRead__"];
+                };
+            };
+            /** @description Одна или несколько услуг не найдены */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     delete_service_services__service_id__delete: {
         parameters: {
             query?: never;
@@ -525,6 +596,48 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StatusResponse_NoneType_"];
+                };
+            };
+            /** @description Услуга не найдена */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_service_services__service_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                service_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ServiceCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_ServiceRead_"];
                 };
             };
             /** @description Услуга не найдена */
