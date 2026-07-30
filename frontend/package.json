@@ -18,7 +18,7 @@
     "check": "npm run lint && npm run lint:fsd && npm run typecheck && npm run build && npm run test",
     "clean": "rm -rf .next tsconfig.tsbuildinfo",
     "clean:full": "rm -rf .next node_modules tsconfig.tsbuildinfo && npm install",
-    "sync:dev": "git checkout rasim && git fetch origin && git rebase origin/dev && git push --force-with-lease"
+    "merge-dev": "git checkout rasim && git fetch origin && git merge origin/dev"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
