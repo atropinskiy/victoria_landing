@@ -22,7 +22,7 @@ export function LoginButton() {
 
 function LoginButtonSkeleton() {
   return (
-    <Button variant="burgundy" size="sm" className="h-9" aria-hidden="true">
+    <Button variant="burgundy" size="sm" className="h-9 w-18" aria-hidden="true">
       <Skeleton className="h-4 w-11 rounded-md" />
     </Button>
   )
@@ -61,7 +61,7 @@ function LoginButtonContent() {
       disabled={isPending || isLoading}
       onClick={handleClick}
       aria-label={label}
-      className="h-9"
+      className="h-9 w-18"
     >
       {label}
     </Button>

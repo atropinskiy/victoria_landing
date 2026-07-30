@@ -10,7 +10,11 @@ interface ServiceStageCardProps extends Pick<VariantProps<typeof cardVariants>, 
 
 export function ServiceStageCard({ title, children, variant = "accent" }: ServiceStageCardProps) {
   return (
-    <Card variant={variant} className="w-68 shrink-0 snap-start" rounded="rounded">
+    <Card
+      variant={variant}
+      className="w-full shrink-0 snap-start gap-10 overflow-visible sm:w-67"
+      rounded="rounded"
+    >
       <CardHeader className="text-right">{title}</CardHeader>
       <CardContent className="flex flex-1 flex-col justify-end gap-10">{children}</CardContent>
     </Card>
