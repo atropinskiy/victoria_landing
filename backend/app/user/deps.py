@@ -26,7 +26,7 @@ async def get_token_payload(
             credentials.credentials, auth["secret_key"], algorithms=[auth["algorithm"]]
         )
     except JWTError:
-        raise exc
+        raise exc from None
 
     jti = payload.get("jti")
     if jti is None:

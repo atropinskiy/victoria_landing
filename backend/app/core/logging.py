@@ -1,6 +1,7 @@
 import json
 import logging
-from datetime import datetime, timezone
+from contextlib import suppress
+from datetime import UTC, datetime
 
 from fastapi import Request, Response
 from jose import JWTError, jwt
@@ -37,7 +38,7 @@ async def log_middleware(request: Request, call_next) -> Response:
     if request.url.path.startswith("/server"):
         return await call_next(request)
 
-    start = datetime.now(timezone.utc)
+    start = datetime.now(UTC)
     response = await call_next(request)
 
     # Буферизуем тело ответа чтобы вытащить message
@@ -47,12 +48,10 @@ async def log_middleware(request: Request, call_next) -> Response:
     body = b"".join(chunks)
 
     message = ""
-    try:
+    with suppress(json.JSONDecodeError, AttributeError):
         message = json.loads(body).get("message", "")
-    except (json.JSONDecodeError, AttributeError):
-        pass
 
-    elapsed = (datetime.now(timezone.utc) - start).total_seconds() * 1000
+    elapsed = (datetime.now(UTC) - start).total_seconds() * 1000
     username = _username_from_request(request)
 
     logger.info(

@@ -1,6 +1,8 @@
 from datetime import datetime
+
 from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.core.security import hash_password
 from app.user.models import RevokedToken, User
 from app.user.schemas import UserCreate

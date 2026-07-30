@@ -3,6 +3,7 @@ from sqlalchemy import delete, func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
+
 from app.services.models import Services, Stages
 from app.services.schemas import (
     Bilingual,
@@ -43,12 +44,12 @@ from app.services.schemas import (
 async def _commit_or_400(db: AsyncSession) -> None:
     try:
         await db.commit()
-    except IntegrityError:
+    except IntegrityError as err:
         await db.rollback()
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Услуга с таким названием уже существует",
-        )
+        ) from err
 
 
 def to_read(service: Services) -> ServiceRead:
@@ -128,7 +129,9 @@ async def update_service(db: AsyncSession, service_id: int, data: ServiceCreate)
     return service
 
 
-async def reorder_services(db: AsyncSession, items: list[ServiceOrderItem]) -> list[Services] | None:
+async def reorder_services(
+    db: AsyncSession, items: list[ServiceOrderItem]
+) -> list[Services] | None:
     order_by_id = {item.id: item.order for item in items}
     result = await db.execute(
         select(Services)

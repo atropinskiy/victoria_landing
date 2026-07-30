@@ -1,4 +1,5 @@
 # Python
+__pycache__
 __pycache__/
 *.py[cod]
 *.pyo
@@ -16,7 +17,8 @@ env/
 
 # Environment
 .env
-*.env.local
+.env.*
+!.env.example
 
 # Database
 *.db

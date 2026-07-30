@@ -1,5 +1,11 @@
 import os
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+_APP_ENV = os.environ.get("APP_ENV", "local")
+_ENV_FILE = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "..", "..", f".env.{_APP_ENV}"
+)
 
 
 class Settings(BaseSettings):
@@ -15,11 +21,7 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
-    model_config = SettingsConfigDict(
-        env_file=os.path.join(
-            os.path.dirname(os.path.abspath(__file__)), "..", "..", ".env"
-        )
-    )
+    model_config = SettingsConfigDict(env_file=_ENV_FILE)
 
 
 settings = Settings()
