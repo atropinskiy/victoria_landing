@@ -2,6 +2,7 @@ export const AppRoutes = {
   HOME: "/",
   ABOUT: { pathname: "/", hash: "about" },
   ABOUT_PAGE: "/about",
+  TEST_PAGE: "/test",
   SERVICES: { pathname: "/", hash: "services" },
   CASES: { pathname: "/", hash: "cases" },
   LIBRARY: { pathname: "/", hash: "library" },

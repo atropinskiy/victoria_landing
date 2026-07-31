@@ -18,7 +18,9 @@ export function ServicesSection() {
 
       <div className="flex flex-col gap-8">
         {isPending
-          ? Array.from({ length: 4 }).map((_, i) => <ServiceRowSkeleton key={i} />)
+          ? Array.from({ length: 4 }).map((_, i) => (
+              <ServiceRowSkeleton key={i} isFirst={i === 0} />
+            ))
           : data?.map((service) => <ServiceRow key={service.id} service={service} t={t} />)}
       </div>
     </Container>

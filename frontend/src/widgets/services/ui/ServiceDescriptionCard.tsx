@@ -11,7 +11,7 @@ interface ServiceDescriptionCardProps extends Pick<VariantProps<typeof cardVaria
 export function ServiceDescriptionCard({ title, children }: ServiceDescriptionCardProps) {
   return (
     <Card
-      className="h-67.25 w-full shrink-0 snap-start gap-12 overflow-visible sm:w-125"
+      className="w-full shrink-0 snap-start gap-12 overflow-visible sm:h-67.25 sm:w-125"
       variant="slate"
       rounded="rounded"
     >

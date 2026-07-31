@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
     qualities: [75, 80, 85],
   },
   turbopack: {
+    root: __dirname,
     rules: {
       "*.svg": {
         loaders: [path.join(process.cwd(), "node_modules/@svgr/webpack")],
