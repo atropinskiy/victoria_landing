@@ -7,7 +7,7 @@ from app.services import crud
 from app.services.schemas import ServiceCreate, ServiceOrderItem, ServiceRead
 from app.user.deps import get_current_user
 from app.user.models import User
-ывфыв
+
 services_router = APIRouter(prefix="/services", tags=["Услуги"])
 
 # Категории пока отключены — см. app/services/models.py.
