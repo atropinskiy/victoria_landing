@@ -3,12 +3,13 @@ from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import sessionmaker
 
+from app.core.config import get_db_url
 from app.core.database import Base, get_db
 from app.main import app
-from app.core.config import get_db_url
 
 
-# ВАЖНО!!! Переключите базу на локальную в докер компоуз. Если тест прогонялся 1 раз, то во 2 выйдет ошибка из за ограниения уникальности записей
+# ВАЖНО!!! Переключите базу на локальную в докер компоуз. Если тест прогонялся 1 раз,
+# то во 2 выйдет ошибка из за ограниения уникальности записей
 @pytest.fixture
 async def db_session():
     engine = create_async_engine(get_db_url(), echo=False)

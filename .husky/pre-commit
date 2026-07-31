@@ -10,6 +10,5 @@ echo "🔍 Frontend lint"
 
 echo "🔍 Backend lint"
 (
-  cd backend
-  ruff check .
+  .venv/Scripts/ruff.exe check backend
 )
