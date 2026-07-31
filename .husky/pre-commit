@@ -1,17 +1,13 @@
 #!/bin/sh
 
-echo "🔥 HUSKY WORKS"
-
 set -e
 
-echo "🔍 Frontend lint"
 (
   cd frontend
   npm run lint
 )
 
-echo "🔍 Backend lint"
 (
   cd backend
-  .venv/Scripts/ruff.exe check .
+  ../.venv/Scripts/ruff.exe check .
 )
