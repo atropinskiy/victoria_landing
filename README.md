@@ -187,7 +187,7 @@ token=5c09e1b20b8f6a4721c347...
 
 docker-compose.prod.yml — предназначен для проверки уже собранных образов из GHCR.
 Для разработки docker-compose.yml docker compose up --build
-GitHub Actions собирает образы и пушит их в GHCR.
+GitHub Actions собирает образы и пушит их в GHCR
 
 Разработка:
 docker compose up --build
@@ -197,3 +197,7 @@ docker compose -f docker-compose.prod.yml pull
 docker compose -f docker-compose.prod.yml up -d !
 
 Важно: Нужно дождаться выполнения action на Github. Команды для прода работают с созданными и проверенными образами.
+
+### Husky
+Хаски установлен в корне. В настоящий момент будет выполнить ruff check для Бекенда и lint для фронта.
+Запускается автоматически при коммите. При возникновении ошибок будет ругаться.

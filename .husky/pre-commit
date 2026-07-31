@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+(
+  cd frontend
+  npm run lint
+)
+
+(
+  cd backend
+  ../.venv/Scripts/ruff.exe check .
+)
