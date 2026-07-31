@@ -49,11 +49,6 @@ class TestRead(BaseModel):
     sections: list[SectionRead]
 
 
-class TestSummaryRead(BaseModel):
-    id: str
-    title: str
-
-
 # Ответ на создание/обновление — с weight, чтобы автор теста мог проверить сохранённые баллы.
 
 

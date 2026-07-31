@@ -16,16 +16,11 @@ from app.quiz.schemas import (
     TestCreate,
     TestRead,
     TestResultRead,
-    TestSummaryRead,
 )
 
 _NESTED_LOAD = selectinload(Tests.categories).selectinload(
     TestCategories.questions
 ).selectinload(TestQuestions.options)
-
-
-def to_summary(test: Tests) -> TestSummaryRead:
-    return TestSummaryRead(id=str(test.id), title=test.title)
 
 
 def to_public_read(test: Tests) -> TestRead:
@@ -114,7 +109,9 @@ def _build_categories(sections: list) -> list[TestCategories]:
 
 
 async def get_tests(db: AsyncSession) -> list[Tests]:
-    result = await db.execute(select(Tests).order_by(Tests.id))
+    result = await db.execute(
+        select(Tests).options(_NESTED_LOAD).order_by(Tests.id)
+    )
     return list(result.scalars().all())
 
 

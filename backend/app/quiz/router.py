@@ -10,7 +10,6 @@ from app.quiz.schemas import (
     TestRead,
     TestResultRead,
     TestSubmitRequest,
-    TestSummaryRead,
 )
 from app.user.deps import get_current_user
 from app.user.models import User
@@ -20,16 +19,19 @@ quiz_router = APIRouter(prefix="/tests", tags=["Тесты"])
 
 @quiz_router.get(
     "",
-    response_model=StatusResponse[list[TestSummaryRead]],
+    response_model=StatusResponse[list[TestRead]],
     summary="Список тестов",
-    description="Возвращает id и название всех тестов, без вопросов и ответов.",
+    description=(
+        "Возвращает все тесты целиком: секции, вопросы и варианты ответов. "
+        "Вес (баллы) вариантов ответа в этом ответе не передаётся."
+    ),
 )
 async def get_tests(db: AsyncSession = Depends(get_db)):
     tests = await crud.get_tests(db)
     return StatusResponse(
         success=True,
         message="Тесты получены",
-        data=[crud.to_summary(test) for test in tests],
+        data=[crud.to_public_read(test) for test in tests],
     )
 
 
