@@ -1,0 +1,24 @@
+{
+  "name": "victoria",
+  "version": "1.0.0",
+  "description": "Лендинг: FastAPI-бэкенд + Next.js-фронтенд + PostgreSQL, за общим nginx. Всё поднимается через Docker Compose.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atropinskiy/victoria_landing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/atropinskiy/victoria_landing/issues"
+  },
+  "homepage": "https://github.com/atropinskiy/victoria_landing#readme",
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}
