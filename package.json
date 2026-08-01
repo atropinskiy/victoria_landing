@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Лендинг: FastAPI-бэкенд + Next.js-фронтенд + PostgreSQL, за общим nginx. Всё поднимается через Docker Compose.",
   "main": "index.js",
-  "devDependencies": {
-    "husky": "^9.1.7"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky"
@@ -20,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/atropinskiy/victoria_landing/issues"
   },
-  "homepage": "https://github.com/atropinskiy/victoria_landing#readme"
+  "homepage": "https://github.com/atropinskiy/victoria_landing#readme",
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
 }
