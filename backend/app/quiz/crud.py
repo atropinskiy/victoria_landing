@@ -6,6 +6,7 @@ from sqlalchemy.orm import selectinload
 from app.quiz.models import TestCategories, TestOptions, TestQuestions, Tests
 from app.quiz.schemas import (
     AnswerItem,
+    Bilingual,
     OptionAdminRead,
     OptionRead,
     QuestionAdminRead,
@@ -27,19 +28,19 @@ _NESTED_LOAD = selectinload(Tests.categories).selectinload(
 def to_public_read(test: Tests) -> TestRead:
     return TestRead(
         id=test.id,
-        title=test.title,
+        title=Bilingual(ru=test.title_ru, en=test.title_en),
         sections=[
             SectionRead(
                 id=category.id,
-                title=category.title,
+                title=Bilingual(ru=category.title_ru, en=category.title_en),
                 questions=[
                     QuestionRead(
                         id=question.id,
-                        text=question.text,
+                        text=Bilingual(ru=question.text_ru, en=question.text_en),
                         options=[
                             OptionRead(
                                 id=option.id,
-                                text=option.text,
+                                text=Bilingual(ru=option.text_ru, en=option.text_en),
                                 category=option.category,
                             )
                             for option in question.options
@@ -56,19 +57,19 @@ def to_public_read(test: Tests) -> TestRead:
 def to_admin_read(test: Tests) -> TestAdminRead:
     return TestAdminRead(
         id=test.id,
-        title=test.title,
+        title=Bilingual(ru=test.title_ru, en=test.title_en),
         sections=[
             SectionAdminRead(
                 id=category.id,
-                title=category.title,
+                title=Bilingual(ru=category.title_ru, en=category.title_en),
                 questions=[
                     QuestionAdminRead(
                         id=question.id,
-                        text=question.text,
+                        text=Bilingual(ru=question.text_ru, en=question.text_en),
                         options=[
                             OptionAdminRead(
                                 id=option.id,
-                                text=option.text,
+                                text=Bilingual(ru=option.text_ru, en=option.text_en),
                                 category=option.category,
                                 weight=option.weight,
                             )
@@ -87,15 +88,18 @@ def _build_categories(sections: list) -> list[TestCategories]:
     return [
         TestCategories(
             order=cat_index,
-            title=section.title,
+            title_ru=section.title.ru,
+            title_en=section.title.en,
             questions=[
                 TestQuestions(
                     order=q_index,
-                    text=question.text,
+                    text_ru=question.text.ru,
+                    text_en=question.text.en,
                     options=[
                         TestOptions(
                             order=o_index,
-                            text=option.text,
+                            text_ru=option.text.ru,
+                            text_en=option.text.en,
                             weight=option.weight,
                             category=option.category,
                         )
@@ -117,7 +121,11 @@ async def get_test(db: AsyncSession) -> Tests | None:
 
 
 async def create_test(db: AsyncSession, data: TestCreate) -> Tests:
-    test = Tests(title=data.title, categories=_build_categories(data.sections))
+    test = Tests(
+        title_ru=data.title.ru,
+        title_en=data.title.en,
+        categories=_build_categories(data.sections),
+    )
     db.add(test)
     await db.commit()
     return await get_test(db)
@@ -128,7 +136,8 @@ async def update_test(db: AsyncSession, data: TestCreate) -> Tests | None:
     if test is None:
         return None
 
-    test.title = data.title
+    test.title_ru = data.title.ru
+    test.title_en = data.title.en
     test.categories = _build_categories(data.sections)
     await db.commit()
     return await get_test(db)

@@ -1,24 +1,29 @@
 from pydantic import BaseModel, Field
 
 
+class Bilingual(BaseModel):
+    ru: str
+    en: str
+
+
 class OptionCreate(BaseModel):
-    text: str
+    text: Bilingual
     weight: int
-    category: str
+    category: str = Field(..., min_length=1)
 
 
 class QuestionCreate(BaseModel):
-    text: str
+    text: Bilingual
     options: list[OptionCreate] = Field(default_factory=list)
 
 
 class CategoryCreate(BaseModel):
-    title: str
+    title: Bilingual
     questions: list[QuestionCreate] = Field(default_factory=list)
 
 
 class TestCreate(BaseModel):
-    title: str
+    title: Bilingual
     sections: list[CategoryCreate] = Field(default_factory=list)
 
 
@@ -27,25 +32,25 @@ class TestCreate(BaseModel):
 
 class OptionRead(BaseModel):
     id: int
-    text: str
+    text: Bilingual
     category: str
 
 
 class QuestionRead(BaseModel):
     id: int
-    text: str
+    text: Bilingual
     options: list[OptionRead]
 
 
 class SectionRead(BaseModel):
     id: int
-    title: str
+    title: Bilingual
     questions: list[QuestionRead]
 
 
 class TestRead(BaseModel):
     id: int
-    title: str
+    title: Bilingual
     sections: list[SectionRead]
 
 
@@ -54,26 +59,26 @@ class TestRead(BaseModel):
 
 class OptionAdminRead(BaseModel):
     id: int
-    text: str
+    text: Bilingual
     category: str
     weight: int
 
 
 class QuestionAdminRead(BaseModel):
     id: int
-    text: str
+    text: Bilingual
     options: list[OptionAdminRead]
 
 
 class SectionAdminRead(BaseModel):
     id: int
-    title: str
+    title: Bilingual
     questions: list[QuestionAdminRead]
 
 
 class TestAdminRead(BaseModel):
     id: int
-    title: str
+    title: Bilingual
     sections: list[SectionAdminRead]
 
 
