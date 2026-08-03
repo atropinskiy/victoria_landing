@@ -26,25 +26,25 @@ class TestCreate(BaseModel):
 
 
 class OptionRead(BaseModel):
-    id: str
+    id: int
     text: str
     category: str
 
 
 class QuestionRead(BaseModel):
-    id: str
+    id: int
     text: str
     options: list[OptionRead]
 
 
 class SectionRead(BaseModel):
-    id: str
+    id: int
     title: str
     questions: list[QuestionRead]
 
 
 class TestRead(BaseModel):
-    id: str
+    id: int
     title: str
     sections: list[SectionRead]
 
@@ -53,33 +53,33 @@ class TestRead(BaseModel):
 
 
 class OptionAdminRead(BaseModel):
-    id: str
+    id: int
     text: str
     category: str
     weight: int
 
 
 class QuestionAdminRead(BaseModel):
-    id: str
+    id: int
     text: str
     options: list[OptionAdminRead]
 
 
 class SectionAdminRead(BaseModel):
-    id: str
+    id: int
     title: str
     questions: list[QuestionAdminRead]
 
 
 class TestAdminRead(BaseModel):
-    id: str
+    id: int
     title: str
     sections: list[SectionAdminRead]
 
 
 class AnswerItem(BaseModel):
-    question_id: str
-    option_id: str
+    question_id: int
+    option_id: int
 
 
 class TestSubmitRequest(BaseModel):

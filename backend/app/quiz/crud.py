@@ -17,6 +17,7 @@ from app.quiz.schemas import (
     TestRead,
     TestResultRead,
 )
+from app.user.models import User
 
 _NESTED_LOAD = selectinload(Tests.categories).selectinload(
     TestCategories.questions
@@ -25,19 +26,19 @@ _NESTED_LOAD = selectinload(Tests.categories).selectinload(
 
 def to_public_read(test: Tests) -> TestRead:
     return TestRead(
-        id=str(test.id),
+        id=test.id,
         title=test.title,
         sections=[
             SectionRead(
-                id=str(category.id),
+                id=category.id,
                 title=category.title,
                 questions=[
                     QuestionRead(
-                        id=str(question.id),
+                        id=question.id,
                         text=question.text,
                         options=[
                             OptionRead(
-                                id=str(option.id),
+                                id=option.id,
                                 text=option.text,
                                 category=option.category,
                             )
@@ -54,19 +55,19 @@ def to_public_read(test: Tests) -> TestRead:
 
 def to_admin_read(test: Tests) -> TestAdminRead:
     return TestAdminRead(
-        id=str(test.id),
+        id=test.id,
         title=test.title,
         sections=[
             SectionAdminRead(
-                id=str(category.id),
+                id=category.id,
                 title=category.title,
                 questions=[
                     QuestionAdminRead(
-                        id=str(question.id),
+                        id=question.id,
                         text=question.text,
                         options=[
                             OptionAdminRead(
-                                id=str(option.id),
+                                id=option.id,
                                 text=option.text,
                                 category=option.category,
                                 weight=option.weight,
@@ -108,48 +109,41 @@ def _build_categories(sections: list) -> list[TestCategories]:
     ]
 
 
-async def get_tests(db: AsyncSession) -> list[Tests]:
+async def get_test(db: AsyncSession) -> Tests | None:
     result = await db.execute(
-        select(Tests).options(_NESTED_LOAD).order_by(Tests.id)
+        select(Tests).options(_NESTED_LOAD).order_by(Tests.id).limit(1)
     )
-    return list(result.scalars().all())
-
-
-async def get_test(db: AsyncSession, test_id: int) -> Tests | None:
-    result = await db.execute(
-        select(Tests).options(_NESTED_LOAD).where(Tests.id == test_id)
-    )
-    return result.scalar_one_or_none()
+    return result.scalars().first()
 
 
 async def create_test(db: AsyncSession, data: TestCreate) -> Tests:
     test = Tests(title=data.title, categories=_build_categories(data.sections))
     db.add(test)
     await db.commit()
-    return await get_test(db, test.id)
+    return await get_test(db)
 
 
-async def update_test(db: AsyncSession, test_id: int, data: TestCreate) -> Tests | None:
-    test = await get_test(db, test_id)
+async def update_test(db: AsyncSession, data: TestCreate) -> Tests | None:
+    test = await get_test(db)
     if test is None:
         return None
 
     test.title = data.title
     test.categories = _build_categories(data.sections)
     await db.commit()
-    return await get_test(db, test_id)
+    return await get_test(db)
 
 
-async def delete_test(db: AsyncSession, test_id: int) -> bool:
-    result = await db.execute(delete(Tests).where(Tests.id == test_id))
+async def delete_test(db: AsyncSession) -> bool:
+    result = await db.execute(delete(Tests))
     await db.commit()
     return result.rowcount > 0
 
 
 async def submit_test(
-    db: AsyncSession, test_id: int, answers: list[AnswerItem]
+    db: AsyncSession, answers: list[AnswerItem], current_user: User | None = None
 ) -> TestResultRead | None:
-    test = await get_test(db, test_id)
+    test = await get_test(db)
     if test is None:
         return None
 
@@ -167,39 +161,31 @@ async def submit_test(
     answered_questions: set[int] = set()
 
     for answer in answers:
-        try:
-            question_id = int(answer.question_id)
-            option_id = int(answer.option_id)
-        except ValueError:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=(
-                    f"Некорректный id вопроса или ответа: "
-                    f"{answer.question_id}/{answer.option_id}"
-                ),
-            ) from None
-
-        if question_id in answered_questions:
+        if answer.question_id in answered_questions:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"На вопрос {answer.question_id} передано больше одного ответа",
             )
 
-        options = valid_options_by_question.get(question_id)
+        options = valid_options_by_question.get(answer.question_id)
         if options is None:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"Вопрос {answer.question_id} не принадлежит этому тесту",
             )
 
-        option = options.get(option_id)
+        option = options.get(answer.option_id)
         if option is None:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"Ответ {answer.option_id} не принадлежит вопросу {answer.question_id}",
             )
 
-        answered_questions.add(question_id)
+        answered_questions.add(answer.question_id)
         scores[option.category] += option.weight
+
+    if current_user is not None:
+        current_user.test_result = scores
+        await db.commit()
 
     return TestResultRead(scores=scores)
