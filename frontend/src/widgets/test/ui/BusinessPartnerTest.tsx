@@ -1,37 +1,35 @@
 "use client"
 
+import type { Test, TestAnswerItem, TestResult } from "@/entities/test"
 import type { Locale } from "@/shared/i18n"
-import type { Localized } from "@/widgets/test/ui/mockTest"
 
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useMemo, useState } from "react"
 
-import { MOCK_TEST } from "@/widgets/test/ui/mockTest"
+import { TestResultChart, useTestSubmit } from "@/entities/test"
 import { Button } from "@/shared/ui/button"
 import { RadioGroup, RadioGroupItem } from "@/shared/ui/radio-group"
 import { Typography } from "@/shared/ui/typography"
+import { Modal } from "@/shared/ui/widgets"
 
-const SUBMIT_LABEL: Localized = { ru: "Отправить результаты", en: "Submit results" }
-
-export interface TestAnswer {
-  questionId: string
-  optionId: string
-}
-
-export function BusinessPartnerTest() {
+export function BusinessPartnerTest({ test }: { test: Test }) {
+  const t = useTranslations("test")
   const locale = useLocale() as Locale
-  const [answers, setAnswers] = useState<Record<string, string>>({})
+  const [answers, setAnswers] = useState<TestAnswerItem[]>([])
+  const [result, setResult] = useState<TestResult | null>(null)
+
+  const { mutateAsync: submitTest, isPending } = useTestSubmit()
 
   const totalQuestions = useMemo(
-    () => MOCK_TEST.sections.reduce((acc, section) => acc + section.questions.length, 0),
+    () => test?.sections.reduce((acc, section) => acc + section.questions.length, 0),
     []
   )
 
   const questionNumbers = useMemo(() => {
-    const numbers = new Map<string, number>()
+    const numbers = new Map<number, number>()
     let order = 0
 
-    MOCK_TEST.sections.forEach((section) => {
+    test?.sections.forEach((section) => {
       section.questions.forEach((question) => {
         order += 1
         numbers.set(question.id, order)
@@ -41,27 +39,26 @@ export function BusinessPartnerTest() {
     return numbers
   }, [])
 
-  const isComplete = Object.keys(answers).length === totalQuestions
+  const isComplete = answers.length === totalQuestions
 
   function handleSubmit() {
-    const payload: TestAnswer[] = Object.entries(answers).map(([questionId, optionId]) => ({
-      questionId,
-      optionId,
-    }))
-    return payload
+    submitTest({ answers }).then((data) => setResult(data ?? null))
   }
 
-  function handleAnswerChange(questionId: string, value: string) {
-    setAnswers((prev) => ({ ...prev, [questionId]: value }))
+  function handleAnswerChange(questionId: number, value: string) {
+    setAnswers((prev) => [
+      ...prev.filter((answer) => answer.question_id !== questionId),
+      { question_id: questionId, option_id: Number(value) },
+    ])
   }
 
   return (
     <div className="flex flex-col gap-14">
       <Typography as="h1" variant="h1" color="burgundy" className="text-center">
-        {MOCK_TEST.title[locale]}
+        {test.title[locale]}
       </Typography>
 
-      {MOCK_TEST.sections.map((section) => (
+      {test.sections.map((section) => (
         <div key={section.id} className="flex flex-col gap-8">
           <Typography as="h3" variant="h3" color="burgundy">
             {section.title[locale]}
@@ -79,16 +76,18 @@ export function BusinessPartnerTest() {
 
                 <RadioGroup
                   aria-label={question.text[locale]}
-                  value={answers[question.id] ?? ""}
+                  value={String(
+                    answers.find((answer) => answer.question_id === question.id)?.option_id ?? ""
+                  )}
                   onValueChange={(value: string) => handleAnswerChange(question.id, value)}
                 >
                   {question.options.map((option) => (
                     <label
                       key={option.id}
-                      htmlFor={option.id}
+                      htmlFor={String(option.id)}
                       className="flex w-fit cursor-pointer items-center gap-2.5"
                     >
-                      <RadioGroupItem id={option.id} value={option.id} />
+                      <RadioGroupItem id={String(option.id)} value={String(option.id)} />
                       <Typography>{option.text[locale]}</Typography>
                     </label>
                   ))}
@@ -102,12 +101,21 @@ export function BusinessPartnerTest() {
       <Button
         type="button"
         size="lg"
-        disabled={!isComplete}
+        disabled={!isComplete || isPending}
         onClick={handleSubmit}
         className="self-center"
       >
-        {SUBMIT_LABEL[locale]}
+        {t("submit")}
       </Button>
+
+      <Modal
+        open={!!result}
+        onClose={() => setResult(null)}
+        title={t("resultTitle")}
+        className="sm:max-w-lg"
+      >
+        {result && <TestResultChart scores={result.scores} />}
+      </Modal>
     </div>
   )
 }

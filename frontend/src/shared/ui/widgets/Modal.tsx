@@ -7,14 +7,23 @@ interface ModalProps {
   onClose: (open: boolean) => void
   title: ReactNode
   showCloseButton?: boolean
+  className?: string
   children?: ReactNode
 }
 
-export function Modal({ open, onClose, title, showCloseButton = true, children }: ModalProps) {
+export function Modal({
+  open,
+  onClose,
+  title,
+  showCloseButton = true,
+  className,
+  children,
+}: ModalProps) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent
         showCloseButton={showCloseButton}
+        className={className}
         // onPointerDownOutside={(event) => event.preventDefault()}
       >
         <DialogHeader>

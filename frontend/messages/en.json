@@ -103,6 +103,7 @@
     "servicePartnershipWhoTitle": "Who it's for:",
     "servicePartnershipWhoText": "Any business partners: whether you've known each other for 10 minutes or 10 years, every business vitally needs this document",
     "servicePartnershipTestCta": "Take the test: what kind of business partner are you?",
+    "servicePartnershipResultCta": "Test result",
     "serviceDivorceTitle": "Divorce proceedings",
     "serviceDivorceApproachTitle": "The specifics of my approach:",
     "serviceDivorceApproachText": "Before going the usual route of litigation, we'll consider an alternative — mediation. This approach preserves your peace of mind, shortens the timeline, and keeps everything fully confidential for both sides.",
@@ -183,6 +184,17 @@
     "paragraph6": "Over the years I've built an extensive network of contacts: notaries, cadastral engineers, realtors, tax consultants. This helps me resolve matters faster and more comprehensively. I make sure to stay in touch: I answer questions in detail, explain every stage of the work, and keep the client informed of the case's progress.",
     "paragraph7": "My clients value me for my professionalism, reliability, and negotiation skills. I speak in plain language, because I believe a client should clearly understand what we're doing and why.",
     "paragraph8": "At the Kutafin Moscow State Law University, I additionally completed training in mediation and hold a mediator qualification. This lets me offer clients not only classic legal solutions but also effective out-of-court dispute resolution methods. Where relationships can be preserved and time saved, I apply mediation techniques; where necessary, I confidently defend interests in court."
+  },
+  "test": {
+    "title": "Test: What kind of business partner are you?",
+    "description": "Take a short test to find out what kind of business partner you are.",
+    "submit": "Submit results",
+    "resultTitle": "Your result",
+    "categories": {
+      "MONEY": "Money",
+      "PARTNERSHIP": "Partnership",
+      "ENTREPRENEUR": "Entrepreneur"
+    }
   },
   "contact": {
     "title": "Contact"
