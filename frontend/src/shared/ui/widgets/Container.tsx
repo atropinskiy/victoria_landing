@@ -17,13 +17,15 @@ const containerVariants = cva("w-full", {
 function Container({
   className,
   bg,
+  grow = false,
   ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof containerVariants>) {
+}: React.ComponentProps<"div"> & VariantProps<typeof containerVariants> & { grow?: boolean }) {
   return (
-    <div className={containerVariants({ bg })}>
+    <div className={cn(containerVariants({ bg }), grow && "flex flex-1 flex-col")}>
       <div
         className={cn(
           "mx-auto flex w-full max-w-7xl flex-col px-4 py-14 sm:px-6 lg:px-8 2xl:max-w-360",
+          grow && "flex-1",
           className
         )}
         {...props}

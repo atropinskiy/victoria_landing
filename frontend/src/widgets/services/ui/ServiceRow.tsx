@@ -1,9 +1,16 @@
-import type { Service } from "@/widgets/services/config/services"
+import type { Service } from "@/entities/service"
+import type { Locale } from "@/shared/i18n"
 import type { getTranslations } from "next-intl/server"
 
-import { Card, CardContent, CardHeader } from "@/shared/ui/card"
+import { ArrowRight } from "lucide-react"
+import { useLocale } from "next-intl"
+
+import { AppRoutes } from "@/shared/config"
+import { Link } from "@/shared/i18n"
+import { Button } from "@/shared/ui/button"
 import { Typography } from "@/shared/ui/typography"
 
+import { ServiceDescriptionCard } from "./ServiceDescriptionCard"
 import { ServiceStageCard } from "./ServiceStageCard"
 
 type Translator = Awaited<ReturnType<typeof getTranslations>>
@@ -14,51 +21,54 @@ interface ServiceRowProps {
 }
 
 export function ServiceRow({ service, t }: ServiceRowProps) {
-  const { titleKey, approach, stages, who } = service
+  const { title, description, stages } = service
+  const locale = useLocale() as Locale
+
+  const isBusinessPartnerRow =
+    title.ru.trim().toLowerCase() === "бизнес-партнёрство" ||
+    title.en.trim().toLowerCase() === "business partnership"
 
   return (
     <div className="flex flex-col gap-6">
-      <Typography variant="h3" color="burgundy">
-        {t(titleKey)}
-      </Typography>
+      <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-10">
+        <Typography variant="h3" color="burgundy" className="sm:h-9">
+          {title[locale]}
+        </Typography>
+        {isBusinessPartnerRow && (
+          <Button
+            asChild
+            rounded="full"
+            size="sm"
+            className="h-auto w-full gap-1.5 px-4 py-2 text-center whitespace-normal uppercase sm:h-9 sm:w-auto sm:whitespace-nowrap"
+          >
+            <Link href={AppRoutes.TEST_PAGE}>
+              {t("servicePartnershipTestCta")}
+              <ArrowRight className="ml-4" />
+            </Link>
+          </Button>
+        )}
+      </div>
 
-      <div className="flex snap-x snap-mandatory flex-row flex-nowrap items-stretch gap-6 overflow-x-auto pb-6">
-        {approach && (
-          <Card className="w-120 shrink-0 snap-start gap-10" variant="slate" rounded="rounded">
-            {approach.titleKey && <CardHeader>{t(approach.titleKey)}</CardHeader>}
-            <CardContent className="flex flex-1 flex-col justify-end">
-              <Typography variant="bodySm">{t(approach.textKey)}</Typography>
-              {approach.noteKey && (
-                <Typography variant="bodySm" className="mt-4">
-                  {t(approach.noteKey)}
-                </Typography>
-              )}
-            </CardContent>
-          </Card>
+      <div className="-mx-3 flex snap-x snap-mandatory scroll-px-3 flex-row flex-nowrap items-stretch gap-6 overflow-x-auto px-3 pb-6">
+        {description && (
+          <ServiceDescriptionCard title={t("approachTitleKey")}>
+            <Typography variant="bodySm">{description[locale]}</Typography>
+          </ServiceDescriptionCard>
         )}
 
         {stages.map((stage, index) => (
           <ServiceStageCard
-            key={stage.titleKey}
-            title={t(stage.titleKey)}
+            key={stage.title.ru}
+            title={stage.title[locale]}
             variant={index === 0 ? "primary" : "accent"}
           >
-            {stage.itemKeys.map((itemKey) => (
-              <Typography key={itemKey} variant="bodySm">
-                {t(itemKey)}
+            {stage.items.map((stage) => (
+              <Typography key={stage.ru} variant="bodySm">
+                {stage[locale]}
               </Typography>
             ))}
           </ServiceStageCard>
         ))}
-
-        {who && (
-          <div className="w-60 shrink-0 snap-start self-center">
-            <Typography className="font-bold">{t(who.titleKey)}</Typography>
-            <Typography variant="bodySm" className="mt-2">
-              {t(who.textKey)}
-            </Typography>
-          </div>
-        )}
       </div>
     </div>
   )

@@ -9,7 +9,7 @@ export function useMe() {
     queryFn: async () => {
       const { data, error } = await client.GET("/users/me")
       if (error) throw error
-      return data
+      return data.data ?? null
     },
     retry: false,
     staleTime: Infinity,
