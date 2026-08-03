@@ -23,7 +23,9 @@ jobs:
 
       # Проверяем, что backend собирается
       - name: Create backend env
-        run: touch backend/.env
+        run: |
+          touch backend/.env
+          touch backend/.env.local
 
       - name: Build containers
         run: docker compose build
