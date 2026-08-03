@@ -11,6 +11,8 @@ import { Link } from "@/shared/i18n"
 import { Button } from "@/shared/ui/button"
 import { Container } from "@/shared/ui/widgets"
 
+export const revalidate = 0
+
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("test")
 
