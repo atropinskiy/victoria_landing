@@ -30,7 +30,7 @@ function CategoryTick({ x, y, textAnchor, payload }: CategoryTickProps) {
       x={Number(x)}
       y={Number(y) + (isTop ? 0 : 20)}
       textAnchor="middle"
-      className="fill-navy text-lg"
+      className="fill-navy text-lg font-bold"
     >
       {payload.value}
     </text>
@@ -52,7 +52,7 @@ export function TestResultChart({ scores }: { scores: TestResult["scores"] }) {
     >
       <RadarChart
         data={data}
-        outerRadius="80%"
+        outerRadius="90%"
         margin={{ top: 10, right: 24, bottom: 10, left: 24 }}
       >
         <PolarGrid />

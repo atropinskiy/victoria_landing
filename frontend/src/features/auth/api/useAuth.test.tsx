@@ -3,7 +3,7 @@ import { cleanup, renderHook } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { useLogin, useLogout, useRegister } from "@/features/auth/api/useAuth"
-import { USER_QUERY_KEY } from "@/entities/user"
+import { QueryKeys } from "@/shared/config"
 import { getAuthToken, setAuthToken } from "@/shared/lib/auth"
 
 const mocks = vi.hoisted(() => ({
@@ -63,7 +63,7 @@ describe("useRegister", () => {
       },
     })
     expect(getAuthToken()).toBe("mock_token")
-    expect(queryClient.getQueryData(USER_QUERY_KEY)).toEqual({
+    expect(queryClient.getQueryData([QueryKeys.USER])).toEqual({
       id: 0,
       email: "mock_email",
       username: "mock_username",
@@ -91,7 +91,7 @@ describe("useRegister", () => {
     ).rejects.toEqual({ message: "Invalid register" })
 
     expect(getAuthToken()).toBeNull()
-    expect(queryClient.getQueryData(USER_QUERY_KEY)).toBeUndefined()
+    expect(queryClient.getQueryData([QueryKeys.USER])).toBeUndefined()
   })
 })
 
@@ -115,7 +115,7 @@ describe("useLogin", () => {
       body: { login: "user", password: "password" },
     })
     expect(getAuthToken()).toBe("test_token")
-    expect(queryClient.getQueryData(USER_QUERY_KEY)).toEqual({
+    expect(queryClient.getQueryData([QueryKeys.USER])).toEqual({
       access_token: "test_token",
       token_type: "bearer",
     })
@@ -135,7 +135,7 @@ describe("useLogin", () => {
     })
 
     expect(getAuthToken()).toBeNull()
-    expect(queryClient.getQueryData(USER_QUERY_KEY)).toBeUndefined()
+    expect(queryClient.getQueryData([QueryKeys.USER])).toBeUndefined()
   })
 })
 
@@ -145,7 +145,7 @@ describe("useLogout", () => {
 
     const queryClient = new QueryClient()
 
-    queryClient.setQueryData(USER_QUERY_KEY, { id: 1, username: "test" })
+    queryClient.setQueryData([QueryKeys.USER], { id: 1, username: "test" })
     setAuthToken("test_token")
 
     const { result } = renderHook(() => useLogout(), { wrapper: createWrapper(queryClient) })
@@ -153,7 +153,7 @@ describe("useLogout", () => {
 
     expect(mocks.post).toHaveBeenCalledWith("/users/logout")
     expect(getAuthToken()).toBeNull()
-    expect(queryClient.getQueryData(USER_QUERY_KEY)).toBeNull()
+    expect(queryClient.getQueryData([QueryKeys.USER])).toBeNull()
   })
 
   it("error", async () => {
@@ -161,13 +161,13 @@ describe("useLogout", () => {
 
     const queryClient = new QueryClient()
 
-    queryClient.setQueryData(USER_QUERY_KEY, { id: 1, username: "test_username" })
+    queryClient.setQueryData([QueryKeys.USER], { id: 1, username: "test_username" })
     setAuthToken("test_token")
 
     const { result } = renderHook(() => useLogout(), { wrapper: createWrapper(queryClient) })
     await expect(result.current.mutateAsync()).rejects.toThrow()
 
     expect(getAuthToken()).toBeNull()
-    expect(queryClient.getQueryData(USER_QUERY_KEY)).toBeNull()
+    expect(queryClient.getQueryData([QueryKeys.USER])).toBeNull()
   })
 })

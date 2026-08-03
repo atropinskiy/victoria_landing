@@ -21,15 +21,15 @@ export function BusinessPartnerTest({ test }: { test: Test }) {
   const { mutateAsync: submitTest, isPending } = useTestSubmit()
 
   const totalQuestions = useMemo(
-    () => test?.sections.reduce((acc, section) => acc + section.questions.length, 0),
-    []
+    () => test.sections.reduce((acc, section) => acc + section.questions.length, 0),
+    [test.sections]
   )
 
   const questionNumbers = useMemo(() => {
     const numbers = new Map<number, number>()
     let order = 0
 
-    test?.sections.forEach((section) => {
+    test.sections.forEach((section) => {
       section.questions.forEach((question) => {
         order += 1
         numbers.set(question.id, order)
@@ -37,7 +37,7 @@ export function BusinessPartnerTest({ test }: { test: Test }) {
     })
 
     return numbers
-  }, [])
+  }, [test.sections])
 
   const isComplete = answers.length === totalQuestions
 

@@ -188,7 +188,7 @@
   "test": {
     "title": "Test: What kind of business partner are you?",
     "description": "Take a short test to find out what kind of business partner you are.",
-    "submit": "Submit results",
+    "submit": "See my result",
     "resultTitle": "Your result",
     "categories": {
       "MONEY": "Money",

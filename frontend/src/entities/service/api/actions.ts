@@ -2,8 +2,8 @@
 
 import { updateTag } from "next/cache"
 
-import { SERVICES_QUERY_KEY } from "@/entities/service/config/queryKeys"
+import { QueryKeys } from "@/shared/config"
 
 export async function revalidateServices() {
-  updateTag(SERVICES_QUERY_KEY[0])
+  updateTag(QueryKeys.SERVICES)
 }

@@ -1,10 +1,10 @@
-import { SERVICES_QUERY_KEY } from "@/entities/service/config/queryKeys"
 import { client } from "@/shared/api"
+import { QueryKeys } from "@/shared/config"
 
 export async function getServices() {
   const { data, error } = await client.GET("/services", {
     cache: "force-cache",
-    next: { tags: SERVICES_QUERY_KEY },
+    next: { tags: [QueryKeys.SERVICES] },
   })
   if (error) throw error
   return data.data ?? []
