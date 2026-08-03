@@ -2,6 +2,7 @@ import type { Service, ServiceOrderItem, ServicePayload } from "@/entities/servi
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
+import { revalidateServices } from "@/entities/service/api/actions"
 import { SERVICES_QUERY_KEY } from "@/entities/service/config/queryKeys"
 import { client } from "@/shared/api"
 
@@ -16,6 +17,7 @@ export function useServiceCreate() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: SERVICES_QUERY_KEY })
+      revalidateServices()
     },
   })
 }
@@ -34,6 +36,7 @@ export function useServiceUpdate() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: SERVICES_QUERY_KEY })
+      revalidateServices()
     },
   })
 }
@@ -50,6 +53,7 @@ export function useServiceDelete() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: SERVICES_QUERY_KEY })
+      revalidateServices()
     },
   })
 }
@@ -62,6 +66,9 @@ export function useServiceOrder() {
       const { data, error } = await client.PATCH("/services/reorder", { body })
       if (error) throw error
       return data
+    },
+    onSuccess: () => {
+      revalidateServices()
     },
     onError: (_error, _items, context) => {
       if (context?.previous) {

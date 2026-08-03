@@ -1,27 +1,22 @@
-"use client"
+import { getTranslations } from "next-intl/server"
+import { Suspense } from "react"
 
-import { useTranslations } from "next-intl"
-
-import { useServices } from "@/entities/service"
 import { Container, SectionTitle } from "@/shared/ui/widgets"
 
-import { ServiceRow } from "./ServiceRow"
-import { ServiceRowSkeleton } from "./ServiceRowSkeleton"
+import { ServicesList } from "./ServicesList"
+import { ServicesListSkeleton } from "./ServicesListSkeleton"
 
-export function ServicesSection() {
-  const t = useTranslations("main")
-  const { data, isPending } = useServices()
+export async function ServicesSection() {
+  const t = await getTranslations("main")
 
   return (
     <Container id="services">
       <SectionTitle>{t("servicesTitle")}</SectionTitle>
 
       <div className="flex flex-col gap-8">
-        {isPending
-          ? Array.from({ length: 4 }).map((_, i) => (
-              <ServiceRowSkeleton key={i} isFirst={i === 0} />
-            ))
-          : data?.map((service) => <ServiceRow key={service.id} service={service} t={t} />)}
+        <Suspense fallback={<ServicesListSkeleton />}>
+          <ServicesList t={t} />
+        </Suspense>
       </div>
     </Container>
   )

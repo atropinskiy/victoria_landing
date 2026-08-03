@@ -1,9 +1,7 @@
 import type { Service } from "@/entities/service"
-import type { Locale } from "@/shared/i18n"
-import type { getTranslations } from "next-intl/server"
+import type { Locale, Translator } from "@/shared/i18n"
 
 import { ArrowRight } from "lucide-react"
-import { useLocale } from "next-intl"
 
 import { AppRoutes } from "@/shared/config"
 import { Link } from "@/shared/i18n"
@@ -13,16 +11,14 @@ import { Typography } from "@/shared/ui/typography"
 import { ServiceDescriptionCard } from "./ServiceDescriptionCard"
 import { ServiceStageCard } from "./ServiceStageCard"
 
-type Translator = Awaited<ReturnType<typeof getTranslations>>
-
 interface ServiceRowProps {
   service: Service
   t: Translator
+  locale: Locale
 }
 
-export function ServiceRow({ service, t }: ServiceRowProps) {
+export function ServiceRow({ service, t, locale }: ServiceRowProps) {
   const { title, description, stages } = service
-  const locale = useLocale() as Locale
 
   const isBusinessPartnerRow =
     title.ru.trim().toLowerCase() === "бизнес-партнёрство" ||

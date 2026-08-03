@@ -1,12 +1,12 @@
-import { useTranslations } from "next-intl"
+import { getTranslations } from "next-intl/server"
 
 import { FOOTER_DOCUMENT_LINKS } from "@/widgets/footer/config/links"
 import { Link } from "@/shared/i18n"
 import { Typography } from "@/shared/ui/typography"
 import { Container } from "@/shared/ui/widgets"
 
-export function Footer() {
-  const t = useTranslations("footer")
+export async function Footer() {
+  const t = await getTranslations("footer")
 
   return (
     <footer className="bg-default">
