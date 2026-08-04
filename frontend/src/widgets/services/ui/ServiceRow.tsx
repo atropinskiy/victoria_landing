@@ -1,9 +1,7 @@
 import type { Service } from "@/entities/service"
-import type { Locale } from "@/shared/i18n"
-import type { getTranslations } from "next-intl/server"
+import type { Locale, Translator } from "@/shared/i18n"
 
 import { ArrowRight } from "lucide-react"
-import { useLocale } from "next-intl"
 
 import { AppRoutes } from "@/shared/config"
 import { Link } from "@/shared/i18n"
@@ -12,17 +10,16 @@ import { Typography } from "@/shared/ui/typography"
 
 import { ServiceDescriptionCard } from "./ServiceDescriptionCard"
 import { ServiceStageCard } from "./ServiceStageCard"
-
-type Translator = Awaited<ReturnType<typeof getTranslations>>
+import { TestResultButton } from "./TestResultButton"
 
 interface ServiceRowProps {
   service: Service
   t: Translator
+  locale: Locale
 }
 
-export function ServiceRow({ service, t }: ServiceRowProps) {
+export function ServiceRow({ service, t, locale }: ServiceRowProps) {
   const { title, description, stages } = service
-  const locale = useLocale() as Locale
 
   const isBusinessPartnerRow =
     title.ru.trim().toLowerCase() === "бизнес-партнёрство" ||
@@ -30,22 +27,27 @@ export function ServiceRow({ service, t }: ServiceRowProps) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-10">
+      <div className="flex flex-col items-center gap-4 lg:flex-row lg:gap-10">
         <Typography variant="h3" color="burgundy" className="sm:h-9">
           {title[locale]}
         </Typography>
+
         {isBusinessPartnerRow && (
-          <Button
-            asChild
-            rounded="full"
-            size="sm"
-            className="h-auto w-full gap-1.5 px-4 py-2 text-center whitespace-normal uppercase sm:h-9 sm:w-auto sm:whitespace-nowrap"
-          >
-            <Link href={AppRoutes.TEST_PAGE}>
-              {t("servicePartnershipTestCta")}
-              <ArrowRight className="ml-4" />
-            </Link>
-          </Button>
+          <div className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
+            <Button
+              asChild
+              rounded="full"
+              size="sm"
+              className="h-auto w-full gap-1.5 px-4 py-2 text-center whitespace-normal uppercase sm:h-9 sm:w-auto sm:whitespace-nowrap"
+            >
+              <Link href={AppRoutes.TEST_PAGE}>
+                {t("servicePartnershipTestCta")}
+                <ArrowRight className="ml-4" />
+              </Link>
+            </Button>
+
+            <TestResultButton />
+          </div>
         )}
       </div>
 

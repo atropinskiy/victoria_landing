@@ -152,10 +152,69 @@ export interface paths {
         patch: operations["update_service_services__service_id__patch"];
         trace?: never;
     };
+    "/tests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Получить тест
+         * @description Возвращает тест целиком: секции, вопросы и варианты ответов. Вес (баллы) вариантов ответа в этом ответе не передаётся. Если тест ещё не создан, возвращает 404.
+         */
+        get: operations["get_test_tests_get"];
+        put?: never;
+        /**
+         * Создать тест
+         * @description Создаёт тест целиком вместе с секциями, вопросами и вариантами ответов (включая вес каждого варианта). Порядок секций/вопросов/вариантов в переданных массивах определяет их порядок отображения.
+         */
+        post: operations["create_test_tests_post"];
+        /**
+         * Удалить тест
+         * @description Удаляет тест. Каскадно удаляются все его секции, вопросы и варианты ответов. Если тест ещё не создан, возвращает 404.
+         */
+        delete: operations["delete_test_tests_delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Обновить тест
+         * @description Обновляет название и полностью заменяет секции/вопросы/варианты ответов теста. Если тест ещё не создан, возвращает 404.
+         */
+        patch: operations["update_test_tests_patch"];
+        trace?: never;
+    };
+    "/tests/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Отправить ответы и получить баллы
+         * @description Публичная ручка: принимает по одному выбранному варианту ответа на каждый вопрос и возвращает сумму баллов (weight) по каждой категории результата. Если пользователь авторизован (передан Bearer-токен), результат также сохраняется в его профиль. Если тест не найден — 404. Если передан несуществующий вопрос/вариант или на один вопрос передано больше одного ответа — 400.
+         */
+        post: operations["submit_test_tests_submit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AnswerItem */
+        AnswerItem: {
+            /** Question Id */
+            question_id: number;
+            /** Option Id */
+            option_id: number;
+        };
         /** Bilingual */
         Bilingual: {
             /** Ru */
@@ -163,10 +222,80 @@ export interface components {
             /** En */
             en: string;
         };
+        /** CategoryCreate */
+        CategoryCreate: {
+            title: components["schemas"]["Bilingual"];
+            /** Questions */
+            questions?: components["schemas"]["QuestionCreate"][];
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** OptionAdminRead */
+        OptionAdminRead: {
+            /** Id */
+            id: number;
+            text: components["schemas"]["Bilingual"];
+            /** Category */
+            category: string;
+            /** Weight */
+            weight: number;
+        };
+        /** OptionCreate */
+        OptionCreate: {
+            text: components["schemas"]["Bilingual"];
+            /** Weight */
+            weight: number;
+            /** Category */
+            category: string;
+        };
+        /** OptionRead */
+        OptionRead: {
+            /** Id */
+            id: number;
+            text: components["schemas"]["Bilingual"];
+            /** Category */
+            category: string;
+        };
+        /** QuestionAdminRead */
+        QuestionAdminRead: {
+            /** Id */
+            id: number;
+            text: components["schemas"]["Bilingual"];
+            /** Options */
+            options: components["schemas"]["OptionAdminRead"][];
+        };
+        /** QuestionCreate */
+        QuestionCreate: {
+            text: components["schemas"]["Bilingual"];
+            /** Options */
+            options?: components["schemas"]["OptionCreate"][];
+        };
+        /** QuestionRead */
+        QuestionRead: {
+            /** Id */
+            id: number;
+            text: components["schemas"]["Bilingual"];
+            /** Options */
+            options: components["schemas"]["OptionRead"][];
+        };
+        /** SectionAdminRead */
+        SectionAdminRead: {
+            /** Id */
+            id: number;
+            title: components["schemas"]["Bilingual"];
+            /** Questions */
+            questions: components["schemas"]["QuestionAdminRead"][];
+        };
+        /** SectionRead */
+        SectionRead: {
+            /** Id */
+            id: number;
+            title: components["schemas"]["Bilingual"];
+            /** Questions */
+            questions: components["schemas"]["QuestionRead"][];
         };
         /** ServiceCreate */
         ServiceCreate: {
@@ -228,6 +357,39 @@ export interface components {
             message: string;
             data?: components["schemas"]["ServiceRead"] | null;
         };
+        /** StatusResponse[TestAdminRead] */
+        StatusResponse_TestAdminRead_: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            data?: components["schemas"]["TestAdminRead"] | null;
+        };
+        /** StatusResponse[TestRead] */
+        StatusResponse_TestRead_: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            data?: components["schemas"]["TestRead"] | null;
+        };
+        /** StatusResponse[TestResultRead] */
+        StatusResponse_TestResultRead_: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            data?: components["schemas"]["TestResultRead"] | null;
+        };
         /** StatusResponse[UserRead] */
         StatusResponse_UserRead_: {
             /** Success */
@@ -261,6 +423,40 @@ export interface components {
             message: string;
             /** Data */
             data?: components["schemas"]["ServiceRead"][] | null;
+        };
+        /** TestAdminRead */
+        TestAdminRead: {
+            /** Id */
+            id: number;
+            title: components["schemas"]["Bilingual"];
+            /** Sections */
+            sections: components["schemas"]["SectionAdminRead"][];
+        };
+        /** TestCreate */
+        TestCreate: {
+            title: components["schemas"]["Bilingual"];
+            /** Sections */
+            sections?: components["schemas"]["CategoryCreate"][];
+        };
+        /** TestRead */
+        TestRead: {
+            /** Id */
+            id: number;
+            title: components["schemas"]["Bilingual"];
+            /** Sections */
+            sections: components["schemas"]["SectionRead"][];
+        };
+        /** TestResultRead */
+        TestResultRead: {
+            /** Scores */
+            scores: {
+                [key: string]: number;
+            };
+        };
+        /** TestSubmitRequest */
+        TestSubmitRequest: {
+            /** Answers */
+            answers?: components["schemas"]["AnswerItem"][];
         };
         /** UserCreate */
         UserCreate: {
@@ -306,6 +502,10 @@ export interface components {
             is_active: boolean;
             /** Role */
             role: string;
+            /** Test Result */
+            test_result?: {
+                [key: string]: number;
+            } | null;
         };
         /** UserWithToken */
         UserWithToken: {
@@ -319,6 +519,10 @@ export interface components {
             is_active: boolean;
             /** Role */
             role: string;
+            /** Test Result */
+            test_result?: {
+                [key: string]: number;
+            } | null;
             /** Access Token */
             access_token: string;
             /**
@@ -620,6 +824,180 @@ export interface operations {
                 };
             };
             /** @description Услуга не найдена */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_test_tests_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_TestRead_"];
+                };
+            };
+            /** @description Тест не найден */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    create_test_tests_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TestCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_TestAdminRead_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_test_tests_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_NoneType_"];
+                };
+            };
+            /** @description Тест не найден */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    update_test_tests_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TestCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_TestAdminRead_"];
+                };
+            };
+            /** @description Тест не найден */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_test_tests_submit_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TestSubmitRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_TestResultRead_"];
+                };
+            };
+            /** @description Некорректные ответы */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Тест не найден */
             404: {
                 headers: {
                     [name: string]: unknown;

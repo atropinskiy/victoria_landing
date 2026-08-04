@@ -2,8 +2,8 @@ import type { LoginPayload, RegisterPayload } from "@/features/auth/model/types"
 
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
-import { USER_QUERY_KEY } from "@/entities/user"
 import { client } from "@/shared/api"
+import { QueryKeys } from "@/shared/config"
 import { removeAuthToken, setAuthToken } from "@/shared/lib/auth"
 
 export function useRegister() {
@@ -18,7 +18,7 @@ export function useRegister() {
     onSuccess: (response) => {
       if (response.data) {
         setAuthToken(response.data.access_token)
-        queryClient.setQueryData(USER_QUERY_KEY, response.data)
+        queryClient.setQueryData([QueryKeys.USER], response.data)
       }
     },
   })
@@ -36,7 +36,7 @@ export function useLogin() {
     onSuccess: (response) => {
       if (response?.data) {
         setAuthToken(response.data.access_token)
-        queryClient.setQueryData(USER_QUERY_KEY, response.data)
+        queryClient.setQueryData([QueryKeys.USER], response.data)
       }
     },
   })
@@ -51,7 +51,7 @@ export function useLogout() {
     },
     onSettled: () => {
       removeAuthToken()
-      queryClient.setQueryData(USER_QUERY_KEY, null)
+      queryClient.setQueryData([QueryKeys.USER], null)
     },
   })
 }
