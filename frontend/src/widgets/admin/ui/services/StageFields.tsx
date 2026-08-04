@@ -56,7 +56,7 @@ export function StageFields({
       <Button
         className="mt-1"
         type="button"
-        variant="outline"
+        variant="surface"
         size="sm"
         onClick={() => append({ ru: "", en: "" })}
       >
