@@ -48,6 +48,7 @@ export function StageFields({
             label="Удалить пункт"
             icon={X}
             iconClassName="size-5"
+            disabled={index === 0}
             onClick={() => remove(index)}
           />
         </div>

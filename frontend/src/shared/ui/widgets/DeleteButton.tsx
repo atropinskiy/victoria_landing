@@ -1,11 +1,12 @@
 import type { LucideIcon } from "lucide-react"
+import type { ComponentProps } from "react"
 
 import { Trash2 } from "lucide-react"
 
 import { cn } from "@/shared/lib/utils"
 import { Button } from "@/shared/ui/button"
 
-interface DeleteButtonProps {
+interface DeleteButtonProps extends ComponentProps<typeof Button> {
   label: string
   onClick: () => void
   className?: string
@@ -19,6 +20,7 @@ export function DeleteButton({
   className,
   icon: Icon = Trash2,
   iconClassName,
+  ...props
 }: DeleteButtonProps) {
   return (
     <Button
@@ -30,6 +32,7 @@ export function DeleteButton({
         className
       )}
       onClick={onClick}
+      {...props}
     >
       <Icon className={cn("size-4", iconClassName)} />
     </Button>
