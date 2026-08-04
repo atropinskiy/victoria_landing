@@ -42,6 +42,7 @@ async def register(data: UserCreate, db: AsyncSession = Depends(get_db)):
             username=user.username,
             is_active=user.is_active,
             role=user.role,
+            test_result=user.test_result,
             access_token=token,
         ),
     )
@@ -113,6 +114,7 @@ async def login(data: UserLogin, db: AsyncSession = Depends(get_db)):
             username=user.username,
             is_active=user.is_active,
             role=user.role,
+            test_result=user.test_result,
             access_token=token,
         ),
     )

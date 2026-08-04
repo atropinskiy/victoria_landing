@@ -9,6 +9,7 @@ from app.user import crud
 from app.user.models import User
 
 bearer_scheme = HTTPBearer()
+optional_bearer_scheme = HTTPBearer(auto_error=False)
 
 
 async def get_token_payload(
@@ -53,3 +54,20 @@ async def get_current_user(
     if user is None:
         raise exc
     return user
+
+
+async def get_current_user_optional(
+    credentials: HTTPAuthorizationCredentials | None = Depends(optional_bearer_scheme),
+    db: AsyncSession = Depends(get_db),
+) -> User | None:
+    if credentials is None:
+        return None
+    try:
+        payload = await get_token_payload(credentials, db)
+    except HTTPException:
+        return None
+
+    username: str | None = payload.get("sub")
+    if username is None:
+        return None
+    return await crud.get_by_username(db, username)
