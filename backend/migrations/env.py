@@ -18,6 +18,7 @@ from app.core.database import Base
 import app.user.models  # noqa: F401 — регистрирует модели в Base.metadata
 import app.services.models  # noqa: F401 — регистрирует модели в Base.metadata
 import app.quiz.models  # noqa: F401 — регистрирует модели в Base.metadata
+import app.core.deploy_test_model  # noqa: F401 — регистрирует модели в Base.metadata
 
 target_metadata = Base.metadata
 
