@@ -18,6 +18,7 @@ class UserRead(BaseModel):
     username: str
     is_active: bool
     role: str
+    test_result: dict[str, int] | None = None
 
     model_config = {"from_attributes": True}
 
