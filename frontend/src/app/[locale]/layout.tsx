@@ -10,6 +10,9 @@ import { Toaster } from "@/shared/ui/sonner"
 
 import "../globals.css"
 
+// TODO: временно отключено, включить когда фича будет готова к показу
+// import { CookieConsentBanner } from "@/features/cookie-consent"
+
 export function generateStaticParams() {
   return [{ locale: "ru" }, { locale: "en" }]
 }
@@ -57,6 +60,7 @@ export default async function LocaleLayout({
           <div className="flex flex-1 flex-col">{children}</div>
           <Toaster />
           <AuthModals />
+          {/* <CookieConsentBanner /> */}
         </NextIntlClientProvider>
       </body>
     </html>

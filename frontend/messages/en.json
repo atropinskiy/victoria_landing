@@ -219,5 +219,10 @@
     "contacts": "Contacts",
     "backToSite": "Back to site",
     "accessDenied": "Access denied"
+  },
+  "cookieConsent": {
+    "text": "By continuing to use this site, you agree to the use of cookie files.",
+    "accept": "Accept",
+    "decline": "Decline"
   }
 }
