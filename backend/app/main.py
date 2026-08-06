@@ -3,6 +3,7 @@ from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.responses import JSONResponse
 
 from app.core.logging import log_middleware, logger
+from app.media.router import media_router
 from app.quiz.router import quiz_router
 from app.services.router import services_router
 from app.user.router import auth_router, user_router
@@ -34,6 +35,7 @@ app.include_router(user_router)
 # app.include_router(categories_router)  # категории пока отключены — см. app/services/router.py
 app.include_router(services_router)
 app.include_router(quiz_router)
+app.include_router(media_router)
 
 
 @app.exception_handler(HTTPException)

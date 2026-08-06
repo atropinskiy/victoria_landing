@@ -6,6 +6,8 @@ services:
     restart: unless-stopped
     env_file:
       - ./backend/.env.${APP_ENV:-server}
+    volumes:
+      - media_data:/app/media
     expose:
       - "8000"
     healthcheck:
@@ -50,3 +52,4 @@ services:
 volumes:
   postgres_data:
   portainer_data:
+  media_data:
