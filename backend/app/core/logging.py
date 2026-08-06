@@ -34,8 +34,8 @@ def _username_from_request(request: Request) -> str:
 
 
 async def log_middleware(request: Request, call_next) -> Response:
-    # WebSocket и страница терминала — не JSON, пропускаем
-    if request.url.path.startswith("/server"):
+    # WebSocket, страница терминала и медиафайлы — не JSON, пропускаем
+    if request.url.path.startswith(("/server", "/media")):
         return await call_next(request)
 
     start = datetime.now(UTC)
