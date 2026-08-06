@@ -16,7 +16,7 @@ import { Container } from "@/shared/ui/widgets"
 export function ConsultationForm() {
   const t = useTranslations("consultationForm")
   const [visible, setVisible] = useState(false)
-  const [hasCookieBanner, setHasCookieBanner] = useState(false)
+  const [, setHasCookieBanner] = useState(false)
 
   useEffect(() => {
     const timeout = setTimeout(() => setVisible(true), 1000)
