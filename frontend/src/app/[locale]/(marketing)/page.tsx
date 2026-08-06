@@ -11,6 +11,8 @@ import { HeroSection } from "@/widgets/hero"
 import { LibrarySection } from "@/widgets/library"
 import { ServicesSection } from "@/widgets/services"
 
+export const revalidate = 0
+
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
 

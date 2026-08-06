@@ -1,7 +1,11 @@
+import type { getTranslations } from "next-intl/server"
+
 export const LOCALE = {
   RU: "ru",
   EN: "en",
 } as const
+
+export type Translator = Awaited<ReturnType<typeof getTranslations>>
 
 export const locales = Object.values(LOCALE)
 

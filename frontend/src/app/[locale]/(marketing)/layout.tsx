@@ -1,6 +1,18 @@
+import { setRequestLocale } from "next-intl/server"
+
 import { Footer } from "@/widgets/footer"
 
-export default function MarketingLayout({ children }: { children: React.ReactNode }) {
+export default async function MarketingLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+
+  setRequestLocale(locale)
+
   return (
     <>
       {children}

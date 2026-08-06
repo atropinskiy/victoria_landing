@@ -14,8 +14,7 @@ function AdminGuard({ children }: { children: React.ReactNode }) {
   const t = useTranslations("admin")
   const hasRedirected = useRef(false)
 
-  const isAdmin = data?.data?.role === USER_ROLES.ADMIN
-  // const isAdmin = !!data
+  const isAdmin = data?.role === USER_ROLES.ADMIN
 
   useEffect(() => {
     if (isPending || isAdmin || hasRedirected.current) return

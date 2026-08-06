@@ -17,8 +17,7 @@ export function BurgerMenu() {
   const t = useTranslations("nav")
   const { data } = useMe()
 
-  // const isAdmin = !!data
-  const isAdmin = data?.data?.role === USER_ROLES.ADMIN
+  const isAdmin = data?.role === USER_ROLES.ADMIN
 
   return (
     <>
