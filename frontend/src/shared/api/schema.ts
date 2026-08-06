@@ -204,10 +204,90 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/media/{file_path}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Serve Media */
+        get: operations["serve_media_media__file_path__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Удалить файл
+         * @description Удаляет файл из медиахранилища.
+         */
+        delete: operations["delete_media_media__file_path__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/media/upload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Загрузить файл
+         * @description Загружает файл в медиахранилище и возвращает его путь (`/media/<имя_файла>`) для использования в других полях. Разрешённые расширения: .avif, .gif, .jpeg, .jpg, .png, .svg, .webp. Максимальный размер — 10 МБ.
+         */
+        post: operations["upload_media_media_upload_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/about": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Получить содержимое вкладки «Обо мне»
+         * @description Возвращает промо-текст (тизер на главной) и полный текст страницы «Обо мне» на русском и английском.
+         */
+        get: operations["get_about_about_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Обновить содержимое вкладки «Обо мне»
+         * @description Обновляет промо-текст и полный текст на русском и английском. HTML санитизируется на сервере. Предыдущая версия сохраняется в историю ревизий.
+         */
+        patch: operations["update_about_about_patch"];
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AboutRead */
+        AboutRead: {
+            promo: components["schemas"]["Bilingual"];
+            full: components["schemas"]["Bilingual"];
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** AboutUpdate */
+        AboutUpdate: {
+            promo: components["schemas"]["Bilingual"];
+            full: components["schemas"]["Bilingual"];
+        };
         /** AnswerItem */
         AnswerItem: {
             /** Question Id */
@@ -222,6 +302,11 @@ export interface components {
             /** En */
             en: string;
         };
+        /** Body_upload_media_media_upload_post */
+        Body_upload_media_media_upload_post: {
+            /** File */
+            file: string;
+        };
         /** CategoryCreate */
         CategoryCreate: {
             title: components["schemas"]["Bilingual"];
@@ -232,6 +317,11 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** MediaUploadRead */
+        MediaUploadRead: {
+            /** Url */
+            url: string;
         };
         /** OptionAdminRead */
         OptionAdminRead: {
@@ -333,6 +423,28 @@ export interface components {
             title: components["schemas"]["Bilingual"];
             /** Items */
             items: components["schemas"]["Bilingual"][];
+        };
+        /** StatusResponse[AboutRead] */
+        StatusResponse_AboutRead_: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            data?: components["schemas"]["AboutRead"] | null;
+        };
+        /** StatusResponse[MediaUploadRead] */
+        StatusResponse_MediaUploadRead_: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            data?: components["schemas"]["MediaUploadRead"] | null;
         };
         /** StatusResponse[NoneType] */
         StatusResponse_NoneType_: {
@@ -1003,6 +1115,161 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    serve_media_media__file_path__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                file_path: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_media_media__file_path__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                file_path: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_NoneType_"];
+                };
+            };
+            /** @description Файл не найден */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upload_media_media_upload_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_upload_media_media_upload_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_MediaUploadRead_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_about_about_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_AboutRead_"];
+                };
+            };
+        };
+    };
+    update_about_about_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AboutUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_AboutRead_"];
+                };
             };
             /** @description Validation Error */
             422: {

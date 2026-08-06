@@ -23,6 +23,8 @@ export function ServiceRow({ service, t, locale }: ServiceRowProps) {
 
   const isBusinessPartnerRow =
     title.ru.trim().toLowerCase() === "бизнес-партнёрство" ||
+    title.ru.trim().toLowerCase() === "бизнес-партнерство" ||
+    title.ru.trim().toLowerCase() === "бизнес партнерство" ||
     title.en.trim().toLowerCase() === "business partnership"
 
   return (

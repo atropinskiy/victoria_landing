@@ -32,7 +32,7 @@ export function ConfirmModal({
       {description ? <Typography variant="bodyXs">{description}</Typography> : null}
 
       <div className="mt-6 flex gap-4">
-        <Button variant="outline" className="flex-1" onClick={onClose} disabled={isPending}>
+        <Button variant="surface" className="flex-1" onClick={onClose} disabled={isPending}>
           {cancelLabel}
         </Button>
         <Button

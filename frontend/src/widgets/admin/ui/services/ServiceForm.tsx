@@ -64,9 +64,9 @@ export function ServiceForm({ defaultValues, submitLabel, isPending, submit }: S
       ))}
       <Button
         type="button"
-        variant="outline"
+        variant="surface"
         className="mt-4"
-        onClick={() => append({ title: { ru: "", en: "" }, items: [] })}
+        onClick={() => append({ title: { ru: "", en: "" }, items: [{ ru: "", en: "" }] })}
       >
         <Plus />
         Добавить этап

@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 
+import { COOKIE_CONSENT_EVENT, COOKIE_CONSENT_KEY } from "@/shared/config"
 import { cn } from "@/shared/lib/utils"
 import { Button } from "@/shared/ui/button"
 import { Card, CardContent } from "@/shared/ui/card"
@@ -15,10 +16,27 @@ import { Container } from "@/shared/ui/widgets"
 export function ConsultationForm() {
   const t = useTranslations("consultationForm")
   const [visible, setVisible] = useState(false)
+  const [, setHasCookieBanner] = useState(false)
 
   useEffect(() => {
     const timeout = setTimeout(() => setVisible(true), 1000)
     return () => clearTimeout(timeout)
+  }, [])
+
+  useEffect(() => {
+    const hasConsent = !!localStorage.getItem(COOKIE_CONSENT_KEY)
+    const applyHasCookieBanner = () => setHasCookieBanner(!hasConsent)
+    applyHasCookieBanner()
+
+    if (hasConsent) return
+
+    const handleCookieConsentChange = () => {
+      setHasCookieBanner(false)
+      window.removeEventListener(COOKIE_CONSENT_EVENT, handleCookieConsentChange)
+    }
+
+    window.addEventListener(COOKIE_CONSENT_EVENT, handleCookieConsentChange)
+    return () => window.removeEventListener(COOKIE_CONSENT_EVENT, handleCookieConsentChange)
   }, [])
 
   return (
@@ -27,8 +45,10 @@ export function ConsultationForm() {
         id="book"
         variant="accent"
         className={cn(
-          "w-full py-4 opacity-0 transition-opacity duration-500 sm:fixed sm:right-6 sm:bottom-6 sm:z-40 sm:mt-0 sm:w-72 sm:max-w-72",
-          visible && "opacity-100"
+          "w-full py-4 opacity-0 transition-[opacity,bottom] duration-500 sm:fixed sm:right-6 sm:z-40 sm:mt-0 sm:w-72 sm:max-w-72",
+          visible && "opacity-100",
+          // hasCookieBanner ? "sm:bottom-22" : "sm:bottom-6"
+          "sm:bottom-6"
         )}
       >
         <CardContent className="flex flex-col gap-3.5 px-4">

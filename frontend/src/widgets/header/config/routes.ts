@@ -17,4 +17,4 @@ export const NAV_LINKS: {
   { href: AppRoutes.CONTACTS, key: "contacts" },
 ]
 
-export const ADMIN_NAV_LINK = { href: AppRoutes.ADMIN.SERVICES, key: "admin" }
+export const ADMIN_NAV_LINK = { href: AppRoutes.ADMIN.ABOUT, key: "admin" }
