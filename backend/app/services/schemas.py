@@ -1,9 +1,8 @@
 from pydantic import BaseModel, Field
 
+from app.core.schemas import Bilingual
 
-class Bilingual(BaseModel):
-    ru: str
-    en: str
+__all__ = ["Bilingual"]
 
 
 # Категории пока отключены — см. app/services/models.py.

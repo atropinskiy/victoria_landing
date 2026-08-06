@@ -15,3 +15,8 @@ class BulkStatusResponse(BaseModel):
     success: bool
     message: str = ""
     count: int
+
+
+class Bilingual(BaseModel):
+    ru: str
+    en: str
