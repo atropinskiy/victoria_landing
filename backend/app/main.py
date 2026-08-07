@@ -3,6 +3,7 @@ from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.responses import JSONResponse
 
 from app.about.router import about_router
+from app.cases.router import cases_router
 from app.core.logging import log_middleware, logger
 from app.media.router import media_router
 from app.quiz.router import quiz_router
@@ -38,6 +39,7 @@ app.include_router(services_router)
 app.include_router(quiz_router)
 app.include_router(media_router)
 app.include_router(about_router)
+app.include_router(cases_router)
 
 
 @app.exception_handler(HTTPException)
