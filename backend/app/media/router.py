@@ -3,7 +3,7 @@ from fastapi.responses import FileResponse
 
 from app.core.schemas import StatusResponse
 from app.media.schemas import MediaUploadRead
-from app.media.service import resolve_media_path, save_upload
+from app.media.service import IMAGE_EXTENSIONS, resolve_media_path, save_upload
 from app.user.deps import get_current_user
 from app.user.models import User
 
@@ -31,7 +31,7 @@ async def upload_media(
     file: UploadFile,
     current_user: User = Depends(get_current_user),
 ):
-    url = await save_upload(file)
+    url = await save_upload(file, IMAGE_EXTENSIONS)
     return StatusResponse(
         success=True,
         message="Файл загружен",

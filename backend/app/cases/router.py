@@ -7,7 +7,7 @@ from app.cases import crud
 from app.cases.schemas import CaseOrderItem, CaseRead
 from app.core.database import get_db
 from app.core.schemas import Bilingual, StatusResponse
-from app.media.service import save_upload
+from app.media.service import IMAGE_EXTENSIONS, save_upload
 from app.user.deps import get_current_user
 from app.user.models import User
 
@@ -49,7 +49,7 @@ async def create_case(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    image_url = await save_upload(image) if image is not None else None
+    image_url = await save_upload(image, IMAGE_EXTENSIONS) if image is not None else None
     case = await crud.create_case(
         db,
         title=Bilingual(ru=title_ru, en=title_en),
@@ -116,7 +116,7 @@ async def update_case(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    image_url = await save_upload(image) if image is not None else None
+    image_url = await save_upload(image, IMAGE_EXTENSIONS) if image is not None else None
     case = await crud.update_case(
         db,
         case_id,

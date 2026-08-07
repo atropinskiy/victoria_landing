@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from app.about.router import about_router
 from app.cases.router import cases_router
 from app.core.logging import log_middleware, logger
+from app.library.router import library_router
 from app.media.router import media_router
 from app.quiz.router import quiz_router
 from app.services.router import services_router
@@ -40,6 +41,7 @@ app.include_router(quiz_router)
 app.include_router(media_router)
 app.include_router(about_router)
 app.include_router(cases_router)
+app.include_router(library_router)
 
 
 @app.exception_handler(HTTPException)

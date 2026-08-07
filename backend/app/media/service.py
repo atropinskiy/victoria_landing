@@ -5,7 +5,8 @@ from fastapi import HTTPException, UploadFile, status
 
 MEDIA_DIR = Path("media").resolve()
 MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10 МБ
-ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif", ".svg"}
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif", ".svg"}
+DOCUMENT_EXTENSIONS = {".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx"}
 
 
 def resolve_media_path(file_path: str) -> Path:
@@ -15,12 +16,12 @@ def resolve_media_path(file_path: str) -> Path:
     return full_path
 
 
-async def save_upload(file: UploadFile) -> str:
+async def save_upload(file: UploadFile, allowed_extensions: set[str]) -> str:
     ext = Path(file.filename or "").suffix.lower()
-    if ext not in ALLOWED_EXTENSIONS:
+    if ext not in allowed_extensions:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Недопустимый тип файла. Разрешены: {', '.join(sorted(ALLOWED_EXTENSIONS))}",
+            detail=f"Недопустимый тип файла. Разрешены: {', '.join(sorted(allowed_extensions))}",
         )
 
     contents = await file.read(MAX_UPLOAD_SIZE + 1)
