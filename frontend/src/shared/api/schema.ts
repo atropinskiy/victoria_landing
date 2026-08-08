@@ -236,7 +236,7 @@ export interface paths {
         put?: never;
         /**
          * Загрузить файл
-         * @description Загружает файл в медиахранилище и возвращает его путь (`/media/<имя_файла>`) для использования в других полях. Разрешённые расширения: .avif, .gif, .jpeg, .jpg, .png, .svg, .webp. Максимальный размер — 10 МБ.
+         * @description Загружает файл в медиахранилище и возвращает его путь (`/media/<имя_файла>`) для использования в других полях. Разрешённые расширения: jpg, jpeg, png, webp, avif, gif, svg. Максимальный размер — 10 МБ.
          */
         post: operations["upload_media_media_upload_post"];
         delete?: never;
@@ -267,6 +267,142 @@ export interface paths {
          * @description Обновляет промо-текст и полный текст на русском и английском. HTML санитизируется на сервере. Предыдущая версия сохраняется в историю ревизий.
          */
         patch: operations["update_about_about_patch"];
+        trace?: never;
+    };
+    "/cases": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Список кейсов
+         * @description Возвращает все кейсы, отсортированные по полю order.
+         */
+        get: operations["get_cases_cases_get"];
+        put?: never;
+        /**
+         * Создать кейс
+         * @description Создаёт кейс. Принимает multipart/form-data: текстовые поля названия/описания на русском и английском и файл изображения (jpg/jpeg/png/webp/avif/gif/svg, до 10 МБ). order передавать не нужно — новый кейс автоматически становится последним в списке.
+         */
+        post: operations["create_case_cases_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/reorder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Изменить порядок кейсов
+         * @description Принимает массив {id, order} — по одному объекту на каждый существующий кейс — и проставляет order каждому кейсу по его id. Ожидается, что фронт всегда присылает записи целиком (все кейсы разом). Если среди переданных id есть несуществующий, ничего не меняется и возвращается 404.
+         */
+        put: operations["reorder_cases_cases_reorder_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Удалить кейс
+         * @description Удаляет кейс по id вместе с его файлом изображения. Если кейс с таким id не найден, возвращает 404.
+         */
+        delete: operations["delete_case_cases__case_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Обновить кейс
+         * @description Обновляет название, описание и (опционально) изображение кейса по id. Принимает multipart/form-data, как и создание. Файл изображения необязателен — если не передан, текущая картинка остаётся без изменений; если передан, старый файл удаляется. order не меняется. Если кейс с таким id не найден, возвращает 404.
+         */
+        patch: operations["update_case_cases__case_id__patch"];
+        trace?: never;
+    };
+    "/library": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Список материалов библиотеки
+         * @description Возвращает все материалы библиотеки, отсортированные по полю order.
+         */
+        get: operations["get_library_library_get"];
+        put?: never;
+        /**
+         * Добавить материал
+         * @description Добавляет материал библиотеки. Принимает multipart/form-data: текстовые поля названия/описания на русском и английском, файл обложки (jpg/jpeg/png/webp/avif/gif/svg, до 10 МБ) и файл документа (pdf/doc/docx/xls/xlsx/ppt/pptx, до 10 МБ) — оба необязательны. order передавать не нужно — новый материал автоматически становится последним в списке.
+         */
+        post: operations["create_library_item_library_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/reorder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Изменить порядок материалов
+         * @description Принимает массив {id, order} — по одному объекту на каждый существующий материал — и проставляет order каждому по его id. Ожидается, что фронт всегда присылает записи целиком (все материалы разом). Если среди переданных id есть несуществующий, ничего не меняется и возвращается 404.
+         */
+        put: operations["reorder_library_library_reorder_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/{item_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Удалить материал
+         * @description Удаляет материал по id вместе с его файлами (обложка и документ). Если материал с таким id не найден, возвращает 404.
+         */
+        delete: operations["delete_library_item_library__item_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Обновить материал
+         * @description Обновляет название, описание и (опционально) обложку/документ материала по id. Принимает multipart/form-data, как и создание. Файлы необязательны — если не переданы, текущие остаются без изменений; если переданы, старые файлы удаляются. order не меняется. Если материал с таким id не найден, возвращает 404.
+         */
+        patch: operations["update_library_item_library__item_id__patch"];
         trace?: never;
     };
 }
@@ -302,10 +438,84 @@ export interface components {
             /** En */
             en: string;
         };
+        /** Body_create_case_cases_post */
+        Body_create_case_cases_post: {
+            /** Title Ru */
+            title_ru: string;
+            /** Title En */
+            title_en: string;
+            /** Description Ru */
+            description_ru: string;
+            /** Description En */
+            description_en: string;
+            /** Image */
+            image?: string | null;
+        };
+        /** Body_create_library_item_library_post */
+        Body_create_library_item_library_post: {
+            /** Title Ru */
+            title_ru: string;
+            /** Title En */
+            title_en: string;
+            /** Description Ru */
+            description_ru: string;
+            /** Description En */
+            description_en: string;
+            /** Image */
+            image?: string | null;
+            /** Document */
+            document?: string | null;
+        };
+        /** Body_update_case_cases__case_id__patch */
+        Body_update_case_cases__case_id__patch: {
+            /** Title Ru */
+            title_ru: string;
+            /** Title En */
+            title_en: string;
+            /** Description Ru */
+            description_ru: string;
+            /** Description En */
+            description_en: string;
+            /** Image */
+            image?: string | null;
+        };
+        /** Body_update_library_item_library__item_id__patch */
+        Body_update_library_item_library__item_id__patch: {
+            /** Title Ru */
+            title_ru: string;
+            /** Title En */
+            title_en: string;
+            /** Description Ru */
+            description_ru: string;
+            /** Description En */
+            description_en: string;
+            /** Image */
+            image?: string | null;
+            /** Document */
+            document?: string | null;
+        };
         /** Body_upload_media_media_upload_post */
         Body_upload_media_media_upload_post: {
             /** File */
             file: string;
+        };
+        /** CaseOrderItem */
+        CaseOrderItem: {
+            /** Id */
+            id: number;
+            /** Order */
+            order: number;
+        };
+        /** CaseRead */
+        CaseRead: {
+            /** Id */
+            id: number;
+            /** Order */
+            order: number;
+            title: components["schemas"]["Bilingual"];
+            description: components["schemas"]["Bilingual"];
+            /** Image */
+            image: string | null;
         };
         /** CategoryCreate */
         CategoryCreate: {
@@ -317,6 +527,26 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** LibraryOrderItem */
+        LibraryOrderItem: {
+            /** Id */
+            id: number;
+            /** Order */
+            order: number;
+        };
+        /** LibraryRead */
+        LibraryRead: {
+            /** Id */
+            id: number;
+            /** Order */
+            order: number;
+            title: components["schemas"]["Bilingual"];
+            description: components["schemas"]["Bilingual"];
+            /** Image */
+            image: string | null;
+            /** Document */
+            document: string | null;
         };
         /** MediaUploadRead */
         MediaUploadRead: {
@@ -435,6 +665,28 @@ export interface components {
             message: string;
             data?: components["schemas"]["AboutRead"] | null;
         };
+        /** StatusResponse[CaseRead] */
+        StatusResponse_CaseRead_: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            data?: components["schemas"]["CaseRead"] | null;
+        };
+        /** StatusResponse[LibraryRead] */
+        StatusResponse_LibraryRead_: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            data?: components["schemas"]["LibraryRead"] | null;
+        };
         /** StatusResponse[MediaUploadRead] */
         StatusResponse_MediaUploadRead_: {
             /** Success */
@@ -523,6 +775,30 @@ export interface components {
              */
             message: string;
             data?: components["schemas"]["UserWithToken"] | null;
+        };
+        /** StatusResponse[list[CaseRead]] */
+        StatusResponse_list_CaseRead__: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            /** Data */
+            data?: components["schemas"]["CaseRead"][] | null;
+        };
+        /** StatusResponse[list[LibraryRead]] */
+        StatusResponse_list_LibraryRead__: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            /** Data */
+            data?: components["schemas"]["LibraryRead"][] | null;
         };
         /** StatusResponse[list[ServiceRead]] */
         StatusResponse_list_ServiceRead__: {
@@ -1270,6 +1546,352 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["StatusResponse_AboutRead_"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_cases_cases_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_list_CaseRead__"];
+                };
+            };
+        };
+    };
+    create_case_cases_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_create_case_cases_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_CaseRead_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reorder_cases_cases_reorder_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CaseOrderItem"][];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_list_CaseRead__"];
+                };
+            };
+            /** @description Один или несколько кейсов не найдены */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_case_cases__case_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_NoneType_"];
+                };
+            };
+            /** @description Кейс не найден */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_case_cases__case_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                case_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_update_case_cases__case_id__patch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_CaseRead_"];
+                };
+            };
+            /** @description Кейс не найден */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_library_library_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_list_LibraryRead__"];
+                };
+            };
+        };
+    };
+    create_library_item_library_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_create_library_item_library_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_LibraryRead_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reorder_library_library_reorder_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LibraryOrderItem"][];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_list_LibraryRead__"];
+                };
+            };
+            /** @description Один или несколько материалов не найдены */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_library_item_library__item_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_NoneType_"];
+                };
+            };
+            /** @description Материал не найден */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_library_item_library__item_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_update_library_item_library__item_id__patch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_LibraryRead_"];
+                };
+            };
+            /** @description Материал не найден */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {
