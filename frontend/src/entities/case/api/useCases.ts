@@ -1,4 +1,4 @@
-import type { Case, CaseOrderItem, CasePayload } from "@/entities/case/model/types"
+import type { Case, CaseBody, CaseOrderItem, CasePayload } from "@/entities/case/model/types"
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
@@ -6,11 +6,21 @@ import { revalidateCases } from "@/entities/case/api/actions"
 import { client } from "@/shared/api"
 import { QueryKeys } from "@/shared/config"
 
-function toFormData(body: CasePayload) {
+// Схема описывает тело мультипарта плоским, поэтому body кастуется к ней,
+// а реальное тело запроса собирает эта функция
+function toFormData({ title, description, image }: CasePayload) {
+  const fields: Record<keyof CaseBody, string | File | undefined> = {
+    title_ru: title.ru,
+    title_en: title.en,
+    description_ru: description.ru,
+    description_en: description.en,
+    image,
+  }
+
   const formData = new FormData()
 
-  for (const [key, value] of Object.entries(body)) {
-    if (value !== undefined && value !== null) formData.append(key, value)
+  for (const [key, value] of Object.entries(fields)) {
+    if (value !== undefined) formData.append(key, value)
   }
 
   return formData
@@ -20,8 +30,11 @@ export function useCaseCreate() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (body: CasePayload) => {
-      const { data, error } = await client.POST("/cases", { body, bodySerializer: toFormData })
+    mutationFn: async (payload: CasePayload) => {
+      const { data, error } = await client.POST("/cases", {
+        body: payload as unknown as CaseBody,
+        bodySerializer: () => toFormData(payload),
+      })
       if (error) throw error
       return data
     },
@@ -36,10 +49,10 @@ export function useCaseUpdate() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async ({ case_id, body }: { case_id: number; body: CasePayload }) => {
+    mutationFn: async ({ case_id, payload }: { case_id: number; payload: CasePayload }) => {
       const { data, error } = await client.PATCH("/cases/{case_id}", {
-        body,
-        bodySerializer: toFormData,
+        body: payload as unknown as CaseBody,
+        bodySerializer: () => toFormData(payload),
         params: { path: { case_id } },
       })
       if (error) throw error
