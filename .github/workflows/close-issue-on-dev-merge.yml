@@ -4,11 +4,11 @@ on:
   pull_request:
     types: [closed]
     branches:
-      - dev  # Срабатывает только для PR, влитых в dev
+      - dev
 
 jobs:
   close-issue:
-    if: github.event.pull_request.merged == true  # Только при успешном мерже
+    if: github.event.pull_request.merged == true  # Важно! Только при успешном мерже
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -19,7 +19,6 @@ jobs:
         with:
           script: |
             const body = context.payload.pull_request.body || '';
-            // Ищем в описании PR ключевые слова close #, fixes # и т.д.
             const re = /(?:close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#(\d+)/gi;
             let match;
             while ((match = re.exec(body)) !== null) {
