@@ -411,8 +411,8 @@ export interface components {
     schemas: {
         /** AboutRead */
         AboutRead: {
-            promo: components["schemas"]["Bilingual"];
-            full: components["schemas"]["Bilingual"];
+            promo: components["schemas"]["app__core__schemas__Bilingual"];
+            full: components["schemas"]["app__core__schemas__Bilingual"];
             /**
              * Updated At
              * Format: date-time
@@ -421,8 +421,8 @@ export interface components {
         };
         /** AboutUpdate */
         AboutUpdate: {
-            promo: components["schemas"]["Bilingual"];
-            full: components["schemas"]["Bilingual"];
+            promo: components["schemas"]["app__core__schemas__Bilingual"];
+            full: components["schemas"]["app__core__schemas__Bilingual"];
         };
         /** AnswerItem */
         AnswerItem: {
@@ -431,13 +431,6 @@ export interface components {
             /** Option Id */
             option_id: number;
         };
-        /** Bilingual */
-        Bilingual: {
-            /** Ru */
-            ru: string;
-            /** En */
-            en: string;
-        };
         /** Body_create_case_cases_post */
         Body_create_case_cases_post: {
             /** Title Ru */
@@ -445,9 +438,9 @@ export interface components {
             /** Title En */
             title_en: string;
             /** Description Ru */
-            description_ru: string;
+            description_ru?: string | null;
             /** Description En */
-            description_en: string;
+            description_en?: string | null;
             /** Image */
             image?: string | null;
         };
@@ -458,9 +451,9 @@ export interface components {
             /** Title En */
             title_en: string;
             /** Description Ru */
-            description_ru: string;
+            description_ru?: string | null;
             /** Description En */
-            description_en: string;
+            description_en?: string | null;
             /** Image */
             image?: string | null;
             /** Document */
@@ -473,9 +466,9 @@ export interface components {
             /** Title En */
             title_en: string;
             /** Description Ru */
-            description_ru: string;
+            description_ru?: string | null;
             /** Description En */
-            description_en: string;
+            description_en?: string | null;
             /** Image */
             image?: string | null;
         };
@@ -486,9 +479,9 @@ export interface components {
             /** Title En */
             title_en: string;
             /** Description Ru */
-            description_ru: string;
+            description_ru?: string | null;
             /** Description En */
-            description_en: string;
+            description_en?: string | null;
             /** Image */
             image?: string | null;
             /** Document */
@@ -512,14 +505,14 @@ export interface components {
             id: number;
             /** Order */
             order: number;
-            title: components["schemas"]["Bilingual"];
-            description: components["schemas"]["Bilingual"];
+            title: components["schemas"]["app__core__schemas__Bilingual"];
+            description: components["schemas"]["app__core__schemas__Bilingual"];
             /** Image */
             image: string | null;
         };
         /** CategoryCreate */
         CategoryCreate: {
-            title: components["schemas"]["Bilingual"];
+            title: components["schemas"]["app__quiz__schemas__Bilingual"];
             /** Questions */
             questions?: components["schemas"]["QuestionCreate"][];
         };
@@ -541,8 +534,8 @@ export interface components {
             id: number;
             /** Order */
             order: number;
-            title: components["schemas"]["Bilingual"];
-            description: components["schemas"]["Bilingual"];
+            title: components["schemas"]["app__core__schemas__Bilingual"];
+            description: components["schemas"]["app__core__schemas__Bilingual"];
             /** Image */
             image: string | null;
             /** Document */
@@ -557,7 +550,7 @@ export interface components {
         OptionAdminRead: {
             /** Id */
             id: number;
-            text: components["schemas"]["Bilingual"];
+            text: components["schemas"]["app__quiz__schemas__Bilingual"];
             /** Category */
             category: string;
             /** Weight */
@@ -565,7 +558,7 @@ export interface components {
         };
         /** OptionCreate */
         OptionCreate: {
-            text: components["schemas"]["Bilingual"];
+            text: components["schemas"]["app__quiz__schemas__Bilingual"];
             /** Weight */
             weight: number;
             /** Category */
@@ -575,7 +568,7 @@ export interface components {
         OptionRead: {
             /** Id */
             id: number;
-            text: components["schemas"]["Bilingual"];
+            text: components["schemas"]["app__quiz__schemas__Bilingual"];
             /** Category */
             category: string;
         };
@@ -583,13 +576,13 @@ export interface components {
         QuestionAdminRead: {
             /** Id */
             id: number;
-            text: components["schemas"]["Bilingual"];
+            text: components["schemas"]["app__quiz__schemas__Bilingual"];
             /** Options */
             options: components["schemas"]["OptionAdminRead"][];
         };
         /** QuestionCreate */
         QuestionCreate: {
-            text: components["schemas"]["Bilingual"];
+            text: components["schemas"]["app__quiz__schemas__Bilingual"];
             /** Options */
             options?: components["schemas"]["OptionCreate"][];
         };
@@ -597,7 +590,7 @@ export interface components {
         QuestionRead: {
             /** Id */
             id: number;
-            text: components["schemas"]["Bilingual"];
+            text: components["schemas"]["app__quiz__schemas__Bilingual"];
             /** Options */
             options: components["schemas"]["OptionRead"][];
         };
@@ -605,7 +598,7 @@ export interface components {
         SectionAdminRead: {
             /** Id */
             id: number;
-            title: components["schemas"]["Bilingual"];
+            title: components["schemas"]["app__quiz__schemas__Bilingual"];
             /** Questions */
             questions: components["schemas"]["QuestionAdminRead"][];
         };
@@ -613,14 +606,14 @@ export interface components {
         SectionRead: {
             /** Id */
             id: number;
-            title: components["schemas"]["Bilingual"];
+            title: components["schemas"]["app__quiz__schemas__Bilingual"];
             /** Questions */
             questions: components["schemas"]["QuestionRead"][];
         };
         /** ServiceCreate */
         ServiceCreate: {
-            title: components["schemas"]["Bilingual"];
-            description: components["schemas"]["Bilingual"];
+            title: components["schemas"]["app__core__schemas__Bilingual"];
+            description: components["schemas"]["app__core__schemas__Bilingual"];
             /** Stages */
             stages?: components["schemas"]["StageCreate"][];
         };
@@ -637,22 +630,22 @@ export interface components {
             id: number;
             /** Order */
             order: number;
-            title: components["schemas"]["Bilingual"];
-            description: components["schemas"]["Bilingual"];
+            title: components["schemas"]["app__core__schemas__Bilingual"];
+            description: components["schemas"]["app__core__schemas__Bilingual"];
             /** Stages */
             stages: components["schemas"]["StageRead"][];
         };
         /** StageCreate */
         StageCreate: {
-            title: components["schemas"]["Bilingual"];
+            title: components["schemas"]["app__core__schemas__Bilingual"];
             /** Items */
-            items?: components["schemas"]["Bilingual"][];
+            items?: components["schemas"]["app__core__schemas__Bilingual"][];
         };
         /** StageRead */
         StageRead: {
-            title: components["schemas"]["Bilingual"];
+            title: components["schemas"]["app__core__schemas__Bilingual"];
             /** Items */
-            items: components["schemas"]["Bilingual"][];
+            items: components["schemas"]["app__core__schemas__Bilingual"][];
         };
         /** StatusResponse[AboutRead] */
         StatusResponse_AboutRead_: {
@@ -816,13 +809,13 @@ export interface components {
         TestAdminRead: {
             /** Id */
             id: number;
-            title: components["schemas"]["Bilingual"];
+            title: components["schemas"]["app__quiz__schemas__Bilingual"];
             /** Sections */
             sections: components["schemas"]["SectionAdminRead"][];
         };
         /** TestCreate */
         TestCreate: {
-            title: components["schemas"]["Bilingual"];
+            title: components["schemas"]["app__quiz__schemas__Bilingual"];
             /** Sections */
             sections?: components["schemas"]["CategoryCreate"][];
         };
@@ -830,7 +823,7 @@ export interface components {
         TestRead: {
             /** Id */
             id: number;
-            title: components["schemas"]["Bilingual"];
+            title: components["schemas"]["app__quiz__schemas__Bilingual"];
             /** Sections */
             sections: components["schemas"]["SectionRead"][];
         };
@@ -931,6 +924,20 @@ export interface components {
             input?: unknown;
             /** Context */
             ctx?: Record<string, never>;
+        };
+        /** Bilingual */
+        app__core__schemas__Bilingual: {
+            /** Ru */
+            ru?: string | null;
+            /** En */
+            en?: string | null;
+        };
+        /** Bilingual */
+        app__quiz__schemas__Bilingual: {
+            /** Ru */
+            ru: string;
+            /** En */
+            en: string;
         };
     };
     responses: never;

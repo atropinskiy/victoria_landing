@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-import { bilingual } from "@/shared/lib/validation"
+import { bilingual, bilingualOptional } from "@/shared/lib/validation"
 
 export const MAX_IMAGE_SIZE = 10 * 1024 * 1024
 
@@ -13,7 +13,7 @@ const imageFile = z
 
 export const caseFormSchema = z.object({
   title: bilingual,
-  description: bilingual,
+  description: bilingualOptional,
   image: imageFile.optional(),
 })
 

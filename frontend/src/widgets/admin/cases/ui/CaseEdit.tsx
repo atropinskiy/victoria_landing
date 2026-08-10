@@ -37,7 +37,10 @@ export function CaseEdit({ caseItem, onSaved }: CaseEditProps) {
       submitLabel="Сохранить"
       isPending={isPending}
       submit={handleUpdate}
-      defaultValues={{ title: caseItem.title, description: caseItem.description }}
+      defaultValues={{
+        title: { ru: caseItem.title.ru ?? "", en: caseItem.title.en ?? "" },
+        description: { ru: caseItem.description.ru ?? "", en: caseItem.description.en ?? "" },
+      }}
       previewUrl={caseItem.image}
     />
   )
