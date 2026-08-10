@@ -43,13 +43,15 @@ async def get_cases(db: AsyncSession = Depends(get_db)):
 async def create_case(
     title_ru: Annotated[str, Form()],
     title_en: Annotated[str, Form()],
-    description_ru: Annotated[str, Form()],
-    description_en: Annotated[str, Form()],
+    description_ru: Annotated[str | None, Form()] = None,
+    description_en: Annotated[str | None, Form()] = None,
     image: Annotated[UploadFile | None, File()] = None,
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    image_url = await save_upload(image, IMAGE_EXTENSIONS) if image is not None else None
+    image_url = (
+        await save_upload(image, IMAGE_EXTENSIONS) if image is not None else None
+    )
     case = await crud.create_case(
         db,
         title=Bilingual(ru=title_ru, en=title_en),
@@ -110,13 +112,15 @@ async def update_case(
     case_id: int,
     title_ru: Annotated[str, Form()],
     title_en: Annotated[str, Form()],
-    description_ru: Annotated[str, Form()],
-    description_en: Annotated[str, Form()],
+    description_ru: Annotated[str | None, Form()] = None,
+    description_en: Annotated[str | None, Form()] = None,
     image: Annotated[UploadFile | None, File()] = None,
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    image_url = await save_upload(image, IMAGE_EXTENSIONS) if image is not None else None
+    image_url = (
+        await save_upload(image, IMAGE_EXTENSIONS) if image is not None else None
+    )
     case = await crud.update_case(
         db,
         case_id,
@@ -125,7 +129,9 @@ async def update_case(
         image=image_url,
     )
     if case is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Кейс не найден")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Кейс не найден"
+        )
     return StatusResponse(
         success=True,
         message="Кейс обновлён",
@@ -150,5 +156,7 @@ async def delete_case(
 ):
     deleted = await crud.delete_case(db, case_id)
     if not deleted:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Кейс не найден")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Кейс не найден"
+        )
     return StatusResponse(success=True, message="Кейс удалён", data=None)

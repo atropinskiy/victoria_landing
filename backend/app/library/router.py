@@ -45,16 +45,20 @@ async def get_library(db: AsyncSession = Depends(get_db)):
 async def create_library_item(
     title_ru: Annotated[str, Form()],
     title_en: Annotated[str, Form()],
-    description_ru: Annotated[str, Form()],
-    description_en: Annotated[str, Form()],
+    description_ru: Annotated[str | None, Form()] = None,
+    description_en: Annotated[str | None, Form()] = None,
     image: Annotated[UploadFile | None, File()] = None,
     document: Annotated[UploadFile | None, File()] = None,
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    image_url = await save_upload(image, IMAGE_EXTENSIONS) if image is not None else None
+    image_url = (
+        await save_upload(image, IMAGE_EXTENSIONS) if image is not None else None
+    )
     document_url = (
-        await save_upload(document, DOCUMENT_EXTENSIONS) if document is not None else None
+        await save_upload(document, DOCUMENT_EXTENSIONS)
+        if document is not None
+        else None
     )
     item = await crud.create_item(
         db,
@@ -116,16 +120,20 @@ async def update_library_item(
     item_id: int,
     title_ru: Annotated[str, Form()],
     title_en: Annotated[str, Form()],
-    description_ru: Annotated[str, Form()],
-    description_en: Annotated[str, Form()],
+    description_ru: Annotated[str | None, Form()] = None,
+    description_en: Annotated[str | None, Form()] = None,
     image: Annotated[UploadFile | None, File()] = None,
     document: Annotated[UploadFile | None, File()] = None,
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    image_url = await save_upload(image, IMAGE_EXTENSIONS) if image is not None else None
+    image_url = (
+        await save_upload(image, IMAGE_EXTENSIONS) if image is not None else None
+    )
     document_url = (
-        await save_upload(document, DOCUMENT_EXTENSIONS) if document is not None else None
+        await save_upload(document, DOCUMENT_EXTENSIONS)
+        if document is not None
+        else None
     )
     item = await crud.update_item(
         db,
@@ -136,7 +144,9 @@ async def update_library_item(
         document=document_url,
     )
     if item is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Материал не найден")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Материал не найден"
+        )
     return StatusResponse(
         success=True,
         message="Материал обновлён",
@@ -161,5 +171,7 @@ async def delete_library_item(
 ):
     deleted = await crud.delete_item(db, item_id)
     if not deleted:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Материал не найден")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Материал не найден"
+        )
     return StatusResponse(success=True, message="Материал удалён", data=None)
