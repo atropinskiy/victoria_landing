@@ -196,6 +196,8 @@ docker compose up --build
 docker compose -f docker-compose.prod.yml pull
 docker compose -f docker-compose.prod.yml up -d !
 
+Тест GHP
+
 Важно: Нужно дождаться выполнения action на Github. Команды для прода работают с созданными и проверенными образами.
 
 ### Husky
