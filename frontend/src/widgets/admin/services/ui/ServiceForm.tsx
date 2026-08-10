@@ -1,16 +1,17 @@
 "use client"
 
-import type { ServiceFormValues } from "@/widgets/admin/model/service-schema"
+import type { ServiceFormValues } from "@/widgets/admin/services/model/service-schema"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Plus } from "lucide-react"
 import { useFieldArray, useForm } from "react-hook-form"
 
-import { serviceFormSchema } from "@/widgets/admin/model/service-schema"
-import { BilingualRow } from "@/widgets/admin/ui/BilingualRow"
-import { StageFields } from "@/widgets/admin/ui/services/StageFields"
+import { serviceFormSchema } from "@/widgets/admin/services/model/service-schema"
 import { Button } from "@/shared/ui/button"
 import { Typography } from "@/shared/ui/typography"
+import { BilingualRow } from "@/shared/ui/widgets"
+
+import { StageFields } from "./StageFields"
 
 interface ServiceFormProps {
   defaultValues?: ServiceFormValues

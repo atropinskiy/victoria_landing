@@ -1,6 +1,6 @@
 import { Skeleton } from "@/shared/ui/skeleton"
 
-export function ServicesListSkeleton() {
+export function SortableListSkeleton() {
   return (
     <ul className="overflow-hidden rounded-sm border bg-white">
       {Array.from({ length: 4 }).map((_, i) => (

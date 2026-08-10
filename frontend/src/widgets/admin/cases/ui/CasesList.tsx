@@ -7,11 +7,17 @@ import { useLocale } from "next-intl"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import { CaseEdit } from "@/widgets/admin/ui/cases/CaseEdit"
-import { CasesListSkeleton } from "@/widgets/admin/ui/cases/CasesListSkeleton"
 import { useCaseDelete, useCaseOrder, useCases } from "@/entities/case"
 import { Typography } from "@/shared/ui/typography"
-import { ConfirmModal, DeleteButton, EditButton, SortableList } from "@/shared/ui/widgets"
+import {
+  ConfirmModal,
+  DeleteButton,
+  EditButton,
+  SortableList,
+  SortableListSkeleton,
+} from "@/shared/ui/widgets"
+
+import { CaseEdit } from "./CaseEdit"
 
 export function CasesList() {
   const locale = useLocale() as Locale
@@ -46,7 +52,7 @@ export function CasesList() {
     )
   }
 
-  if (isPending) return <CasesListSkeleton />
+  if (isPending) return <SortableListSkeleton />
   if (!cases) return null
 
   return (

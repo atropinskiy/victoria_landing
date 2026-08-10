@@ -7,11 +7,17 @@ import { useLocale } from "next-intl"
 import { useState } from "react"
 import { toast } from "sonner"
 
-import { ServiceEdit } from "@/widgets/admin/ui/services/ServiceEdit"
-import { ServicesListSkeleton } from "@/widgets/admin/ui/services/ServicesListSkeleton"
 import { useServiceDelete, useServiceOrder, useServices } from "@/entities/service"
 import { Typography } from "@/shared/ui/typography"
-import { ConfirmModal, DeleteButton, EditButton, SortableList } from "@/shared/ui/widgets"
+import {
+  ConfirmModal,
+  DeleteButton,
+  EditButton,
+  SortableList,
+  SortableListSkeleton,
+} from "@/shared/ui/widgets"
+
+import { ServiceEdit } from "./ServiceEdit"
 
 export function ServicesList() {
   const locale = useLocale() as Locale
@@ -46,7 +52,7 @@ export function ServicesList() {
     )
   }
 
-  if (isPending) return <ServicesListSkeleton />
+  if (isPending) return <SortableListSkeleton />
   if (!services) return null
 
   return (

@@ -1,12 +1,13 @@
 "use client"
 
-import type { ServiceFormValues } from "@/widgets/admin/model/service-schema"
+import type { ServiceFormValues } from "@/widgets/admin/services/model/service-schema"
 
 import { toast } from "sonner"
 
-import { ServiceForm } from "@/widgets/admin/ui/services/ServiceForm"
 import { useServiceCreate } from "@/entities/service"
 import { Typography } from "@/shared/ui/typography"
+
+import { ServiceForm } from "./ServiceForm"
 
 export function ServiceCreate() {
   const { isPending, mutateAsync } = useServiceCreate()
@@ -27,17 +28,11 @@ export function ServiceCreate() {
 
   return (
     <div className="flex flex-col">
-      <div className="flex justify-end"></div>
-
-      <div className="grid transition-[grid-template-rows] duration-500 ease-out">
-        <div className="overflow-hidden">
-          <div className="border-border flex flex-col gap-3 rounded-sm border bg-white p-5">
-            <Typography variant="h6" color="burgundy" className="mb-1 text-center">
-              Добавить услугу
-            </Typography>
-            <ServiceForm submitLabel="Создать" isPending={isPending} submit={handleCreate} />
-          </div>
-        </div>
+      <div className="border-border flex flex-col gap-3 rounded-sm border bg-white p-5">
+        <Typography variant="h6" color="burgundy" className="mb-1 text-center">
+          Добавить услугу
+        </Typography>
+        <ServiceForm submitLabel="Создать" isPending={isPending} submit={handleCreate} />
       </div>
     </div>
   )

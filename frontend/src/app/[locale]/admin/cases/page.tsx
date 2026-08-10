@@ -1,12 +1,8 @@
 import { setRequestLocale } from "next-intl/server"
 
-import { CaseCreate, CasesList } from "@/widgets/admin"
+import { CaseCreate, CasesList } from "@/widgets/admin/cases"
 
-export default async function AdminCasesPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}) {
+export default async function AdminCasesPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
 
   setRequestLocale(locale)

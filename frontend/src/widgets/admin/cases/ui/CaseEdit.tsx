@@ -1,12 +1,13 @@
 "use client"
 
 import type { Case } from "@/entities/case"
-import type { CaseFormValues } from "@/widgets/admin/model/case-schema"
+import type { CaseFormValues } from "@/widgets/admin/cases/model/case-schema"
 
 import { toast } from "sonner"
 
-import { CaseForm } from "@/widgets/admin/ui/cases/CaseForm"
 import { useCaseUpdate } from "@/entities/case"
+
+import { CaseForm } from "./CaseForm"
 
 interface CaseEditProps {
   caseItem: Case

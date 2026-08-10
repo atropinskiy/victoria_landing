@@ -1,15 +1,14 @@
 "use client"
 
-import type { ServiceFormValues } from "@/widgets/admin/model/service-schema"
+import type { ServiceFormValues } from "@/widgets/admin/services/model/service-schema"
 import type { Control } from "react-hook-form"
 
 import { Plus, X } from "lucide-react"
 import { useFieldArray } from "react-hook-form"
 
-import { BilingualRow } from "@/widgets/admin/ui/BilingualRow"
 import { Button } from "@/shared/ui/button"
 import { Typography } from "@/shared/ui/typography"
-import { DeleteButton } from "@/shared/ui/widgets"
+import { BilingualRow, DeleteButton } from "@/shared/ui/widgets"
 
 export function StageFields({
   control,

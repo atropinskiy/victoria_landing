@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 
-import { Sidebar } from "@/widgets/admin"
+import { Sidebar } from "@/widgets/admin/sidebar"
 import { AdminGuard } from "@/features/auth"
 
 export async function generateMetadata(): Promise<Metadata> {

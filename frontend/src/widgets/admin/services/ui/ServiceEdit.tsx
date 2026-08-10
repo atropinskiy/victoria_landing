@@ -1,12 +1,13 @@
 "use client"
 
 import type { Service } from "@/entities/service"
-import type { ServiceFormValues } from "@/widgets/admin/model/service-schema"
+import type { ServiceFormValues } from "@/widgets/admin/services/model/service-schema"
 
 import { toast } from "sonner"
 
-import { ServiceForm } from "@/widgets/admin/ui/services/ServiceForm"
 import { useServiceUpdate } from "@/entities/service"
+
+import { ServiceForm } from "./ServiceForm"
 
 interface ServiceEditFormProps {
   service: Service

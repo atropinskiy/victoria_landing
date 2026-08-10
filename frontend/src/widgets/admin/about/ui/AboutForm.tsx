@@ -1,23 +1,23 @@
 "use client"
 
 import type { About } from "@/entities/about"
-import type { AboutFormValues } from "@/widgets/admin/model/about-schema"
+import type { AboutFormValues } from "@/widgets/admin/about/model/about-schema"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import { aboutFormSchema } from "@/widgets/admin/model/about-schema"
+import { aboutFormSchema } from "@/widgets/admin/about/model/about-schema"
 import { useAboutUpdate } from "@/entities/about"
 import { Button } from "@/shared/ui/button"
 import { Typography } from "@/shared/ui/typography"
 import { FormRichText } from "@/shared/ui/widgets"
 
-interface AboutFormFieldsProps {
+interface AboutFormProps {
   about: About
 }
 
-export function AboutFormFields({ about }: AboutFormFieldsProps) {
+export function AboutForm({ about }: AboutFormProps) {
   const { isPending: isUpdating, mutateAsync } = useAboutUpdate()
   const form = useForm<AboutFormValues>({
     resolver: zodResolver(aboutFormSchema),

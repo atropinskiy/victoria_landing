@@ -1,12 +1,13 @@
 "use client"
 
-import type { CaseFormValues } from "@/widgets/admin/model/case-schema"
+import type { CaseFormValues } from "@/widgets/admin/cases/model/case-schema"
 
 import { toast } from "sonner"
 
-import { CaseForm } from "@/widgets/admin/ui/cases/CaseForm"
 import { useCaseCreate } from "@/entities/case"
 import { Typography } from "@/shared/ui/typography"
+
+import { CaseForm } from "./CaseForm"
 
 export function CaseCreate() {
   const { isPending, mutateAsync } = useCaseCreate()
@@ -31,12 +32,7 @@ export function CaseCreate() {
         <Typography variant="h6" color="burgundy" className="mb-1 text-center">
           Добавить кейс
         </Typography>
-        <CaseForm
-          submitLabel="Создать"
-          isPending={isPending}
-          submit={handleCreate}
-          requireImage
-        />
+        <CaseForm submitLabel="Создать" isPending={isPending} submit={handleCreate} requireImage />
       </div>
     </div>
   )

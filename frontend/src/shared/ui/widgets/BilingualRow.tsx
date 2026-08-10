@@ -3,7 +3,8 @@
 import type { Control, FieldPath, FieldValues } from "react-hook-form"
 
 import { cn } from "@/shared/lib/utils"
-import { FormInput, FormTextarea } from "@/shared/ui/widgets"
+import { FormInput } from "./FormInput"
+import { FormTextarea } from "./FormTextarea"
 
 interface BilingualRowProps<T extends FieldValues> {
   control: Control<T>

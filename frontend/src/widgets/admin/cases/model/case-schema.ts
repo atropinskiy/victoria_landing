@@ -1,9 +1,6 @@
 import * as z from "zod"
 
-export const bilingual = z.object({
-  ru: z.string().min(1, "Заполните поле"),
-  en: z.string().min(1, "Заполните поле"),
-})
+import { bilingual } from "@/shared/lib/validation"
 
 export const MAX_IMAGE_SIZE = 10 * 1024 * 1024
 

@@ -3,7 +3,7 @@
 import { ArrowLeft } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-import { ADMIN_SIDEBAR_LINKS } from "@/widgets/admin/config/routes"
+import { ADMIN_SIDEBAR_LINKS } from "@/widgets/admin/sidebar/config/routes"
 import { AppRoutes } from "@/shared/config"
 import { Link, usePathname } from "@/shared/i18n"
 import { cn } from "@/shared/lib/utils"
@@ -14,7 +14,7 @@ export function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="bg-accent sticky top-0 flex h-dvh shrink-0 flex-col gap-8 self-start px-2 py-8 shadow-[6px_0_6px_-4px_rgba(0,0,0,0.3),10px_0_20px_-6px_rgba(0,0,0,0.25)] w-16 sm:w-60 sm:px-6">
+    <aside className="bg-accent sticky top-0 flex h-dvh w-16 shrink-0 flex-col gap-8 self-start px-2 py-8 shadow-[6px_0_6px_-4px_rgba(0,0,0,0.3),10px_0_20px_-6px_rgba(0,0,0,0.25)] sm:w-60 sm:px-6">
       <Typography
         as="span"
         className="text-accent-foreground hidden text-lg font-bold tracking-wide uppercase sm:block"

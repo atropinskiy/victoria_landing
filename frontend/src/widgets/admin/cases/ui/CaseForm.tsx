@@ -1,6 +1,6 @@
 "use client"
 
-import type { CaseFormValues } from "@/widgets/admin/model/case-schema"
+import type { CaseFormValues } from "@/widgets/admin/cases/model/case-schema"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -10,11 +10,10 @@ import {
   caseFormSchema,
   IMAGE_MIME_TYPES,
   MAX_IMAGE_SIZE,
-} from "@/widgets/admin/model/case-schema"
-import { BilingualRow } from "@/widgets/admin/ui/BilingualRow"
+} from "@/widgets/admin/cases/model/case-schema"
 import { Button } from "@/shared/ui/button"
 import { Typography } from "@/shared/ui/typography"
-import { FormDropzone } from "@/shared/ui/widgets"
+import { BilingualRow, FormDropzone } from "@/shared/ui/widgets"
 
 interface CaseFormProps {
   defaultValues?: CaseFormValues
