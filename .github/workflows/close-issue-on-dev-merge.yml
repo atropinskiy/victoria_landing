@@ -1,0 +1,34 @@
+name: Close Issue on Merge to Dev
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - dev  # Срабатывает только для PR, влитых в dev
+
+jobs:
+  close-issue:
+    if: github.event.pull_request.merged == true  # Только при успешном мерже
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: read
+    steps:
+      - name: Close linked issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body || '';
+            // Ищем в описании PR ключевые слова close #, fixes # и т.д.
+            const re = /(?:close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#(\d+)/gi;
+            let match;
+            while ((match = re.exec(body)) !== null) {
+              const issue_number = parseInt(match[1], 10);
+              console.log(`Закрываю задачу #${issue_number}`);
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue_number,
+                state: 'closed'
+              });
+            }
