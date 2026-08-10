@@ -18,16 +18,17 @@ export function BilingualRow<T extends FieldValues>({
   name,
   multiline,
   className,
+  size = "md",
 }: BilingualRowProps<T>) {
   const ru = `${name}.ru` as FieldPath<T>
   const en = `${name}.en` as FieldPath<T>
 
   return (
-    <div className={cn("mt-1.5 flex flex-col gap-1 sm:flex-row sm:gap-6", className)}>
+    <div className={cn("mt-2 flex flex-col gap-1 sm:flex-row sm:gap-6", className)}>
       {multiline ? (
         <>
-          <FormTextarea variant="light" size="md" control={control} name={ru} label="RU" />
-          <FormTextarea variant="light" size="md" control={control} name={en} label="EN" />
+          <FormTextarea variant="light" size={size} control={control} name={ru} label="RU" />
+          <FormTextarea variant="light" size={size} control={control} name={en} label="EN" />
         </>
       ) : (
         <>

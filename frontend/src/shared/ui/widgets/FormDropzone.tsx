@@ -5,7 +5,7 @@ import type { Control, FieldPath, FieldValues } from "react-hook-form"
 
 import { Controller } from "react-hook-form"
 
-import { Dropzone } from "@/shared/ui/dropzone"
+import { Dropzone } from "@/shared/ui/widgets/Dropzone"
 import { Field, FieldError } from "@/shared/ui/field"
 
 interface FormDropzoneProps<T extends FieldValues>

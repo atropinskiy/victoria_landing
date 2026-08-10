@@ -19,7 +19,7 @@ export function ServicesList() {
   const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null)
 
   const { isPending, data: services } = useServices()
-  const { mutateAsync: deleteService } = useServiceDelete()
+  const { mutateAsync: deleteService, isPending: isDeleting } = useServiceDelete()
   const { mutate: reorder } = useServiceOrder()
 
   const handleOrder = (services: Service[]) => {
@@ -79,7 +79,7 @@ export function ServicesList() {
         onConfirm={handleDelete}
         title="Удалить услугу?"
         description="Действие необратимо."
-        isPending={isPending}
+        isPending={isDeleting}
       />
     </>
   )

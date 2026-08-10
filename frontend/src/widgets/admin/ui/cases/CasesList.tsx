@@ -19,7 +19,7 @@ export function CasesList() {
   const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null)
 
   const { isPending, data: cases } = useCases()
-  const { mutateAsync: deleteCase } = useCaseDelete()
+  const { mutateAsync: deleteCase, isPending: isDeleting } = useCaseDelete()
   const { mutate: reorder } = useCaseOrder()
 
   const handleOrder = (cases: Case[]) => {
@@ -79,7 +79,7 @@ export function CasesList() {
         onConfirm={handleDelete}
         title="Удалить кейс?"
         description="Действие необратимо."
-        isPending={isPending}
+        isPending={isDeleting}
       />
     </>
   )

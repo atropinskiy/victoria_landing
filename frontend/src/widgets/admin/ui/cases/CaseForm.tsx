@@ -5,7 +5,12 @@ import type { CaseFormValues } from "@/widgets/admin/model/case-schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
-import { caseFormSchema } from "@/widgets/admin/model/case-schema"
+import {
+  caseCreateSchema,
+  caseFormSchema,
+  IMAGE_MIME_TYPES,
+  MAX_IMAGE_SIZE,
+} from "@/widgets/admin/model/case-schema"
 import { BilingualRow } from "@/widgets/admin/ui/BilingualRow"
 import { Button } from "@/shared/ui/button"
 import { Typography } from "@/shared/ui/typography"
@@ -14,6 +19,7 @@ import { FormDropzone } from "@/shared/ui/widgets"
 interface CaseFormProps {
   defaultValues?: CaseFormValues
   previewUrl?: string | null
+  requireImage?: boolean
   submitLabel?: string
   isPending?: boolean
   submit: (values: CaseFormValues) => Promise<void>
@@ -22,12 +28,13 @@ interface CaseFormProps {
 export function CaseForm({
   defaultValues,
   previewUrl,
+  requireImage,
   submitLabel,
   isPending,
   submit,
 }: CaseFormProps) {
   const form = useForm<CaseFormValues>({
-    resolver: zodResolver(caseFormSchema),
+    resolver: zodResolver(requireImage ? caseCreateSchema : caseFormSchema),
     defaultValues: defaultValues ?? {
       title: { ru: "", en: "" },
       description: { ru: "", en: "" },
@@ -41,34 +48,37 @@ export function CaseForm({
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col">
-      <div className="grid gap-x-8 gap-y-4 lg:grid-cols-[1fr_16.5rem]">
+      <div className="grid gap-x-8 gap-y-4 lg:grid-cols-[1fr_13rem]">
         <div className="flex flex-col">
-          <Typography variant="h6" color="navy">
+          <Typography as="h6" variant="h6" color="navy">
             Название
           </Typography>
           <BilingualRow control={form.control} name="title" />
 
-          <Typography variant="h6" color="navy" className="mt-4">
+          <Typography as="h6" variant="h6" color="navy" className="mt-3">
             Описание
           </Typography>
-          <BilingualRow control={form.control} name="description" multiline />
+          <BilingualRow control={form.control} name="description" multiline size="lg" />
         </div>
 
-        <div className="flex w-full max-w-66 flex-col">
-          <Typography variant="h6" color="navy">
+        <div className="flex w-full max-w-52 flex-col">
+          <Typography as="h6" variant="h6" color="navy">
             Изображение
           </Typography>
           <FormDropzone
             control={form.control}
             name="image"
             previewUrl={previewUrl}
+            aspect={3 / 4}
+            accept={IMAGE_MIME_TYPES}
+            maxSize={MAX_IMAGE_SIZE}
             hint="JPG, PNG, WebP или AVIF, до 10 МБ"
-            className="mt-1.5"
+            className="mt-2"
           />
         </div>
       </div>
 
-      <Button type="submit" className="mt-8" disabled={isPending}>
+      <Button type="submit" className="mt-4" disabled={isPending}>
         {submitLabel}
       </Button>
     </form>

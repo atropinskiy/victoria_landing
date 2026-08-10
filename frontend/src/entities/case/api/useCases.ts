@@ -6,8 +6,6 @@ import { revalidateCases } from "@/entities/case/api/actions"
 import { client } from "@/shared/api"
 import { QueryKeys } from "@/shared/config"
 
-// Схема описывает тело мультипарта плоским, поэтому body кастуется к ней,
-// а реальное тело запроса собирает эта функция
 function toFormData({ title, description, image }: CasePayload) {
   const fields: Record<keyof CaseBody, string | File | undefined> = {
     title_ru: title.ru,

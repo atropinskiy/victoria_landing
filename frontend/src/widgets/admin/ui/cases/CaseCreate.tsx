@@ -31,7 +31,12 @@ export function CaseCreate() {
         <Typography variant="h6" color="burgundy" className="mb-1 text-center">
           Добавить кейс
         </Typography>
-        <CaseForm submitLabel="Создать" isPending={isPending} submit={handleCreate} />
+        <CaseForm
+          submitLabel="Создать"
+          isPending={isPending}
+          submit={handleCreate}
+          requireImage
+        />
       </div>
     </div>
   )

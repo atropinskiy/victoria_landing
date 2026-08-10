@@ -11,7 +11,15 @@ const nextConfig: NextConfig = {
     preloadEntriesOnStart: false,
   },
   images: {
-    qualities: [75, 80, 85],
+    qualities: [75, 80, 85, 90],
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/media/:path*",
+        destination: `${process.env.INTERNAL_API_URL || "http://backend:8000"}/media/:path*`,
+      },
+    ]
   },
   turbopack: {
     root: __dirname,
