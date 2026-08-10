@@ -5,7 +5,7 @@ from app.about import crud
 from app.about.schemas import AboutRead, AboutUpdate
 from app.core.database import get_db
 from app.core.schemas import StatusResponse
-from app.user.deps import get_current_user
+from app.user.deps import get_current_admin_user
 from app.user.models import User
 
 about_router = APIRouter(prefix="/about", tags=["Обо мне"])
@@ -41,7 +41,7 @@ async def get_about(db: AsyncSession = Depends(get_db)):
 async def update_about(
     data: AboutUpdate,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     content = await crud.update_about(db, data)
     return StatusResponse(

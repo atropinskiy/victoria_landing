@@ -21,13 +21,3 @@ class UserRead(BaseModel):
     test_result: dict[str, int] | None = None
 
     model_config = {"from_attributes": True}
-
-
-class TokenRead(BaseModel):
-    access_token: str
-    token_type: str = "bearer"
-
-
-class UserWithToken(UserRead):
-    access_token: str
-    token_type: str = "bearer"

@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from app.core.config import get_db_url
 from app.core.database import Base, get_db
 from app.main import app
+from app.user.models import User
 
 
 @pytest.fixture
@@ -34,18 +35,27 @@ async def client(db_session):
 
     app.dependency_overrides[get_db] = override_get_db
     transport = ASGITransport(app=app)
-    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+    async with AsyncClient(transport=transport, base_url="https://test") as ac:
         yield ac
     app.dependency_overrides.clear()
 
 
-async def _auth_headers(client) -> dict:
+async def _register(client, username="tester", email="t@example.com") -> dict:
     resp = await client.post(
         "/auth/register",
-        json={"username": "tester", "email": "t@example.com", "password": "secret123"},
+        json={"username": username, "email": email, "password": "secret123"},
     )
-    token = resp.json()["data"]["access_token"]
-    return {"Authorization": f"Bearer {token}"}
+    return resp.json()["data"]
+
+
+async def _register_admin(
+    client, db_session, username="admin_tester", email="admin@example.com"
+) -> dict:
+    data = await _register(client, username, email)
+    user = await db_session.get(User, data["id"])
+    user.role = "admin"
+    await db_session.commit()
+    return data
 
 
 async def test_create_service_requires_auth(client):
@@ -57,14 +67,26 @@ async def test_create_service_requires_auth(client):
             "stages": [],
         },
     )
-    assert resp.status_code in (401, 403)  # HTTPBearer без токена -> 403
+    assert resp.status_code == 401
 
 
-async def test_create_service_with_auth(client):
-    headers = await _auth_headers(client)
+async def test_create_service_requires_admin(client):
+    await _register(client)
     resp = await client.post(
         "/services",
-        headers=headers,
+        json={
+            "title": {"ru": "Услуга", "en": "Service"},
+            "description": {"ru": "Описание", "en": "Description"},
+            "stages": [],
+        },
+    )
+    assert resp.status_code == 403
+
+
+async def test_create_service_with_auth(client, db_session):
+    await _register_admin(client, db_session)
+    resp = await client.post(
+        "/services",
         json={
             "title": {"ru": "Услуга", "en": "Service"},
             "description": {"ru": "Описание", "en": "Description"},

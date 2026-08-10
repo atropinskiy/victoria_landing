@@ -66,12 +66,13 @@ async def log_middleware(request: Request, call_next) -> Response:
         elapsed,
     )
 
-    # Пересоздаём ответ (content-length пересчитается автоматически)
-    headers = dict(response.headers)
-    headers.pop("content-length", None)
-    return Response(
-        content=body,
-        status_code=response.status_code,
-        headers=headers,
-        media_type=response.media_type,
-    )
+    # Пересоздаём ответ (content-length пересчитается автоматически по новому телу).
+    # dict(response.headers) тут не годится — он схлопывает повторяющиеся заголовки
+    # (например несколько Set-Cookie для access_token + user_role) в один.
+    # response.media_type тоже не годится — у обёртки из call_next он пустой,
+    # реальный Content-Type сидит только в сырых headers, поэтому копируем их как есть.
+    new_response = Response(content=body, status_code=response.status_code)
+    new_response.raw_headers += [
+        (key, value) for key, value in response.headers.raw if key != b"content-length"
+    ]
+    return new_response

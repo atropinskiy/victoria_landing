@@ -8,7 +8,7 @@ from app.cases.schemas import CaseOrderItem, CaseRead
 from app.core.database import get_db
 from app.core.schemas import Bilingual, StatusResponse
 from app.media.service import IMAGE_EXTENSIONS, save_upload
-from app.user.deps import get_current_user
+from app.user.deps import get_current_admin_user
 from app.user.models import User
 
 cases_router = APIRouter(prefix="/cases", tags=["Кейсы"])
@@ -47,7 +47,7 @@ async def create_case(
     description_en: Annotated[str | None, Form()] = None,
     image: Annotated[UploadFile | None, File()] = None,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     image_url = (
         await save_upload(image, IMAGE_EXTENSIONS) if image is not None else None
@@ -81,7 +81,7 @@ async def create_case(
 async def reorder_cases(
     items: list[CaseOrderItem],
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     cases = await crud.reorder_cases(db, items)
     if cases is None:
@@ -116,7 +116,7 @@ async def update_case(
     description_en: Annotated[str | None, Form()] = None,
     image: Annotated[UploadFile | None, File()] = None,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     image_url = (
         await save_upload(image, IMAGE_EXTENSIONS) if image is not None else None
@@ -152,7 +152,7 @@ async def update_case(
 async def delete_case(
     case_id: int,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     deleted = await crud.delete_case(db, case_id)
     if not deleted:
