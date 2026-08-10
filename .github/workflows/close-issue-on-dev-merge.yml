@@ -8,7 +8,7 @@ on:
 
 jobs:
   close-issue:
-    if: github.event.pull_request.merged == true  # Важно! Только при успешном мерже
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -19,15 +19,22 @@ jobs:
         with:
           script: |
             const body = context.payload.pull_request.body || '';
-            const re = /(?:close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#(\d+)/gi;
+            // Ищем все #число после ключевых слов
+            const re = /(?:close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+(#[0-9]+(?:\s+#[0-9]+)*)/gi;
             let match;
             while ((match = re.exec(body)) !== null) {
-              const issue_number = parseInt(match[1], 10);
-              console.log(`Закрываю задачу #${issue_number}`);
-              await github.rest.issues.update({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: issue_number,
-                state: 'closed'
-              });
+              // Извлекаем все номера задач из найденной группы
+              const numbers = match[1].match(/#(\d+)/g);
+              if (numbers) {
+                for (const num of numbers) {
+                  const issue_number = parseInt(num.replace('#', ''), 10);
+                  console.log(`Закрываю задачу #${issue_number}`);
+                  await github.rest.issues.update({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue_number,
+                    state: 'closed'
+                  });
+                }
+              }
             }
