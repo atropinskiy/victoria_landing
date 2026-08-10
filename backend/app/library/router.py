@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, s
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
-from app.core.schemas import Bilingual, StatusResponse
+from app.core.schemas import Bilingual, BilingualOptional, StatusResponse
 from app.library import crud
 from app.library.schemas import LibraryOrderItem, LibraryRead
 from app.media.service import DOCUMENT_EXTENSIONS, IMAGE_EXTENSIONS, save_upload
@@ -63,7 +63,7 @@ async def create_library_item(
     item = await crud.create_item(
         db,
         title=Bilingual(ru=title_ru, en=title_en),
-        description=Bilingual(ru=description_ru, en=description_en),
+        description=BilingualOptional(ru=description_ru, en=description_en),
         image=image_url,
         document=document_url,
     )
@@ -139,7 +139,7 @@ async def update_library_item(
         db,
         item_id,
         title=Bilingual(ru=title_ru, en=title_en),
-        description=Bilingual(ru=description_ru, en=description_en),
+        description=BilingualOptional(ru=description_ru, en=description_en),
         image=image_url,
         document=document_url,
     )

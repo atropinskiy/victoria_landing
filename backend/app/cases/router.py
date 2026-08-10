@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.cases import crud
 from app.cases.schemas import CaseOrderItem, CaseRead
 from app.core.database import get_db
-from app.core.schemas import Bilingual, StatusResponse
+from app.core.schemas import Bilingual, BilingualOptional, StatusResponse
 from app.media.service import IMAGE_EXTENSIONS, save_upload
 from app.user.deps import get_current_admin_user
 from app.user.models import User
@@ -55,7 +55,7 @@ async def create_case(
     case = await crud.create_case(
         db,
         title=Bilingual(ru=title_ru, en=title_en),
-        description=Bilingual(ru=description_ru, en=description_en),
+        description=BilingualOptional(ru=description_ru, en=description_en),
         image=image_url,
     )
     return StatusResponse(
@@ -125,7 +125,7 @@ async def update_case(
         db,
         case_id,
         title=Bilingual(ru=title_ru, en=title_en),
-        description=Bilingual(ru=description_ru, en=description_en),
+        description=BilingualOptional(ru=description_ru, en=description_en),
         image=image_url,
     )
     if case is None:

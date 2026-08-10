@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.cases.models import Cases
 from app.cases.schemas import CaseOrderItem, CaseRead
-from app.core.schemas import Bilingual
+from app.core.schemas import Bilingual, BilingualOptional
 from app.media.service import delete_upload
 
 
@@ -24,8 +24,8 @@ def to_read(case: Cases) -> CaseRead:
     return CaseRead(
         id=case.id,
         order=case.order,
-        title=Bilingual(ru=case.title_ru, en=case.title_en),
-        description=Bilingual(ru=case.ru_descr, en=case.en_descr),
+        title=Bilingual(ru=case.title_ru or "", en=case.title_en or ""),
+        description=BilingualOptional(ru=case.ru_descr, en=case.en_descr),
         image=case.image,
     )
 
@@ -36,7 +36,7 @@ async def get_cases(db: AsyncSession) -> list[Cases]:
 
 
 async def create_case(
-    db: AsyncSession, title: Bilingual, description: Bilingual, image: str | None
+    db: AsyncSession, title: Bilingual, description: BilingualOptional, image: str | None
 ) -> Cases:
     next_order = await db.scalar(select(func.coalesce(func.max(Cases.order), 0)))
     case = Cases(
@@ -57,7 +57,7 @@ async def update_case(
     db: AsyncSession,
     case_id: int,
     title: Bilingual,
-    description: Bilingual,
+    description: BilingualOptional,
     image: str | None,
 ) -> Cases | None:
     result = await db.execute(select(Cases).where(Cases.id == case_id))

@@ -3,7 +3,7 @@ from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.schemas import Bilingual
+from app.core.schemas import Bilingual, BilingualOptional
 from app.library.models import Library
 from app.library.schemas import LibraryOrderItem, LibraryRead
 from app.media.service import delete_upload
@@ -24,8 +24,8 @@ def to_read(item: Library) -> LibraryRead:
     return LibraryRead(
         id=item.id,
         order=item.order,
-        title=Bilingual(ru=item.title_ru, en=item.title_en),
-        description=Bilingual(ru=item.ru_descr, en=item.en_descr),
+        title=Bilingual(ru=item.title_ru or "", en=item.title_en or ""),
+        description=BilingualOptional(ru=item.ru_descr, en=item.en_descr),
         image=item.image,
         document=item.document,
     )
@@ -39,7 +39,7 @@ async def get_library(db: AsyncSession) -> list[Library]:
 async def create_item(
     db: AsyncSession,
     title: Bilingual,
-    description: Bilingual,
+    description: BilingualOptional,
     image: str | None,
     document: str | None,
 ) -> Library:
@@ -63,7 +63,7 @@ async def update_item(
     db: AsyncSession,
     item_id: int,
     title: Bilingual,
-    description: Bilingual,
+    description: BilingualOptional,
     image: str | None,
     document: str | None,
 ) -> Library | None:
