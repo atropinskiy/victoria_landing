@@ -7,7 +7,7 @@ import { toast } from "sonner"
 import { useLogout } from "@/features/auth"
 import { useMe } from "@/entities/user"
 import { ModalIds } from "@/shared/config"
-import { getAuthToken } from "@/shared/lib/auth"
+import { getUserRole } from "@/shared/lib/auth"
 import { useHasMounted, useModalParam } from "@/shared/lib/hooks"
 import { Button } from "@/shared/ui/button"
 import { Skeleton } from "@/shared/ui/skeleton"
@@ -33,7 +33,7 @@ function LoginButtonContent() {
   const { open } = useModalParam(ModalIds.LOGIN)
 
   const hasMounted = useHasMounted()
-  const isAuthenticated = hasMounted && Boolean(getAuthToken())
+  const isAuthenticated = hasMounted && Boolean(getUserRole())
   const { isLoading } = useMe()
   const { mutateAsync: logout, isPending } = useLogout()
   const label = t(isAuthenticated ? "logoutButton" : "loginButton")

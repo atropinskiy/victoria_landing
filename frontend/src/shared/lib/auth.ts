@@ -1,25 +1,15 @@
-import { AUTH_TOKEN_KEY } from "@/shared/config"
+import { USER_ROLE_COOKIE } from "@/shared/config"
 
-// TODO: change to cookies! (localstorage only for client components)
+export function getUserRole(): string | null {
+  if (typeof document === "undefined") return null
 
-// import { cookies } from "next/headers"
+  const match = document.cookie.match(new RegExp(`(?:^|;\\s*)${USER_ROLE_COOKIE}=([^;]*)`))
 
-// async function getServerAuthToken(): Promise<string | null> {
-//   const cookieStore = await cookies()
-//   return cookieStore.get("auth_token")?.value ?? null
-// }
-
-export function getAuthToken(): string | null {
-  if (typeof window === "undefined") return null
-  return localStorage.getItem(AUTH_TOKEN_KEY)
+  return match ? decodeURIComponent(match[1]) : null
 }
 
-export function setAuthToken(token: string): void {
-  if (typeof window === "undefined") return
-  localStorage.setItem(AUTH_TOKEN_KEY, token)
-}
+export function clearUserRole(): void {
+  if (typeof document === "undefined") return
 
-export function removeAuthToken(): void {
-  if (typeof window === "undefined") return
-  localStorage.removeItem(AUTH_TOKEN_KEY)
+  document.cookie = `${USER_ROLE_COOKIE}=; path=/; max-age=0`
 }

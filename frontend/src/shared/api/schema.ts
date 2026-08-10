@@ -15,7 +15,7 @@ export interface paths {
         put?: never;
         /**
          * Регистрация
-         * @description Создаёт нового пользователя и сразу возвращает JWT access token.
+         * @description Создаёт нового пользователя и сразу выставляет JWT access token в httpOnly cookie.
          */
         post: operations["register_auth_register_post"];
         delete?: never;
@@ -35,7 +35,7 @@ export interface paths {
         put?: never;
         /**
          * Вход
-         * @description Принимает email **или** username и пароль, возвращает JWT access token.
+         * @description Принимает email **или** username и пароль, выставляет JWT access token в httpOnly cookie (и роль пользователя в отдельную читаемую cookie).
          */
         post: operations["login_auth_login_post"];
         delete?: never;
@@ -195,7 +195,7 @@ export interface paths {
         put?: never;
         /**
          * Отправить ответы и получить баллы
-         * @description Публичная ручка: принимает по одному выбранному варианту ответа на каждый вопрос и возвращает сумму баллов (weight) по каждой категории результата. Если пользователь авторизован (передан Bearer-токен), результат также сохраняется в его профиль. Если тест не найден — 404. Если передан несуществующий вопрос/вариант или на один вопрос передано больше одного ответа — 400.
+         * @description Публичная ручка: принимает по одному выбранному варианту ответа на каждый вопрос и возвращает сумму баллов (weight) по каждой категории результата. Если пользователь авторизован (передан cookie с токеном), результат также сохраняется в его профиль. Если тест не найден — 404. Если передан несуществующий вопрос/вариант или на один вопрос передано больше одного ответа — 400.
          */
         post: operations["submit_test_tests_submit_post"];
         delete?: never;
@@ -411,8 +411,8 @@ export interface components {
     schemas: {
         /** AboutRead */
         AboutRead: {
-            promo: components["schemas"]["app__core__schemas__Bilingual"];
-            full: components["schemas"]["app__core__schemas__Bilingual"];
+            promo: components["schemas"]["Bilingual"];
+            full: components["schemas"]["Bilingual"];
             /**
              * Updated At
              * Format: date-time
@@ -421,8 +421,8 @@ export interface components {
         };
         /** AboutUpdate */
         AboutUpdate: {
-            promo: components["schemas"]["app__core__schemas__Bilingual"];
-            full: components["schemas"]["app__core__schemas__Bilingual"];
+            promo: components["schemas"]["Bilingual"];
+            full: components["schemas"]["Bilingual"];
         };
         /** AnswerItem */
         AnswerItem: {
@@ -430,6 +430,20 @@ export interface components {
             question_id: number;
             /** Option Id */
             option_id: number;
+        };
+        /** Bilingual */
+        Bilingual: {
+            /** Ru */
+            ru: string;
+            /** En */
+            en: string;
+        };
+        /** BilingualOptional */
+        BilingualOptional: {
+            /** Ru */
+            ru?: string | null;
+            /** En */
+            en?: string | null;
         };
         /** Body_create_case_cases_post */
         Body_create_case_cases_post: {
@@ -505,14 +519,14 @@ export interface components {
             id: number;
             /** Order */
             order: number;
-            title: components["schemas"]["app__core__schemas__Bilingual"];
-            description: components["schemas"]["app__core__schemas__Bilingual"];
+            title: components["schemas"]["Bilingual"];
+            description: components["schemas"]["BilingualOptional"];
             /** Image */
             image: string | null;
         };
         /** CategoryCreate */
         CategoryCreate: {
-            title: components["schemas"]["app__quiz__schemas__Bilingual"];
+            title: components["schemas"]["Bilingual"];
             /** Questions */
             questions?: components["schemas"]["QuestionCreate"][];
         };
@@ -534,8 +548,8 @@ export interface components {
             id: number;
             /** Order */
             order: number;
-            title: components["schemas"]["app__core__schemas__Bilingual"];
-            description: components["schemas"]["app__core__schemas__Bilingual"];
+            title: components["schemas"]["Bilingual"];
+            description: components["schemas"]["BilingualOptional"];
             /** Image */
             image: string | null;
             /** Document */
@@ -550,7 +564,7 @@ export interface components {
         OptionAdminRead: {
             /** Id */
             id: number;
-            text: components["schemas"]["app__quiz__schemas__Bilingual"];
+            text: components["schemas"]["Bilingual"];
             /** Category */
             category: string;
             /** Weight */
@@ -558,7 +572,7 @@ export interface components {
         };
         /** OptionCreate */
         OptionCreate: {
-            text: components["schemas"]["app__quiz__schemas__Bilingual"];
+            text: components["schemas"]["Bilingual"];
             /** Weight */
             weight: number;
             /** Category */
@@ -568,7 +582,7 @@ export interface components {
         OptionRead: {
             /** Id */
             id: number;
-            text: components["schemas"]["app__quiz__schemas__Bilingual"];
+            text: components["schemas"]["Bilingual"];
             /** Category */
             category: string;
         };
@@ -576,13 +590,13 @@ export interface components {
         QuestionAdminRead: {
             /** Id */
             id: number;
-            text: components["schemas"]["app__quiz__schemas__Bilingual"];
+            text: components["schemas"]["Bilingual"];
             /** Options */
             options: components["schemas"]["OptionAdminRead"][];
         };
         /** QuestionCreate */
         QuestionCreate: {
-            text: components["schemas"]["app__quiz__schemas__Bilingual"];
+            text: components["schemas"]["Bilingual"];
             /** Options */
             options?: components["schemas"]["OptionCreate"][];
         };
@@ -590,7 +604,7 @@ export interface components {
         QuestionRead: {
             /** Id */
             id: number;
-            text: components["schemas"]["app__quiz__schemas__Bilingual"];
+            text: components["schemas"]["Bilingual"];
             /** Options */
             options: components["schemas"]["OptionRead"][];
         };
@@ -598,7 +612,7 @@ export interface components {
         SectionAdminRead: {
             /** Id */
             id: number;
-            title: components["schemas"]["app__quiz__schemas__Bilingual"];
+            title: components["schemas"]["Bilingual"];
             /** Questions */
             questions: components["schemas"]["QuestionAdminRead"][];
         };
@@ -606,14 +620,14 @@ export interface components {
         SectionRead: {
             /** Id */
             id: number;
-            title: components["schemas"]["app__quiz__schemas__Bilingual"];
+            title: components["schemas"]["Bilingual"];
             /** Questions */
             questions: components["schemas"]["QuestionRead"][];
         };
         /** ServiceCreate */
         ServiceCreate: {
-            title: components["schemas"]["app__core__schemas__Bilingual"];
-            description: components["schemas"]["app__core__schemas__Bilingual"];
+            title: components["schemas"]["Bilingual"];
+            description: components["schemas"]["Bilingual"];
             /** Stages */
             stages?: components["schemas"]["StageCreate"][];
         };
@@ -630,22 +644,22 @@ export interface components {
             id: number;
             /** Order */
             order: number;
-            title: components["schemas"]["app__core__schemas__Bilingual"];
-            description: components["schemas"]["app__core__schemas__Bilingual"];
+            title: components["schemas"]["Bilingual"];
+            description: components["schemas"]["Bilingual"];
             /** Stages */
             stages: components["schemas"]["StageRead"][];
         };
         /** StageCreate */
         StageCreate: {
-            title: components["schemas"]["app__core__schemas__Bilingual"];
+            title: components["schemas"]["Bilingual"];
             /** Items */
-            items?: components["schemas"]["app__core__schemas__Bilingual"][];
+            items?: components["schemas"]["Bilingual"][];
         };
         /** StageRead */
         StageRead: {
-            title: components["schemas"]["app__core__schemas__Bilingual"];
+            title: components["schemas"]["Bilingual"];
             /** Items */
-            items: components["schemas"]["app__core__schemas__Bilingual"][];
+            items: components["schemas"]["Bilingual"][];
         };
         /** StatusResponse[AboutRead] */
         StatusResponse_AboutRead_: {
@@ -758,17 +772,6 @@ export interface components {
             message: string;
             data?: components["schemas"]["UserRead"] | null;
         };
-        /** StatusResponse[UserWithToken] */
-        StatusResponse_UserWithToken_: {
-            /** Success */
-            success: boolean;
-            /**
-             * Message
-             * @default
-             */
-            message: string;
-            data?: components["schemas"]["UserWithToken"] | null;
-        };
         /** StatusResponse[list[CaseRead]] */
         StatusResponse_list_CaseRead__: {
             /** Success */
@@ -809,13 +812,13 @@ export interface components {
         TestAdminRead: {
             /** Id */
             id: number;
-            title: components["schemas"]["app__quiz__schemas__Bilingual"];
+            title: components["schemas"]["Bilingual"];
             /** Sections */
             sections: components["schemas"]["SectionAdminRead"][];
         };
         /** TestCreate */
         TestCreate: {
-            title: components["schemas"]["app__quiz__schemas__Bilingual"];
+            title: components["schemas"]["Bilingual"];
             /** Sections */
             sections?: components["schemas"]["CategoryCreate"][];
         };
@@ -823,7 +826,7 @@ export interface components {
         TestRead: {
             /** Id */
             id: number;
-            title: components["schemas"]["app__quiz__schemas__Bilingual"];
+            title: components["schemas"]["Bilingual"];
             /** Sections */
             sections: components["schemas"]["SectionRead"][];
         };
@@ -888,30 +891,6 @@ export interface components {
                 [key: string]: number;
             } | null;
         };
-        /** UserWithToken */
-        UserWithToken: {
-            /** Id */
-            id: number;
-            /** Email */
-            email: string | null;
-            /** Username */
-            username: string;
-            /** Is Active */
-            is_active: boolean;
-            /** Role */
-            role: string;
-            /** Test Result */
-            test_result?: {
-                [key: string]: number;
-            } | null;
-            /** Access Token */
-            access_token: string;
-            /**
-             * Token Type
-             * @default bearer
-             */
-            token_type: string;
-        };
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -924,20 +903,6 @@ export interface components {
             input?: unknown;
             /** Context */
             ctx?: Record<string, never>;
-        };
-        /** Bilingual */
-        app__core__schemas__Bilingual: {
-            /** Ru */
-            ru?: string | null;
-            /** En */
-            en?: string | null;
-        };
-        /** Bilingual */
-        app__quiz__schemas__Bilingual: {
-            /** Ru */
-            ru: string;
-            /** En */
-            en: string;
         };
     };
     responses: never;
@@ -967,7 +932,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["StatusResponse_UserWithToken_"];
+                    "application/json": components["schemas"]["StatusResponse_UserRead_"];
                 };
             };
             /** @description Validation Error */
@@ -1000,7 +965,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["StatusResponse_UserWithToken_"];
+                    "application/json": components["schemas"]["StatusResponse_UserRead_"];
                 };
             };
             /** @description Неверный логин или пароль */

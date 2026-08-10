@@ -1,25 +1,23 @@
 import type { NextRequest } from "next/server"
 
 import createMiddleware from "next-intl/middleware"
+import { NextResponse } from "next/server"
 
-// import { NextResponse } from "next/server"
-
+import { USER_ROLE_COOKIE } from "./shared/config"
 import { routing } from "./shared/i18n/routing"
 
 const intlMiddleware = createMiddleware(routing)
 
 export default function proxy(request: NextRequest) {
-  // TODO: включить когда токен будет в httpOnly cookie. Роль в отдельной cookie лучше!
-  //
-  // if (request.nextUrl.pathname.match(/^\/(ru|en)\/admin(\/|$)/)) {
-  //   const role = request.cookies.get("user_role")?.value
-  //
-  //   if (role !== "admin") {
-  //     const url = request.nextUrl.clone()
-  //     url.pathname = "/"
-  //     return NextResponse.redirect(url)
-  //   }
-  // }
+  if (request.nextUrl.pathname.match(/^\/(ru|en)\/admin(\/|$)/)) {
+    const role = request.cookies.get(USER_ROLE_COOKIE)?.value
+
+    if (role !== "admin") {
+      const url = request.nextUrl.clone()
+      url.pathname = "/"
+      return NextResponse.redirect(url)
+    }
+  }
 
   return intlMiddleware(request)
 }

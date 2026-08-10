@@ -217,8 +217,7 @@
     "cases": "Cases",
     "library": "Library",
     "contacts": "Contacts",
-    "backToSite": "Back to site",
-    "accessDenied": "Access denied"
+    "backToSite": "Back to site"
   },
   "cookieConsent": {
     "text": "By continuing to use this site, you agree to the use of cookie files.",

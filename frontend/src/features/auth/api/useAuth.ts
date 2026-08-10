@@ -4,7 +4,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { client } from "@/shared/api"
 import { QueryKeys } from "@/shared/config"
-import { removeAuthToken, setAuthToken } from "@/shared/lib/auth"
 
 export function useRegister() {
   const queryClient = useQueryClient()
@@ -17,7 +16,6 @@ export function useRegister() {
     },
     onSuccess: (response) => {
       if (response.data) {
-        setAuthToken(response.data.access_token)
         queryClient.setQueryData([QueryKeys.USER], response.data)
       }
     },
@@ -35,7 +33,6 @@ export function useLogin() {
     },
     onSuccess: (response) => {
       if (response?.data) {
-        setAuthToken(response.data.access_token)
         queryClient.setQueryData([QueryKeys.USER], response.data)
       }
     },
@@ -50,7 +47,6 @@ export function useLogout() {
       await client.POST("/users/logout")
     },
     onSettled: () => {
-      removeAuthToken()
       queryClient.setQueryData([QueryKeys.USER], null)
     },
   })
