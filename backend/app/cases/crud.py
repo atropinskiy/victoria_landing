@@ -24,7 +24,7 @@ def to_read(case: Cases) -> CaseRead:
     return CaseRead(
         id=case.id,
         order=case.order,
-        title=Bilingual(ru=case.title_ru or "", en=case.title_en or ""),
+        title=Bilingual(ru=case.title_ru, en=case.title_en),
         description=BilingualOptional(ru=case.ru_descr, en=case.en_descr),
         image=case.image,
     )

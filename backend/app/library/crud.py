@@ -24,7 +24,7 @@ def to_read(item: Library) -> LibraryRead:
     return LibraryRead(
         id=item.id,
         order=item.order,
-        title=Bilingual(ru=item.title_ru or "", en=item.title_en or ""),
+        title=Bilingual(ru=item.title_ru, en=item.title_en),
         description=BilingualOptional(ru=item.ru_descr, en=item.en_descr),
         image=item.image,
         document=item.document,
