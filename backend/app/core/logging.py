@@ -27,15 +27,17 @@ def _username_from_request(request: Request) -> str:
         return "anonymous"
     try:
         data = get_auth_data()
-        payload = jwt.decode(auth[7:], data["secret_key"], algorithms=[data["algorithm"]])
+        payload = jwt.decode(
+            auth[7:], data["secret_key"], algorithms=[data["algorithm"]]
+        )
         return payload.get("sub", "anonymous")
     except JWTError:
         return "anonymous"
 
 
 async def log_middleware(request: Request, call_next) -> Response:
-    # WebSocket, страница терминала и медиафайлы — не JSON, пропускаем
-    if request.url.path.startswith(("/server", "/media")):
+    path = request.url.path.removeprefix(request.scope.get("root_path", ""))
+    if path.startswith(("/server", "/media")):
         return await call_next(request)
 
     start = datetime.now(UTC)
