@@ -15,9 +15,11 @@ class Settings(BaseSettings):
     DB_USER: str
     DB_PASSWORD: str
 
-    SECRET_KEY: str
+    JWT_PRIVATE_KEY: str
+    JWT_PUBLIC_KEY: str
     ALGORITHM: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
+    REFRESH_TOKEN_EXPIRE_DAYS: int
 
     model_config = SettingsConfigDict(env_file=_ENV_FILE)
 
@@ -33,4 +35,8 @@ def get_db_url() -> str:
 
 
 def get_auth_data() -> dict:
-    return {"secret_key": settings.SECRET_KEY, "algorithm": settings.ALGORITHM}
+    return {
+        "private_key": settings.JWT_PRIVATE_KEY,
+        "public_key": settings.JWT_PUBLIC_KEY,
+        "algorithm": settings.ALGORITHM,
+    }

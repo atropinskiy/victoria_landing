@@ -95,3 +95,45 @@ async def test_create_service_with_auth(client, db_session):
     )
     assert resp.status_code == 201
     assert resp.json()["data"]["title"]["ru"] == "Услуга"
+
+
+async def test_refresh_rotates_tokens(client):
+    await _register(client, username="refresh_user", email="refresh@example.com")
+    old_refresh = client.cookies.get("refresh_token")
+    assert old_refresh is not None
+
+    resp = await client.post("/auth/refresh")
+    assert resp.status_code == 200
+    new_refresh = client.cookies.get("refresh_token")
+    assert new_refresh is not None
+    assert new_refresh != old_refresh
+
+
+async def test_refresh_with_reused_token_revokes_all(client):
+    await _register(client, username="reuse_user", email="reuse@example.com")
+    old_refresh = client.cookies.get("refresh_token")
+
+    resp = await client.post("/auth/refresh")
+    assert resp.status_code == 200
+    new_refresh = client.cookies.get("refresh_token")
+
+    # Переиспользуем уже провёрнутый (старый) refresh token — признак кражи.
+    client.cookies.set("refresh_token", old_refresh)
+    reuse_resp = await client.post("/auth/refresh")
+    assert reuse_resp.status_code == 401
+
+    # Из-за детекта переиспользования должны погаситься вообще все токены юзера,
+    # включая тот, что был выдан только что легитимной ротацией.
+    client.cookies.set("refresh_token", new_refresh)
+    second_resp = await client.post("/auth/refresh")
+    assert second_resp.status_code == 401
+
+
+async def test_public_key_endpoint(client):
+    resp = await client.get("/auth/public-key")
+    assert resp.status_code == 200
+    body = resp.json()["data"]
+    assert body["kty"] == "EC"
+    assert body["crv"] == "P-256"
+    assert body["alg"] == "ES256"
+    assert body["x"] and body["y"]

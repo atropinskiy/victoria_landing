@@ -1,10 +1,9 @@
 from fastapi import Depends, HTTPException, Request, status
-from jose import JWTError, jwt
+from jose import JWTError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.config import get_auth_data
 from app.core.database import get_db
-from app.core.security import ACCESS_TOKEN_COOKIE_NAME
+from app.core.security import ACCESS_TOKEN_COOKIE_NAME, decode_token
 from app.user import crud
 from app.user.models import User
 
@@ -21,8 +20,7 @@ async def get_token_payload(
     if token is None:
         raise exc
     try:
-        auth = get_auth_data()
-        payload = jwt.decode(token, auth["secret_key"], algorithms=[auth["algorithm"]])
+        payload = decode_token(token)
     except JWTError:
         raise exc from None
 

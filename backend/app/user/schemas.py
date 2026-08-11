@@ -21,3 +21,11 @@ class UserRead(BaseModel):
     test_result: dict[str, int] | None = None
 
     model_config = {"from_attributes": True}
+
+
+class PublicKeyRead(BaseModel):
+    kty: str
+    crv: str
+    x: str
+    y: str
+    alg: str

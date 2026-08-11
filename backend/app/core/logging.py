@@ -4,9 +4,9 @@ from contextlib import suppress
 from datetime import UTC, datetime
 
 from fastapi import Request, Response
-from jose import JWTError, jwt
+from jose import JWTError
 
-from app.core.config import get_auth_data
+from app.core.security import ACCESS_TOKEN_COOKIE_NAME, decode_token
 
 logging.basicConfig(
     level=logging.INFO,
@@ -22,14 +22,11 @@ logger = logging.getLogger("victoria")
 
 
 def _username_from_request(request: Request) -> str:
-    auth = request.headers.get("Authorization", "")
-    if not auth.startswith("Bearer "):
+    token = request.cookies.get(ACCESS_TOKEN_COOKIE_NAME)
+    if token is None:
         return "anonymous"
     try:
-        data = get_auth_data()
-        payload = jwt.decode(
-            auth[7:], data["secret_key"], algorithms=[data["algorithm"]]
-        )
+        payload = decode_token(token)
         return payload.get("sub", "anonymous")
     except JWTError:
         return "anonymous"
