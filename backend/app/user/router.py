@@ -12,9 +12,8 @@ from app.core.security import (
     clear_auth_cookies,
     create_access_token,
     create_refresh_token,
-    create_role_token,
     decode_token,
-    set_auth_cookies,
+    set_access_token_cookie,
     set_refresh_cookie,
     verify_password,
 )
@@ -29,10 +28,9 @@ user_router = APIRouter(prefix="/users", tags=["Пользователи"])
 
 async def _issue_tokens(response: Response, db: AsyncSession, user: User) -> None:
     access_token = create_access_token({"sub": user.username, "role": user.role})
-    role_token = create_role_token(user.username, user.role)
-    refresh_token, jti, expires_at = create_refresh_token(user.username)
+    refresh_token, jti, expires_at = create_refresh_token(user.username, user.role)
     await crud.store_refresh_token(db, jti, user.id, expires_at)
-    set_auth_cookies(response, access_token, role_token)
+    set_access_token_cookie(response, access_token)
     set_refresh_cookie(response, refresh_token)
 
 
