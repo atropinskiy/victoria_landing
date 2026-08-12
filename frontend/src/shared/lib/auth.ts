@@ -1,15 +1,37 @@
-import { USER_ROLE_COOKIE } from "@/shared/config"
+import type { JWK } from "jose"
 
-export function getUserRole(): string | null {
-  if (typeof document === "undefined") return null
+import { compactVerify, importJWK } from "jose"
 
-  const match = document.cookie.match(new RegExp(`(?:^|;\\s*)${USER_ROLE_COOKIE}=([^;]*)`))
-
-  return match ? decodeURIComponent(match[1]) : null
+let keyPromise: ReturnType<typeof importJWK> | null = null
+function getPublicKey() {
+  keyPromise ??= fetchPublicKey().catch((error) => {
+    keyPromise = null
+    throw error
+  })
+  return keyPromise
 }
 
-export function clearUserRole(): void {
-  if (typeof document === "undefined") return
+async function fetchPublicKey() {
+  const baseUrl = process.env.INTERNAL_API_URL ?? "http://backend:8000"
+  const response = await fetch(`${baseUrl}/auth/public-key`)
+  if (!response.ok) throw new Error(`public-key request failed: ${response.status}`)
 
-  document.cookie = `${USER_ROLE_COOKIE}=; path=/; max-age=0`
+  const { data } = (await response.json()) as { data: JWK }
+  return importJWK(data, "ES256")
+}
+
+export async function getRoleFromToken(token: string | undefined): Promise<string | null> {
+  if (!token) return null
+
+  try {
+    const { payload } = await compactVerify(token, await getPublicKey(), {
+      algorithms: ["ES256"],
+    })
+    const data: unknown = JSON.parse(new TextDecoder().decode(payload))
+    const role = (data as { role?: unknown }).role
+
+    return typeof role === "string" ? role : null
+  } catch {
+    return null
+  }
 }

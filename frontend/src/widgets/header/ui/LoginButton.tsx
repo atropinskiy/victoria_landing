@@ -6,9 +6,9 @@ import { toast } from "sonner"
 
 import { useLogout } from "@/features/auth"
 import { useMe } from "@/entities/user"
-import { ModalIds } from "@/shared/config"
-import { getUserRole } from "@/shared/lib/auth"
-import { useHasMounted, useModalParam } from "@/shared/lib/hooks"
+import { AppRoutes, ModalIds } from "@/shared/config"
+import { usePathname, useRouter } from "@/shared/i18n"
+import { useModalParam } from "@/shared/lib/hooks"
 import { Button } from "@/shared/ui/button"
 import { Skeleton } from "@/shared/ui/skeleton"
 
@@ -31,34 +31,43 @@ function LoginButtonSkeleton() {
 function LoginButtonContent() {
   const t = useTranslations("auth")
   const { open } = useModalParam(ModalIds.LOGIN)
+  const pathname = usePathname()
+  const router = useRouter()
 
-  const hasMounted = useHasMounted()
-  const isAuthenticated = hasMounted && Boolean(getUserRole())
-  const { isLoading } = useMe()
+  const { data: user, isLoading } = useMe()
   const { mutateAsync: logout, isPending } = useLogout()
+
+  const isAuthenticated = Boolean(user)
   const label = t(isAuthenticated ? "logoutButton" : "loginButton")
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
     event.currentTarget.blur()
 
     if (isAuthenticated) {
-      toast.promise(logout, {
-        loading: t("logoutLoading"),
-        success: t("logoutSuccessTitle"),
-        error: t("logoutErrorTitle"),
-      })
+      toast.promise(
+        logout().then(() => {
+          if (pathname.startsWith(AppRoutes.ADMIN.HOME)) {
+            router.replace(AppRoutes.HOME)
+          }
+        }),
+        {
+          loading: t("logoutLoading"),
+          success: t("logoutSuccessTitle"),
+          error: t("logoutErrorTitle"),
+        }
+      )
     } else {
       open()
     }
   }
 
-  if (!hasMounted) return <LoginButtonSkeleton />
+  if (isLoading) return <LoginButtonSkeleton />
 
   return (
     <Button
       variant="burgundy"
       size="sm"
-      disabled={isPending || isLoading}
+      disabled={isPending}
       onClick={handleClick}
       aria-label={label}
       className="h-9 w-18"

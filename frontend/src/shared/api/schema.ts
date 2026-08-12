@@ -15,7 +15,7 @@ export interface paths {
         put?: never;
         /**
          * Регистрация
-         * @description Создаёт нового пользователя и сразу выставляет JWT access token в httpOnly cookie.
+         * @description Создаёт нового пользователя и сразу выставляет JWT access/refresh token в httpOnly cookie.
          */
         post: operations["register_auth_register_post"];
         delete?: never;
@@ -35,9 +35,49 @@ export interface paths {
         put?: never;
         /**
          * Вход
-         * @description Принимает email **или** username и пароль, выставляет JWT access token в httpOnly cookie (и роль пользователя в отдельную читаемую cookie).
+         * @description Принимает email **или** username и пароль, выставляет JWT access/refresh token в httpOnly cookie (и роль пользователя в отдельную читаемую подписанную cookie).
          */
         post: operations["login_auth_login_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Обновление токена
+         * @description Читает refresh token из httpOnly cookie и выдаёт новую пару access/refresh (с ротацией — старый refresh token отзывается).
+         */
+        post: operations["refresh_auth_refresh_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/public-key": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Публичный ключ
+         * @description Публичный ключ в формате JWK (ES256), которым подписаны JWT — можно проверить подпись на клиенте, не обращаясь к бэкенду за каждым запросом.
+         */
+        get: operations["get_public_key_auth_public_key_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -75,7 +115,7 @@ export interface paths {
         put?: never;
         /**
          * Выход из профиля
-         * @description Отзывает текущий JWT токен авторизованного пользователя
+         * @description Отзывает текущий access и refresh токен авторизованного пользователя
          */
         post: operations["logout_users_logout_post"];
         delete?: never;
@@ -586,6 +626,19 @@ export interface components {
             /** Category */
             category: string;
         };
+        /** PublicKeyRead */
+        PublicKeyRead: {
+            /** Kty */
+            kty: string;
+            /** Crv */
+            crv: string;
+            /** X */
+            x: string;
+            /** Y */
+            y: string;
+            /** Alg */
+            alg: string;
+        };
         /** QuestionAdminRead */
         QuestionAdminRead: {
             /** Id */
@@ -716,6 +769,17 @@ export interface components {
             message: string;
             /** Data */
             data?: null;
+        };
+        /** StatusResponse[PublicKeyRead] */
+        StatusResponse_PublicKeyRead_: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            data?: components["schemas"]["PublicKeyRead"] | null;
         };
         /** StatusResponse[ServiceRead] */
         StatusResponse_ServiceRead_: {
@@ -984,6 +1048,53 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    refresh_auth_refresh_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_UserRead_"];
+                };
+            };
+            /** @description Refresh token отсутствует, истёк или отозван */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_public_key_auth_public_key_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_PublicKeyRead_"];
                 };
             };
         };
