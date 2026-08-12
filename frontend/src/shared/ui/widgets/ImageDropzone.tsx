@@ -7,10 +7,11 @@ import Image from "next/image"
 import { useEffect, useId, useMemo, useRef, useState } from "react"
 
 import { cn } from "@/shared/lib/utils"
+import { Button } from "@/shared/ui/button"
 import { Typography } from "@/shared/ui/typography"
 import { ImageCropModal } from "@/shared/ui/widgets/ImageCropModal"
 
-interface DropzoneProps {
+interface ImageDropzoneProps {
   value?: File | null
   onChange: (file: File | null) => void
   previewUrl?: string | null
@@ -31,7 +32,7 @@ function matchesAccept(file: File, accept: string[]) {
   )
 }
 
-export function Dropzone({
+export function ImageDropzone({
   value,
   onChange,
   previewUrl,
@@ -44,7 +45,7 @@ export function Dropzone({
   disabled,
   className,
   "aria-invalid": ariaInvalid,
-}: DropzoneProps) {
+}: ImageDropzoneProps) {
   const inputId = useId()
   const inputRef = useRef<HTMLInputElement>(null)
   const [isDragging, setIsDragging] = useState(false)
@@ -155,7 +156,7 @@ export function Dropzone({
               />
               <span className="bg-ink/55 text-cream absolute inset-0 flex flex-col items-center justify-center gap-2 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100">
                 <Upload className="size-6 shrink-0" />
-                <Typography variant="bodyXs" className="text-inherit">
+                <Typography variant="hint" className="text-inherit">
                   Заменить изображение
                 </Typography>
               </span>
@@ -167,7 +168,7 @@ export function Dropzone({
                 {label}
               </Typography>
               {hint && (
-                <Typography variant="bodyXs" className="text-slate/70">
+                <Typography variant="hint" className="text-slate/70">
                   {hint}
                 </Typography>
               )}
@@ -176,14 +177,16 @@ export function Dropzone({
         </label>
 
         {value && (
-          <button
+          <Button
             type="button"
+            variant="surface"
+            size="icon"
             onClick={handleClear}
             aria-label="Убрать выбранное изображение"
-            className="text-ink absolute top-2 right-2 rounded-sm bg-white/90 p-1.5 shadow-sm transition-colors hover:bg-white"
+            className="text-ink absolute top-2 right-2 size-8 bg-white/90 hover:bg-white"
           >
             <X className="size-4" />
-          </button>
+          </Button>
         )}
 
         {aspect && (
@@ -200,7 +203,7 @@ export function Dropzone({
       </div>
 
       {error && (
-        <Typography variant="bodyXs" className="text-destructive">
+        <Typography variant="hint" className="text-destructive">
           {error}
         </Typography>
       )}

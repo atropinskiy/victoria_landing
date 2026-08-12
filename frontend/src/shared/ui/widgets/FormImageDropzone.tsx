@@ -5,27 +5,27 @@ import type { Control, FieldPath, FieldValues } from "react-hook-form"
 
 import { Controller } from "react-hook-form"
 
-import { Dropzone } from "@/shared/ui/widgets/Dropzone"
+import { ImageDropzone } from "@/shared/ui/widgets/ImageDropzone"
 import { Field, FieldError } from "@/shared/ui/field"
 
-interface FormDropzoneProps<T extends FieldValues>
-  extends Omit<ComponentProps<typeof Dropzone>, "name" | "value" | "onChange"> {
+interface FormImageDropzoneProps<T extends FieldValues>
+  extends Omit<ComponentProps<typeof ImageDropzone>, "name" | "value" | "onChange"> {
   name: FieldPath<T>
   control: Control<T>
 }
 
-function FormDropzone<T extends FieldValues>({
+function FormImageDropzone<T extends FieldValues>({
   name,
   control,
   ...props
-}: FormDropzoneProps<T>) {
+}: FormImageDropzoneProps<T>) {
   return (
     <Controller
       name={name}
       control={control}
       render={({ field, fieldState }) => (
         <Field aria-invalid={fieldState.invalid} data-invalid={fieldState.invalid}>
-          <Dropzone
+          <ImageDropzone
             {...props}
             value={field.value ?? null}
             onChange={field.onChange}
@@ -38,4 +38,4 @@ function FormDropzone<T extends FieldValues>({
   )
 }
 
-export { FormDropzone }
+export { FormImageDropzone }

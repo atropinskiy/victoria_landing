@@ -13,7 +13,7 @@ import {
 } from "@/widgets/admin/cases/model/case-schema"
 import { Button } from "@/shared/ui/button"
 import { Typography } from "@/shared/ui/typography"
-import { BilingualRow, FormDropzone } from "@/shared/ui/widgets"
+import { BilingualRow, FormImageDropzone } from "@/shared/ui/widgets"
 
 interface CaseFormProps {
   defaultValues?: CaseFormValues
@@ -64,7 +64,7 @@ export function CaseForm({
           <Typography as="h6" variant="h6" color="navy">
             Изображение
           </Typography>
-          <FormDropzone
+          <FormImageDropzone
             control={form.control}
             name="image"
             previewUrl={previewUrl}

@@ -1,9 +1,12 @@
 "use client"
 
-import { useTranslations } from "next-intl"
+import type { LibraryItem } from "@/entities/library"
+import type { Locale } from "@/shared/i18n"
+
+import { ImageOff } from "lucide-react"
+import { useLocale } from "next-intl"
 import Image from "next/image"
 
-import { LIBRARY_ITEMS } from "@/widgets/library/config/library"
 import { useMe } from "@/entities/user"
 import {
   Carousel,
@@ -14,35 +17,65 @@ import {
 } from "@/shared/ui/carousel"
 import { Typography } from "@/shared/ui/typography"
 
-export function LibraryCarousel() {
-  const t = useTranslations("main")
+interface LibraryCarouselProps {
+  items: LibraryItem[]
+}
+
+export function LibraryCarousel({ items }: LibraryCarouselProps) {
+  const locale = useLocale() as Locale
   const { data: user } = useMe()
 
   const isAuth = Boolean(user)
-  const items = isAuth ? LIBRARY_ITEMS : LIBRARY_ITEMS.slice(0, 1)
+  const visibleItems = isAuth ? items : items.slice(0, 1)
 
   return (
     <Carousel opts={{ loop: true }}>
       <CarouselContent className={isAuth ? "justify-between" : "justify-center"}>
-        {items.map(({ image, titleKey }, index) => (
-          <CarouselItem key={titleKey} className="sm:basis-1/2 lg:basis-1/3">
+        {visibleItems.map(({ id, title, image, document }, index) => {
+          const caption = title[locale] ?? ""
+
+          const figure = (
             <figure className="flex flex-col items-center gap-4">
-              <Image
-                src={image}
-                alt={t(titleKey)}
-                width={480}
-                height={640}
-                quality={80}
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="aspect-3/4 w-full rounded-xl object-cover"
-                loading={index === 0 ? "eager" : "lazy"}
-              />
+              {image ? (
+                <Image
+                  src={image}
+                  alt={caption}
+                  width={480}
+                  height={640}
+                  quality={80}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="aspect-3/4 w-full rounded-xl object-cover"
+                  loading={index === 0 ? "eager" : "lazy"}
+                />
+              ) : (
+                <div className="bg-muted text-slate flex aspect-3/4 w-full items-center justify-center rounded-xl">
+                  <ImageOff className="size-8" />
+                </div>
+              )}
               <Typography as="figcaption" variant="bodyLg" className="text-center">
-                {t(titleKey)}
+                {caption}
               </Typography>
             </figure>
-          </CarouselItem>
-        ))}
+          )
+
+          return (
+            <CarouselItem key={id} className="sm:basis-1/2 lg:basis-1/3">
+              {document ? (
+                <a
+                  href={document}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download
+                  className="focus-visible:ring-burgundy/40 block rounded-xl transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:outline-none"
+                >
+                  {figure}
+                </a>
+              ) : (
+                figure
+              )}
+            </CarouselItem>
+          )
+        })}
       </CarouselContent>
 
       <CarouselPrevious

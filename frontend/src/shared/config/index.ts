@@ -1,5 +1,5 @@
 export { BASE_URL } from "./api"
-export { ACCESS_TOKEN_COOKIE, USER_ROLE_COOKIE } from "./auth"
+export { REFRESH_TOKEN_COOKIE } from "./auth"
 export { ModalIds, MODAL_PARAM, type ModalId } from "./modal"
 export { QueryKeys } from "./queryKeys"
 export { AppRoutes } from "./routes"
