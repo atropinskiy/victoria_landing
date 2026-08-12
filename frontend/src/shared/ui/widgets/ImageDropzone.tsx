@@ -1,11 +1,10 @@
 "use client"
 
-import type { DragEvent } from "react"
-
 import { ImagePlus, Upload, X } from "lucide-react"
 import Image from "next/image"
-import { useEffect, useId, useMemo, useRef, useState } from "react"
+import { useState } from "react"
 
+import { useDropzone } from "@/shared/lib/hooks"
 import { cn } from "@/shared/lib/utils"
 import { Button } from "@/shared/ui/button"
 import { Typography } from "@/shared/ui/typography"
@@ -26,12 +25,6 @@ interface ImageDropzoneProps {
   "aria-invalid"?: boolean
 }
 
-function matchesAccept(file: File, accept: string[]) {
-  return accept.some((type) =>
-    type.endsWith("/*") ? file.type.startsWith(type.slice(0, -1)) : file.type === type
-  )
-}
-
 export function ImageDropzone({
   value,
   onChange,
@@ -46,71 +39,35 @@ export function ImageDropzone({
   className,
   "aria-invalid": ariaInvalid,
 }: ImageDropzoneProps) {
-  const inputId = useId()
-  const inputRef = useRef<HTMLInputElement>(null)
-  const [isDragging, setIsDragging] = useState(false)
   const [fileToCrop, setFileToCrop] = useState<File | null>(null)
-  const [error, setError] = useState<string | null>(null)
 
-  const objectUrl = useMemo(() => (value ? URL.createObjectURL(value) : null), [value])
-
-  useEffect(() => {
-    if (!objectUrl) return
-
-    return () => URL.revokeObjectURL(objectUrl)
-  }, [objectUrl])
+  const {
+    inputId,
+    inputRef,
+    isDragging,
+    error,
+    objectUrl,
+    handleFile,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleClear,
+  } = useDropzone({
+    value,
+    accept,
+    acceptError,
+    maxSize,
+    disabled,
+    onFile: (file) => {
+      if (file && aspect) {
+        setFileToCrop(file)
+        return
+      }
+      onChange(file)
+    },
+  })
 
   const preview = objectUrl ?? previewUrl ?? null
-
-  const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-    if (!disabled) setIsDragging(true)
-  }
-
-  const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-    setIsDragging(false)
-  }
-
-  const handleFile = (file: File | null) => {
-    setError(null)
-
-    if (!file) {
-      onChange(null)
-      return
-    }
-
-    if (!matchesAccept(file, accept)) {
-      setError(acceptError)
-      return
-    }
-
-    if (maxSize && file.size > maxSize) {
-      setError(`Файл больше ${Math.round(maxSize / 1024 / 1024)} МБ`)
-      return
-    }
-
-    if (aspect) {
-      setFileToCrop(file)
-      return
-    }
-
-    onChange(file)
-  }
-
-  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-    setIsDragging(false)
-    if (disabled) return
-
-    const file = event.dataTransfer.files?.[0]
-    if (file) handleFile(file)
-  }
-
-  const handleClear = () => {
-    onChange(null)
-    inputRef.current?.focus()
-  }
 
   return (
     <div className={cn("flex w-full flex-col gap-1", className)}>
