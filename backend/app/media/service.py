@@ -31,7 +31,10 @@ async def save_upload(file: UploadFile, allowed_extensions: set[str]) -> str:
             detail=f"Файл больше {MAX_UPLOAD_SIZE // (1024 * 1024)} МБ",
         )
 
-    filename = f"{uuid.uuid4().hex}{ext}"
+    original_name = Path(file.filename or "").name or f"file{ext}"
+    filename = original_name
+    while (MEDIA_DIR / filename).exists():
+        filename = f"{Path(original_name).stem}_{uuid.uuid4().hex[:8]}{ext}"
     (MEDIA_DIR / filename).write_bytes(contents)
     return f"/media/{filename}"
 
