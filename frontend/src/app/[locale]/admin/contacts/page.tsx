@@ -1,6 +1,6 @@
 import { setRequestLocale } from "next-intl/server"
 
-import { ContactsEdit } from "@/widgets/admin/contacts/ui/ContactsEdit"
+import { ContactsEdit } from "@/widgets/admin/contacts"
 
 export default async function AdminContactsPage({
   params,
