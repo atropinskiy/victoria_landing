@@ -15,7 +15,7 @@ contacts_router = APIRouter(prefix="/contacts", tags=["Контакты"])
     "",
     response_model=StatusResponse[ContactsRead],
     summary="Получить контактные данные",
-    description="Возвращает email, телефон, адрес, часы работы и ссылку на карту.",
+    description="Возвращает email, телефон, адрес и часы работы на русском и английском, а также ссылку на карту.",
 )
 async def get_contacts(db: AsyncSession = Depends(get_db)):
     content = await crud.get_contacts(db)
@@ -31,7 +31,7 @@ async def get_contacts(db: AsyncSession = Depends(get_db)):
     response_model=StatusResponse[ContactsRead],
     summary="Обновить контактные данные",
     description=(
-        "Обновляет email, телефон, адрес и часы работы. "
+        "Обновляет email, телефон, адрес и часы работы на русском и английском. "
         "map_url необязателен — если не передан, сохраняется пустая строка."
     ),
 )
