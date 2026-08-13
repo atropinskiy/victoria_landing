@@ -51,11 +51,16 @@ function Typography<T extends React.ElementType = "p">({
   ...props
 }: TypographyProps<T>) {
   const Comp = (as ?? "p") as React.ElementType
+  const resolvedColor = color ?? (as === "a" ? "burgundy" : undefined)
 
   return (
     <Comp
       data-slot="typography"
-      className={cn(typographyVariants({ variant, color }), as === "a" && "underline", className)}
+      className={cn(
+        typographyVariants({ variant, color: resolvedColor }),
+        as === "a" && "underline cursor-pointer",
+        className
+      )}
       {...props}
     />
   )

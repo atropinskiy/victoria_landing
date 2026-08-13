@@ -445,6 +445,30 @@ export interface paths {
         patch: operations["update_library_item_library__item_id__patch"];
         trace?: never;
     };
+    "/contacts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Получить контактные данные
+         * @description Возвращает email, телефон, адрес, часы работы и ссылку на карту.
+         */
+        get: operations["get_contacts_contacts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Обновить контактные данные
+         * @description Обновляет email, телефон, адрес и часы работы. map_url необязателен — если не передан, сохраняется пустая строка.
+         */
+        patch: operations["update_contacts_contacts_patch"];
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -569,6 +593,34 @@ export interface components {
             title: components["schemas"]["Bilingual"];
             /** Questions */
             questions?: components["schemas"]["QuestionCreate"][];
+        };
+        /** ContactsRead */
+        ContactsRead: {
+            /** Email */
+            email: string;
+            /** Phone */
+            phone: string;
+            address: components["schemas"]["Bilingual"];
+            hours: components["schemas"]["Bilingual"];
+            /** Map Url */
+            map_url: string;
+        };
+        /** ContactsUpdate */
+        ContactsUpdate: {
+            /**
+             * Email
+             * Format: email
+             */
+            email: string;
+            /** Phone */
+            phone: string;
+            address: components["schemas"]["Bilingual"];
+            hours: components["schemas"]["Bilingual"];
+            /**
+             * Map Url
+             * @default
+             */
+            map_url: string;
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -735,6 +787,17 @@ export interface components {
              */
             message: string;
             data?: components["schemas"]["CaseRead"] | null;
+        };
+        /** StatusResponse[ContactsRead] */
+        StatusResponse_ContactsRead_: {
+            /** Success */
+            success: boolean;
+            /**
+             * Message
+             * @default
+             */
+            message: string;
+            data?: components["schemas"]["ContactsRead"] | null;
         };
         /** StatusResponse[LibraryRead] */
         StatusResponse_LibraryRead_: {
@@ -1975,6 +2038,59 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_contacts_contacts_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_ContactsRead_"];
+                };
+            };
+        };
+    };
+    update_contacts_contacts_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ContactsUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatusResponse_ContactsRead_"];
+                };
             };
             /** @description Validation Error */
             422: {

@@ -15,6 +15,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/shared/ui/carousel"
+import { useHasMounted } from "@/shared/lib/hooks"
 import { Typography } from "@/shared/ui/typography"
 
 interface LibraryCarouselProps {
@@ -23,9 +24,10 @@ interface LibraryCarouselProps {
 
 export function LibraryCarousel({ items }: LibraryCarouselProps) {
   const locale = useLocale() as Locale
+  const hasMounted = useHasMounted()
   const { data: user } = useMe()
 
-  const isAuth = Boolean(user)
+  const isAuth = hasMounted && Boolean(user)
   const visibleItems = isAuth ? items : items.slice(0, 1)
 
   return (

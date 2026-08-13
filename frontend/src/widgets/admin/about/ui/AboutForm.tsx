@@ -5,10 +5,10 @@ import type { AboutFormValues } from "@/widgets/admin/about/model/about-schema"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { toast } from "sonner"
 
 import { aboutFormSchema } from "@/widgets/admin/about/model/about-schema"
 import { useAboutUpdate } from "@/entities/about"
+import { toastSaveChanges } from "@/shared/lib/toast"
 import { Button } from "@/shared/ui/button"
 import { Typography } from "@/shared/ui/typography"
 import { FormRichText } from "@/shared/ui/widgets"
@@ -28,17 +28,7 @@ export function AboutForm({ about }: AboutFormProps) {
   })
 
   async function onSubmit(values: AboutFormValues): Promise<void> {
-    const promise = mutateAsync({ body: values })
-
-    toast.promise(promise, {
-      loading: "Сохраняем изменения",
-      success: "Изменения сохранены",
-      error: (error) => ({
-        message: error?.message || "Не удалось сохранить изменения",
-      }),
-    })
-
-    await promise
+    await toastSaveChanges(mutateAsync({ body: values }))
   }
 
   return (

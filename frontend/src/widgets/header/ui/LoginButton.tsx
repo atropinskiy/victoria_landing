@@ -8,7 +8,7 @@ import { useLogout } from "@/features/auth"
 import { useMe } from "@/entities/user"
 import { AppRoutes, ModalIds } from "@/shared/config"
 import { usePathname, useRouter } from "@/shared/i18n"
-import { useModalParam } from "@/shared/lib/hooks"
+import { useHasMounted, useModalParam } from "@/shared/lib/hooks"
 import { Button } from "@/shared/ui/button"
 import { Skeleton } from "@/shared/ui/skeleton"
 
@@ -33,6 +33,7 @@ function LoginButtonContent() {
   const { open } = useModalParam(ModalIds.LOGIN)
   const pathname = usePathname()
   const router = useRouter()
+  const hasMounted = useHasMounted()
 
   const { data: user, isLoading } = useMe()
   const { mutateAsync: logout, isPending } = useLogout()
@@ -61,7 +62,7 @@ function LoginButtonContent() {
     }
   }
 
-  if (isLoading) return <LoginButtonSkeleton />
+  if (!hasMounted || isLoading) return <LoginButtonSkeleton />
 
   return (
     <Button

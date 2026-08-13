@@ -3,6 +3,7 @@
 import type { Control, FieldPath, FieldValues } from "react-hook-form"
 
 import { cn } from "@/shared/lib/utils"
+
 import { FormInput } from "./FormInput"
 import { FormTextarea } from "./FormTextarea"
 
@@ -25,7 +26,7 @@ export function BilingualRow<T extends FieldValues>({
   const en = `${name}.en` as FieldPath<T>
 
   return (
-    <div className={cn("mt-2 flex flex-col gap-1 sm:flex-row sm:gap-6", className)}>
+    <div className={cn("mt-2 flex flex-col gap-1 md:flex-row md:gap-6", className)}>
       {multiline ? (
         <>
           <FormTextarea variant="light" size={size} control={control} name={ru} label="RU" />

@@ -3,9 +3,8 @@
 import type { Case } from "@/entities/case"
 import type { CaseFormValues } from "@/widgets/admin/cases/model/case-schema"
 
-import { toast } from "sonner"
-
 import { useCaseUpdate } from "@/entities/case"
+import { toastSaveChanges } from "@/shared/lib/toast"
 
 import { CaseForm } from "./CaseForm"
 
@@ -18,17 +17,7 @@ export function CaseEdit({ caseItem, onSaved }: CaseEditProps) {
   const { isPending, mutateAsync } = useCaseUpdate()
 
   async function handleUpdate(values: CaseFormValues): Promise<void> {
-    const promise = mutateAsync({ case_id: caseItem.id, payload: values })
-
-    toast.promise(promise, {
-      loading: "Сохраняем изменения",
-      success: "Изменения сохранены",
-      error: (error) => ({
-        message: error?.message || "Не удалось сохранить изменения",
-      }),
-    })
-
-    await promise
+    await toastSaveChanges(mutateAsync({ case_id: caseItem.id, payload: values }))
     onSaved?.()
   }
 

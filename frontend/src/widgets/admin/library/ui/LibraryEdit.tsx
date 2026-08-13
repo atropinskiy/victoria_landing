@@ -3,9 +3,8 @@
 import type { LibraryItem } from "@/entities/library"
 import type { LibraryFormValues } from "@/widgets/admin/library/model/library-schema"
 
-import { toast } from "sonner"
-
 import { useLibraryUpdate } from "@/entities/library"
+import { toastSaveChanges } from "@/shared/lib/toast"
 
 import { LibraryForm } from "./LibraryForm"
 
@@ -18,17 +17,7 @@ export function LibraryEdit({ item, onSaved }: LibraryEditProps) {
   const { isPending, mutateAsync } = useLibraryUpdate()
 
   async function handleUpdate(values: LibraryFormValues): Promise<void> {
-    const promise = mutateAsync({ item_id: item.id, payload: values })
-
-    toast.promise(promise, {
-      loading: "Сохраняем изменения",
-      success: "Изменения сохранены",
-      error: (error) => ({
-        message: error?.message || "Не удалось сохранить изменения",
-      }),
-    })
-
-    await promise
+    await toastSaveChanges(mutateAsync({ item_id: item.id, payload: values }))
     onSaved?.()
   }
 
