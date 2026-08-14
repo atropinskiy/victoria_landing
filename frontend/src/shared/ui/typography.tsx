@@ -21,6 +21,7 @@ const typographyVariants = cva("font-heading", {
       body: "text-[18px] sm:text-[22px] leading-tight text-justify",
       bodySm: "font-sans sm:text-[18px] text-[16px] leading-tight font-normal",
       bodyXs: "font-sans sm:text-[16px] text-[14px] leading-tight font-normal",
+      hint: "font-sans text-[14px] leading-tight font-normal",
       accent: "font-sans sm:text-[18px] text-[18px] leading-tight font-semibold italic capitalize",
     },
     color: {
@@ -50,11 +51,16 @@ function Typography<T extends React.ElementType = "p">({
   ...props
 }: TypographyProps<T>) {
   const Comp = (as ?? "p") as React.ElementType
+  const resolvedColor = color ?? (as === "a" ? "burgundy" : undefined)
 
   return (
     <Comp
       data-slot="typography"
-      className={cn(typographyVariants({ variant, color }), as === "a" && "underline", className)}
+      className={cn(
+        typographyVariants({ variant, color: resolvedColor }),
+        as === "a" && "cursor-pointer",
+        className
+      )}
       {...props}
     />
   )

@@ -1,25 +1,37 @@
-import { AUTH_TOKEN_KEY } from "@/shared/config"
+import type { JWK } from "jose"
 
-// TODO: change to cookies! (localstorage only for client components)
+import { compactVerify, importJWK } from "jose"
 
-// import { cookies } from "next/headers"
-
-// async function getServerAuthToken(): Promise<string | null> {
-//   const cookieStore = await cookies()
-//   return cookieStore.get("auth_token")?.value ?? null
-// }
-
-export function getAuthToken(): string | null {
-  if (typeof window === "undefined") return null
-  return localStorage.getItem(AUTH_TOKEN_KEY)
+let keyPromise: ReturnType<typeof importJWK> | null = null
+function getPublicKey() {
+  keyPromise ??= fetchPublicKey().catch((error) => {
+    keyPromise = null
+    throw error
+  })
+  return keyPromise
 }
 
-export function setAuthToken(token: string): void {
-  if (typeof window === "undefined") return
-  localStorage.setItem(AUTH_TOKEN_KEY, token)
+async function fetchPublicKey() {
+  const baseUrl = process.env.INTERNAL_API_URL ?? "http://backend:8000"
+  const response = await fetch(`${baseUrl}/auth/public-key`)
+  if (!response.ok) throw new Error(`public-key request failed: ${response.status}`)
+
+  const { data } = (await response.json()) as { data: JWK }
+  return importJWK(data, "ES256")
 }
 
-export function removeAuthToken(): void {
-  if (typeof window === "undefined") return
-  localStorage.removeItem(AUTH_TOKEN_KEY)
+export async function getRoleFromToken(token: string | undefined): Promise<string | null> {
+  if (!token) return null
+
+  try {
+    const { payload } = await compactVerify(token, await getPublicKey(), {
+      algorithms: ["ES256"],
+    })
+    const data: unknown = JSON.parse(new TextDecoder().decode(payload))
+    const role = (data as { role?: unknown }).role
+
+    return typeof role === "string" ? role : null
+  } catch {
+    return null
+  }
 }
