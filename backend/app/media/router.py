@@ -4,7 +4,7 @@ from fastapi.responses import FileResponse
 from app.core.schemas import StatusResponse
 from app.media.schemas import MediaUploadRead
 from app.media.service import IMAGE_EXTENSIONS, resolve_media_path, save_upload
-from app.user.deps import get_current_user
+from app.user.deps import get_current_admin_user
 from app.user.models import User
 
 media_router = APIRouter(prefix="/media", tags=["Медиа"])
@@ -29,7 +29,7 @@ async def serve_media(file_path: str):
 )
 async def upload_media(
     file: UploadFile,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     url = await save_upload(file, IMAGE_EXTENSIONS)
     return StatusResponse(
@@ -48,7 +48,7 @@ async def upload_media(
 )
 async def delete_media(
     file_path: str,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     resolve_media_path(file_path).unlink()
     return StatusResponse(success=True, message="Файл удалён", data=None)

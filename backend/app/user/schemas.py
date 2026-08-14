@@ -23,11 +23,9 @@ class UserRead(BaseModel):
     model_config = {"from_attributes": True}
 
 
-class TokenRead(BaseModel):
-    access_token: str
-    token_type: str = "bearer"
-
-
-class UserWithToken(UserRead):
-    access_token: str
-    token_type: str = "bearer"
+class PublicKeyRead(BaseModel):
+    kty: str
+    crv: str
+    x: str
+    y: str
+    alg: str

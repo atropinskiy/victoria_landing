@@ -18,5 +18,10 @@ class BulkStatusResponse(BaseModel):
 
 
 class Bilingual(BaseModel):
+    ru: str
+    en: str
+
+
+class BilingualOptional(BaseModel):
     ru: str | None = None
     en: str | None = None

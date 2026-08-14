@@ -5,7 +5,7 @@ from app.core.database import get_db
 from app.core.schemas import StatusResponse
 from app.services import crud
 from app.services.schemas import ServiceCreate, ServiceOrderItem, ServiceRead
-from app.user.deps import get_current_user
+from app.user.deps import get_current_admin_user
 from app.user.models import User
 
 services_router = APIRouter(prefix="/services", tags=["Услуги"])
@@ -105,7 +105,7 @@ async def get_services(db: AsyncSession = Depends(get_db)):
 async def create_service(
     data: ServiceCreate,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     service = await crud.create_service(db, data)
     return StatusResponse(
@@ -131,7 +131,7 @@ async def create_service(
 async def reorder_services(
     items: list[ServiceOrderItem],
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     services = await crud.reorder_services(db, items)
     if services is None:
@@ -162,7 +162,7 @@ async def update_service(
     service_id: int,
     data: ServiceCreate,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     service = await crud.update_service(db, service_id, data)
     if service is None:
@@ -190,7 +190,7 @@ async def update_service(
 async def delete_service(
     service_id: int,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     deleted = await crud.delete_service(db, service_id)
     if not deleted:

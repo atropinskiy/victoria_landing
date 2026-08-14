@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app.core.schemas import Bilingual
+from app.core.schemas import Bilingual, BilingualOptional
 
 
 class CaseOrderItem(BaseModel):
@@ -12,5 +12,5 @@ class CaseRead(BaseModel):
     id: int
     order: int
     title: Bilingual
-    description: Bilingual
+    description: BilingualOptional
     image: str | None

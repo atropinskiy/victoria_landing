@@ -4,11 +4,11 @@ from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, s
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
-from app.core.schemas import Bilingual, StatusResponse
+from app.core.schemas import Bilingual, BilingualOptional, StatusResponse
 from app.library import crud
 from app.library.schemas import LibraryOrderItem, LibraryRead
 from app.media.service import DOCUMENT_EXTENSIONS, IMAGE_EXTENSIONS, save_upload
-from app.user.deps import get_current_user
+from app.user.deps import get_current_admin_user
 from app.user.models import User
 
 library_router = APIRouter(prefix="/library", tags=["Библиотека"])
@@ -50,7 +50,7 @@ async def create_library_item(
     image: Annotated[UploadFile | None, File()] = None,
     document: Annotated[UploadFile | None, File()] = None,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     image_url = (
         await save_upload(image, IMAGE_EXTENSIONS) if image is not None else None
@@ -63,7 +63,7 @@ async def create_library_item(
     item = await crud.create_item(
         db,
         title=Bilingual(ru=title_ru, en=title_en),
-        description=Bilingual(ru=description_ru, en=description_en),
+        description=BilingualOptional(ru=description_ru, en=description_en),
         image=image_url,
         document=document_url,
     )
@@ -89,7 +89,7 @@ async def create_library_item(
 async def reorder_library(
     items: list[LibraryOrderItem],
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     rows = await crud.reorder_library(db, items)
     if rows is None:
@@ -125,7 +125,7 @@ async def update_library_item(
     image: Annotated[UploadFile | None, File()] = None,
     document: Annotated[UploadFile | None, File()] = None,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     image_url = (
         await save_upload(image, IMAGE_EXTENSIONS) if image is not None else None
@@ -139,7 +139,7 @@ async def update_library_item(
         db,
         item_id,
         title=Bilingual(ru=title_ru, en=title_en),
-        description=Bilingual(ru=description_ru, en=description_en),
+        description=BilingualOptional(ru=description_ru, en=description_en),
         image=image_url,
         document=document_url,
     )
@@ -167,7 +167,7 @@ async def update_library_item(
 async def delete_library_item(
     item_id: int,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     deleted = await crud.delete_item(db, item_id)
     if not deleted:
