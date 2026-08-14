@@ -11,7 +11,7 @@ from app.quiz.schemas import (
     TestResultRead,
     TestSubmitRequest,
 )
-from app.user.deps import get_current_user, get_current_user_optional
+from app.user.deps import get_current_admin_user, get_current_user_optional
 from app.user.models import User
 
 quiz_router = APIRouter(prefix="/tests", tags=["Тесты"])
@@ -53,7 +53,7 @@ async def get_test(db: AsyncSession = Depends(get_db)):
 async def create_test(
     data: TestCreate,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     test = await crud.create_test(db, data)
     return StatusResponse(
@@ -74,7 +74,7 @@ async def create_test(
 async def update_test(
     data: TestCreate,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     test = await crud.update_test(db, data)
     if test is None:
@@ -98,7 +98,7 @@ async def update_test(
 )
 async def delete_test(
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_admin_user),
 ):
     deleted = await crud.delete_test(db)
     if not deleted:
@@ -115,7 +115,7 @@ async def delete_test(
     description=(
         "Публичная ручка: принимает по одному выбранному варианту ответа на "
         "каждый вопрос и возвращает сумму баллов (weight) по каждой категории "
-        "результата. Если пользователь авторизован (передан Bearer-токен), "
+        "результата. Если пользователь авторизован (передан cookie с токеном), "
         "результат также сохраняется в его профиль. Если тест не найден — 404. "
         "Если передан несуществующий вопрос/вариант или на один вопрос "
         "передано больше одного ответа — 400."
