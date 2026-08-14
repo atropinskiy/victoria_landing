@@ -58,7 +58,7 @@ function Typography<T extends React.ElementType = "p">({
       data-slot="typography"
       className={cn(
         typographyVariants({ variant, color: resolvedColor }),
-        as === "a" && "underline cursor-pointer",
+        as === "a" && "cursor-pointer",
         className
       )}
       {...props}

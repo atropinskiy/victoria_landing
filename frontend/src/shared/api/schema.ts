@@ -454,7 +454,7 @@ export interface paths {
         };
         /**
          * Получить контактные данные
-         * @description Возвращает email, телефон, адрес, часы работы и ссылку на карту.
+         * @description Возвращает email, телефон, адрес и часы работы на русском и английском, а также ссылку на карту.
          */
         get: operations["get_contacts_contacts_get"];
         put?: never;
@@ -464,7 +464,7 @@ export interface paths {
         head?: never;
         /**
          * Обновить контактные данные
-         * @description Обновляет email, телефон, адрес и часы работы. map_url необязателен — если не передан, сохраняется пустая строка.
+         * @description Обновляет email, телефон, адрес и часы работы на русском и английском. map_url необязателен — если не передан, сохраняется пустая строка.
          */
         patch: operations["update_contacts_contacts_patch"];
         trace?: never;

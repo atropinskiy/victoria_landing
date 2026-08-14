@@ -35,7 +35,7 @@ export async function ContactsContent() {
               >
                 {t("contactEmailLabel")}
               </Typography>
-              <Typography as="span" color="burgundy" className="underline">
+              <Typography as="span" color="burgundy">
                 {contacts.email}
               </Typography>
             </span>
@@ -60,7 +60,7 @@ export async function ContactsContent() {
               >
                 {t("contactPhoneLabel")}
               </Typography>
-              <Typography as="span" color="burgundy" className="underline">
+              <Typography as="span" color="burgundy">
                 {contacts.phone}
               </Typography>
             </span>
@@ -88,7 +88,7 @@ export async function ContactsContent() {
                 >
                   {t("contactAddressLabel")}
                 </Typography>
-                <Typography as="span" color="burgundy" className="underline">
+                <Typography as="span" color="burgundy">
                   {contacts.address[locale]}
                 </Typography>
               </span>

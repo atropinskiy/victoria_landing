@@ -38,8 +38,8 @@ export function AboutForm({ about }: AboutFormProps) {
           Промо
         </Typography>
         <div className="mt-1.5 flex flex-col gap-1 sm:flex-row sm:gap-5">
-          <FormRichText control={form.control} name="promo.ru" label="RU" height="162px" />
-          <FormRichText control={form.control} name="promo.en" label="EN" height="162px" />
+          <FormRichText control={form.control} name="promo.ru" label="RU" height="160px" />
+          <FormRichText control={form.control} name="promo.en" label="EN" height="160px" />
         </div>
       </div>
       <div>
@@ -47,8 +47,8 @@ export function AboutForm({ about }: AboutFormProps) {
           Полная
         </Typography>
         <div className="mt-1.5 flex flex-col gap-1 sm:flex-row sm:gap-6">
-          <FormRichText control={form.control} name="full.ru" label="RU" height="235px" />
-          <FormRichText control={form.control} name="full.en" label="EN" height="235px" />
+          <FormRichText control={form.control} name="full.ru" label="RU" height="233px" />
+          <FormRichText control={form.control} name="full.en" label="EN" height="233px" />
         </div>
       </div>
 

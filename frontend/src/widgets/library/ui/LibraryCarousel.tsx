@@ -3,11 +3,12 @@
 import type { LibraryItem } from "@/entities/library"
 import type { Locale } from "@/shared/i18n"
 
-import { ImageOff } from "lucide-react"
+import { ImageOff, Paperclip } from "lucide-react"
 import { useLocale } from "next-intl"
 import Image from "next/image"
 
 import { useMe } from "@/entities/user"
+import { useHasMounted } from "@/shared/lib/hooks"
 import {
   Carousel,
   CarouselContent,
@@ -15,7 +16,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/shared/ui/carousel"
-import { useHasMounted } from "@/shared/lib/hooks"
 import { Typography } from "@/shared/ui/typography"
 
 interface LibraryCarouselProps {
@@ -54,8 +54,14 @@ export function LibraryCarousel({ items }: LibraryCarouselProps) {
                   <ImageOff className="size-8" />
                 </div>
               )}
-              <Typography as="figcaption" variant="bodyLg" className="text-center">
-                {caption}
+              <Typography
+                as="figcaption"
+                color="burgundy"
+                variant="bodyLg"
+                className="flex items-center justify-center gap-1.5 text-center"
+              >
+                {document && <Paperclip className="text-primary size-5 shrink-0" />}
+                <span className="line-clamp-2">{caption}</span>
               </Typography>
             </figure>
           )
