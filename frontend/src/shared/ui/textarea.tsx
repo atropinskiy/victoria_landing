@@ -23,7 +23,7 @@ const textareaVariants = cva(
       size: {
         sm: "h-16",
         md: "h-28",
-        lg: "h-40",
+        lg: "h-45",
       },
     },
     defaultVariants: {

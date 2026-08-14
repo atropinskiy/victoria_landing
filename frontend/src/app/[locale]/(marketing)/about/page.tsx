@@ -40,7 +40,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         {t("heading")}
       </Typography>
 
-      <Suspense fallback={<AboutContentSkeleton lines={[4, 4, 5, 2, 10]} />}>
+      <Suspense fallback={<AboutContentSkeleton variant="full" />}>
         <AboutFullContent />
       </Suspense>
     </Container>

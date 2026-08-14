@@ -5,16 +5,18 @@ import { useState } from "react"
 
 import { TestResultChart } from "@/entities/test"
 import { useMe } from "@/entities/user"
+import { useHasMounted } from "@/shared/lib/hooks"
 import { Button } from "@/shared/ui/button"
 import { Modal } from "@/shared/ui/widgets"
 
 export function TestResultButton() {
   const t = useTranslations("main")
   const tTest = useTranslations("test")
+  const hasMounted = useHasMounted()
   const { data } = useMe()
   const [open, setOpen] = useState(false)
 
-  if (!data?.test_result) return null
+  if (!hasMounted || !data?.test_result) return null
 
   return (
     <>

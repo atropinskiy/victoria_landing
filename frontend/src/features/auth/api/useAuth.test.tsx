@@ -4,7 +4,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { useLogin, useLogout, useRegister } from "@/features/auth/api/useAuth"
 import { QueryKeys } from "@/shared/config"
-import { getAuthToken, setAuthToken } from "@/shared/lib/auth"
 
 const mocks = vi.hoisted(() => ({
   post: vi.fn(),
@@ -20,8 +19,15 @@ function createWrapper(queryClient: QueryClient) {
   }
 }
 
+const mockUser = {
+  id: 0,
+  email: "mock_email",
+  username: "mock_username",
+  is_active: true,
+  role: "user",
+}
+
 beforeEach(() => {
-  localStorage.clear()
   mocks.post.mockReset()
 })
 
@@ -32,19 +38,7 @@ afterEach(() => {
 describe("useRegister", () => {
   it("success", async () => {
     mocks.post.mockResolvedValueOnce({
-      data: {
-        success: true,
-        message: "",
-        data: {
-          id: 0,
-          email: "mock_email",
-          username: "mock_username",
-          is_active: true,
-          role: "user",
-          access_token: "mock_token",
-          token_type: "bearer",
-        },
-      },
+      data: { success: true, message: "", data: mockUser },
     })
 
     const queryClient = new QueryClient()
@@ -62,16 +56,7 @@ describe("useRegister", () => {
         password: "password",
       },
     })
-    expect(getAuthToken()).toBe("mock_token")
-    expect(queryClient.getQueryData([QueryKeys.USER])).toEqual({
-      id: 0,
-      email: "mock_email",
-      username: "mock_username",
-      is_active: true,
-      role: "user",
-      access_token: "mock_token",
-      token_type: "bearer",
-    })
+    expect(queryClient.getQueryData([QueryKeys.USER])).toEqual(mockUser)
   })
 
   it("error", async () => {
@@ -90,7 +75,6 @@ describe("useRegister", () => {
       })
     ).rejects.toEqual({ message: "Invalid register" })
 
-    expect(getAuthToken()).toBeNull()
     expect(queryClient.getQueryData([QueryKeys.USER])).toBeUndefined()
   })
 })
@@ -98,11 +82,7 @@ describe("useRegister", () => {
 describe("useLogin", () => {
   it("success", async () => {
     mocks.post.mockResolvedValueOnce({
-      data: {
-        success: true,
-        message: "",
-        data: { access_token: "test_token", token_type: "bearer" },
-      },
+      data: { success: true, message: "", data: mockUser },
       error: undefined,
     })
 
@@ -114,11 +94,7 @@ describe("useLogin", () => {
     expect(mocks.post).toHaveBeenCalledWith("/auth/login", {
       body: { login: "user", password: "password" },
     })
-    expect(getAuthToken()).toBe("test_token")
-    expect(queryClient.getQueryData([QueryKeys.USER])).toEqual({
-      access_token: "test_token",
-      token_type: "bearer",
-    })
+    expect(queryClient.getQueryData([QueryKeys.USER])).toEqual(mockUser)
   })
 
   it("error", async () => {
@@ -134,7 +110,6 @@ describe("useLogin", () => {
       message: "Invalid login or password",
     })
 
-    expect(getAuthToken()).toBeNull()
     expect(queryClient.getQueryData([QueryKeys.USER])).toBeUndefined()
   })
 })
@@ -146,13 +121,11 @@ describe("useLogout", () => {
     const queryClient = new QueryClient()
 
     queryClient.setQueryData([QueryKeys.USER], { id: 1, username: "test" })
-    setAuthToken("test_token")
 
     const { result } = renderHook(() => useLogout(), { wrapper: createWrapper(queryClient) })
     await result.current.mutateAsync()
 
     expect(mocks.post).toHaveBeenCalledWith("/users/logout")
-    expect(getAuthToken()).toBeNull()
     expect(queryClient.getQueryData([QueryKeys.USER])).toBeNull()
   })
 
@@ -162,12 +135,10 @@ describe("useLogout", () => {
     const queryClient = new QueryClient()
 
     queryClient.setQueryData([QueryKeys.USER], { id: 1, username: "test_username" })
-    setAuthToken("test_token")
 
     const { result } = renderHook(() => useLogout(), { wrapper: createWrapper(queryClient) })
     await expect(result.current.mutateAsync()).rejects.toThrow()
 
-    expect(getAuthToken()).toBeNull()
     expect(queryClient.getQueryData([QueryKeys.USER])).toBeNull()
   })
 })

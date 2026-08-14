@@ -1,24 +1,28 @@
 "use client"
 
-import type { ComponentProps } from "react"
+import type { ComponentProps, ReactNode } from "react"
 import type { Control, FieldPath, FieldValues } from "react-hook-form"
 
 import { Controller } from "react-hook-form"
 
-import { Field, FieldError } from "@/shared/ui/field"
+import { Field, FieldDescription, FieldError } from "@/shared/ui/field"
 import { Input } from "@/shared/ui/input"
 
-interface FormInputProps<T extends FieldValues>
-  extends Omit<ComponentProps<typeof Input>, "name" | "aria-label"> {
+interface FormInputProps<T extends FieldValues> extends Omit<
+  ComponentProps<typeof Input>,
+  "name" | "aria-label"
+> {
   name: FieldPath<T>
   control: Control<T>
-  label: string
+  label?: string
+  helperText?: ReactNode
 }
 
 function FormInput<T extends FieldValues>({
   name,
   control,
-  label,
+  label = "",
+  helperText,
   ...props
 }: FormInputProps<T>) {
   return (
@@ -34,7 +38,11 @@ function FormInput<T extends FieldValues>({
             placeholder={label}
             aria-label={label}
           />
-          <FieldError errors={fieldState.error ? [fieldState.error] : []} />
+          {fieldState.error ? (
+            <FieldError errors={[fieldState.error]} />
+          ) : (
+            <FieldDescription>{helperText}</FieldDescription>
+          )}
         </Field>
       )}
     />

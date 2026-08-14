@@ -3,4 +3,7 @@ export const QueryKeys = {
   TEST: "test",
   SERVICES: "services",
   ABOUT: "about",
+  CASES: "cases",
+  LIBRARY: "library",
+  CONTACTS: "contacts",
 } as const

@@ -1,6 +1,6 @@
 import { setRequestLocale } from "next-intl/server"
 
-import { ServiceCreate, ServicesList } from "@/widgets/admin"
+import { ServiceCreate, ServicesList } from "@/widgets/admin/services"
 
 export default async function AdminServicesPage({
   params,
